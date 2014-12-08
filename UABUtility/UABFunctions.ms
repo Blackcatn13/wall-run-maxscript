@@ -41,8 +41,7 @@ function CopyTextures FilePath Objs =
 
 function ExportStaticMeshManager FilePath =
 (
-	local fileName =  FilePath + "static_mesh_manager.xml"
-	local file=createfile fileName
+	local file=createfile (FilePath + "static_mesh_manager.xml")
 	
 	-- Para escribir sobre el fichero de tipo carácter stream utilizando la función format
 	format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:file
@@ -68,7 +67,7 @@ function ExportStaticMeshManager FilePath =
 
 function ExportStaticMesh ExportMeshCheck FilePath Obj=
 (
-	local file=createfile (FilePath + "static_mesh.xml")
+	local file=createfile (FilePath + "renderable_objects.xml")
 	-- Para escribir sobre el fichero de tipo carácter stream utilizando la función format
 	format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:file
 	format "<renderable_objects>\n" to:file

@@ -15,10 +15,11 @@ utility UABUtility "UAB Utility" width:200 height:352
 	button ExportSceneButton "Scene" pos:[16,288] width:168 height:24
 	button ExportStaticMeshManagerButton "Static Mesh Manager" pos:[16,256] width:168 height:24
 	button btnSetProperties "Set Properties" pos:[56,328] width:72 height:16
-	dropdownList LevelList "" pos:[8,136] width:184 height:21
-
+	combobox LevelList "" pos:[8,116] width:184 height:3
+	
 	--Eventos de la utility
-
+	
+	--Esta función se llama al pulsarse sobre el btón ExportMeshButton
 	on UABUtility open do
 	(
 		PathLabel.text = "C:/Users/IBM_ADMIN/Desktop/uabEngines/UABEngine_2_12/bin/Videogame/Data/"--"Path: D://UABEngine/Data"
@@ -30,8 +31,6 @@ utility UABUtility "UAB Utility" width:200 height:352
 	(
 		PathLabel.text = ExportPath +LevelList.items[LevelList.selection] +"/"
 	)
-	
-	--Esta función se llama al pulsarse sobre el btón ExportMeshButton
 	on ExportMeshButton pressed do
 	(
 	--Implementad aquí el código de pulsado de este botón
@@ -53,17 +52,14 @@ utility UABUtility "UAB Utility" width:200 height:352
 			ExportStaticMesh false PathLabel.text $
 		)
 	)
-	
 	on ExportStaticMeshManagerButton pressed do
 	(
 		ExportStaticMeshManager PathLabel.text
 		format "Static Mesh Manager Exportado \n"
 	)
-	
 	on btnSetProperties pressed do
 	(
 		createDialog UABSetProperties
 	)
-	
 )
 
