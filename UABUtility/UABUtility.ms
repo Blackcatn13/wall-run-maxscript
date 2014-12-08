@@ -1,60 +1,86 @@
 fileIn "setProperties.ms"
 fileIn "UABFunctions.ms"
 
-utility UABUtility "UAB Utility" width:200 height:352
+global realPath
+
+utility UABUtility "UAB Utility" width:152 height:360
 (
 	-- Contenido de la utility
-	button btnSetPath "Set Path" pos:[56,8] width:85 height:23
-	label PathLabel "Path" pos:[12,37] width:180 height:16
-	checkbox ExportMeshCheck "Export Mesh" pos:[8,69] width:112 height:16
-	checkbox CopyTexturesCheck "Copy Textures" pos:[8,88] width:96 height:16
-	GroupBox grp1 "Export" pos:[8,176] width:184 height:144
-	button ExportLightsButton "Lights" pos:[16,192] width:72 height:24
-	button ExportMeshButton "Mesh" pos:[104,192] width:80 height:24
-	button ExportCameraButton "Camera" pos:[16,224] width:72 height:24
-	button ExportSceneButton "Scene" pos:[16,288] width:168 height:24
-	button ExportStaticMeshManagerButton "Static Mesh Manager" pos:[16,256] width:168 height:24
-	button btnSetProperties "Set Properties" pos:[56,328] width:72 height:16
-	combobox LevelList "" pos:[8,116] width:184 height:3
+	button btnSetPath "Set Path" pos:[8,8] width:136 height:28
+	label PathLabel pos:[8,40] width:136 height:76 readOnly:true
+	checkbox ExportMeshCheck "Export Mesh" pos:[8,124] width:136 height:16
+	checkbox CopyTexturesCheck "Copy Textures" pos:[8,148] width:136 height:16
+	GroupBox grp1 "Export" pos:[8,196] width:136 height:120
+	button ExportLightsButton "Lights" pos:[16,220] width:56 height:16
+	button ExportMeshButton "Mesh" pos:[80,220] width:56 height:16
+	button ExportCameraButton "Camera" pos:[16,244] width:56 height:16
+	button ExportSceneButton "Scene" pos:[16,292] width:120 height:16
+	button ExportStaticMeshManagerButton "Static Mesh Manager" pos:[16,268] width:120 height:16
+	groupBox grp2 "Tools" pos:[8,324] width:136 height:48
+	button btnSetProperties "Set Properties" pos:[16,348] width:120 height:16
+	dropDownList LevelList "" pos:[8,172] width:136 height:21
 	
 	--Eventos de la utility
 	
 	--Esta función se llama al pulsarse sobre el btón ExportMeshButton
 	on UABUtility open do
 	(
-		PathLabel.text = "C:/Users/IBM_ADMIN/Desktop/uabEngines/UABEngine_2_12/bin/Videogame/Data/"--"Path: D://UABEngine/Data"
-		global ExportPath = PathLabel.text
-		local levels=#("","level_1","level_2", "level_3","level_4", "main menu", "select player")
+		
+		--PathLabel.text = "C:/Users/IBM_ADMIN/this_works?/Desktop/uabEngines/UABEngine_2_12/bin/Videogame/Data/auxi/testing/the_size_of_this_labels"--"Path: D://UABEngine/Data"
+		--global ExportPath = PathLabel.text
+		local levels=#("","level1","level2", "level3","level4", "main menu", "select player")
 		LevelList.items=levels
 	)
+	
 	on btnSetPath pressed do
 	(
-		PathLabel.text = ExportPath +LevelList.items[LevelList.selection] +"/"
+		local data_path = getSavePath caption:"Exe path" initialDir:"C:\\" 
+		PathLabel.text = data_path
+		realPath = data_path
+		local filtered = filterString data_path "\\"
+		local idx = 1
+		local auxstring = ""
+		PathLabel.text = auxstring
+		while idx <= filtered.count do (
+			if (filtered[idx].count + auxstring.count) <  22 then (
+				auxstring = auxstring + filtered[idx] + "\\"
+				idx = idx + 1
+			) else (
+				auxstring = auxstring + "\n"
+				PathLabel.text = PathLabel.text + auxstring
+				auxstring = ""
+			)
+		)
+		if auxstring != "" then (
+			PathLabel.text = PathLabel.text + auxstring
+		)
 	)
 	on ExportMeshButton pressed do
 	(
 	--Implementad aquí el código de pulsado de este botón
-	
+		local pathToCopy = realPath + "\\Data\\" + LevelList.items[LevelList.selection] + "\\"
 		--Si CopyTextures checked copia las texturas
 		if CopyTexturesCheck.checked == true then
 		(
 			format "Copiamos \n"
-			CopyTextures PathLabel.text $
+			CopyTextures pathToCopy $
 		)
 		--Si ExportMesh checked exportar el mesh
 		if ExportMeshCheck.checked == true then
 		(
-			ExportStaticMesh true PathLabel.text $
+			ExportStaticMesh true pathToCopy $
 		)
 		else 
 		(
 			-- Exportar solo transformación y posicion
-			ExportStaticMesh false PathLabel.text $
+			ExportStaticMesh false pathToCopy $
 		)
 	)
 	on ExportStaticMeshManagerButton pressed do
 	(
-		ExportStaticMeshManager PathLabel.text
+		local pathToCopy = realPath + "\\Data\\" + LevelList.items[LevelList.selection] + "\\"
+		format "pathToCopy %\n" pathToCopy
+		ExportStaticMeshManager pathToCopy realPath
 		format "Static Mesh Manager Exportado \n"
 	)
 	on btnSetProperties pressed do

@@ -4,34 +4,26 @@ function CopyTextures FilePath Objs =
 	--Explorador de directorio de destino
 	/*	FilePath=getSavePath caption:"Select Data Folder" initialDir:FilePath
 		format "Path updated to: \"%\" \n" FilePath*/
-	if doesFileExist L_Path == false then
-	(
+	if doesFileExist L_Path == false then (
 		makeDir L_Path all:true
 		format "directorio % creado \n" L_Path
 	)
 	--)
-	if FilePath!=undefined then 
-	(		
+	if FilePath!=undefined then (		
 		--local out_name=GetSaveFileName filename:(GetMeshesPathExport L_Path/*()*/+$.name+".mesh") caption:"Select output file to export file" types:" mesh(*.mesh)|*.mesh|All Files(*.*)|*.*|"
 		local TexturesArray = GetTextures Objs
-		for i=1 to TexturesArray.count do
-		(
+		for i=1 to TexturesArray.count do (
 			format "% \n" TexturesArray[i]
-			if TexturesArray[i]!=undefined then
-			(
+			if TexturesArray[i]!=undefined then (
 				FileName = filenameFromPath TexturesArray[i]
 				FilePathName = L_Path + FileName
 				format "Copy file Name: \"%\" \n" FilePathName
-				if doesFileExist FilePathName then
-				(
-					if (queryBox "File already exists in destination folder. Override?" title: "File alreay exists" true) == true then
-					(
+				if doesFileExist FilePathName then (
+					if (queryBox "File already exists in destination folder. Override?" title: "File alreay exists" true) == true then (
 						deleteFile FilePathName
 						copyFile TexturesArray[i] FilePathName
 					)
-				)
-				else
-				(
+				) else (
 					copyFile TexturesArray[i] FilePathName
 				)
 			)
@@ -39,7 +31,7 @@ function CopyTextures FilePath Objs =
 	)
 )
 
-function ExportStaticMeshManager FilePath =
+function ExportStaticMeshManager FilePath AbsPath=
 (
 	local file=createfile (FilePath + "static_mesh_manager.xml")
 	
@@ -51,12 +43,14 @@ function ExportStaticMeshManager FilePath =
 		local arrayCores = GetObjectCores $
 		for i = 1 to arrayCores.count do
 		(
-			MeshFile = GetMeshesPathExport FilePath/*()*/+arrayCores[i].name+".mesh"
+			local pathaux = GetMeshesPathExport FilePath AbsPath
+			MeshFile = pathaux + arrayCores[i].name + ".mesh"
 			format "\t<static_mesh name=\"%\" filename=\"%\">\n" arrayCores[i].name MeshFile to:file
 		)
 	)else
 	(
-		MeshFile = GetMeshesPathExport FilePath/*()*/+$.name+".mesh"
+		local pathaux = GetMeshesPathExport FilePath AbsPath
+		MeshFile = pathaux + $.name + ".mesh"
 		format "\t<static_mesh name=\"%\" filename=\"%\">\n" $.name MeshFile to:file
 	)
 	format "</static_meshes>\n" to:file
@@ -102,11 +96,11 @@ function ExportStaticMesh ExportMeshCheck FilePath Obj=
 	close file
 )
 
-function GetMeshesPathExport FilePath =
+function GetMeshesPathExport FilePath AbsPath =
 (
-	local IndexData = findstring FilePath "/Data"
-	llalalal = substring FilePath IndexData FilePath.count
-	return substring FilePath IndexData FilePath.count
+	local newPath= pathConfig.convertPathToRelativeTo FilePath AbsPath
+	format "test %\n" newPath
+	return newPath
 )
 
 function GetObjectCores Objs = 
@@ -148,20 +142,28 @@ function GetObjectCores Objs =
 function GetTextures Objs =
 (
 	local arrayTextures = #()
-	if(classof Objs)== ObjectSet then
-	(
-		for i=1 to Objs.count do
-		(
-			if Objs[i].material != undefined then
-			(
-				append arrayTextures Objs[i].material.diffuseMap.filename
+	if(classof Objs)== ObjectSet then (
+		for i=1 to Objs.count do (
+			if Objs[i].material != undefined then (
+				if classof(Objs.material) == Multimaterial then (
+					for i = 1 to Objs.material.numsubs do (
+						append arrayTextures  Objs.material[i].diffuseMap.bitmap.filename
+					)
+				) else (					
+					append arrayTextures Objs.material.diffuseMap.bitmap.filename
+				)
 			)
 		)
+	) else (
+		if classof(Objs.material) == Multimaterial then (
+			for i = 1 to Objs.material.numsubs do (
+				append arrayTextures  Objs.material[i].diffuseMap.bitmap.filename
+			)
+		) else (					
+			append arrayTextures Objs.material.diffuseMap.bitmap.filename
+		)
 	)
-	else
-	(
-		append arrayTextures Objs.material.diffuseMap.filename
-	)
+	format "Textures to copy %\n" arrayTextures
 	return arrayTextures
 )
 
