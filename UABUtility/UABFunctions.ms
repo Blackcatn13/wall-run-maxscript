@@ -33,6 +33,10 @@ function CopyTextures FilePath Objs =
 
 function ExportStaticMeshManager FilePath AbsPath=
 (
+	if doesFileExist FilePath == false then (
+		makeDir FilePath all:true
+		format "directorio % creado \n" FilePath
+	)
 	local file=createfile (FilePath + "static_mesh_manager.xml")
 	
 	-- Para escribir sobre el fichero de tipo carácter stream utilizando la función format
@@ -61,39 +65,59 @@ function ExportStaticMeshManager FilePath AbsPath=
 
 function ExportStaticMesh ExportMeshCheck FilePath Obj=
 (
+	if doesFileExist FilePath == false then (
+		makeDir FilePath all:true
+		format "directorio % creado \n" FilePath
+	)
+	
 	local file=createfile (FilePath + "renderable_objects.xml")
 	-- Para escribir sobre el fichero de tipo carácter stream utilizando la función format
 	format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:file
 	format "<renderable_objects>\n" to:file
 	
-	if (classof $)==ObjectSet then
+	if (classof Obj)==ObjectSet then
 	(
-		local arrayCores = GetObjectCores $
+		local arrayCores = GetObjectCores Obj
 		for i = 1 to arrayCores.count do
 		(
-			local YawAngle=GetYaw $[i].transform
-			local PitchAngle= GetPitch $[i].transform
-			local RollAngle= GetRoll $[i].transform
-			local Translation=$[i].transform.translation
-			local ObjScale=$[i].scale
-			if ExportMeshCheck == true then
-			(
-				format "\t<mesh_instance name=\"%\" core=\"%\" pos=\"%\" yaw=\"%\" pitch=\"%\" roll=\"%\" scale=\"%\" />\n" $[i].name "CoreObject" Translation YawAngle PitchAngle RollAngle ObjScale to:file
-			)
-			else
-			(
-				format "\t<mesh_instance name=\"%\" pos=\"%\" yaw=\"%\" pitch=\"%\" roll=\"%\" scale=\"%\" />\n"  $[i].name Translation YawAngle PitchAngle RollAngle ObjScale  to:file
-			)
+			ExportRenderableObjects ExportMeshCheck Obj[i] file (FilePath + "/Meshes")
 		)
 		
 	)
 	else
 	(
 		--TODO que pasa si solo hay un objeto seleccionado?
+		ExportRenderableObjects ExportMeshCheck Obj file (FilePath + "/Meshes")
 	)
 	format "</renderable_objects>\n" to:file
 	-- Para cerrar el fichero de tipo carácter stream
 	close file
+)
+
+function ExportRenderableObjects ExportChecked Obj File MeshPath =
+(
+	local YawAngle=GetYaw Obj.transform
+	local PitchAngle= GetPitch Obj.transform
+	local RollAngle= GetRoll Obj.transform
+	local Translation=Obj.transform.translation
+	local ObjScale=Obj.scale
+	if ExportChecked == true then
+	(
+		--Exportamos el .mesh
+		if doesFileExist MeshPath == false then
+		(
+			makeDir MeshPath all:true
+		)
+		ExportMesh Obj (MeshPath +"\\"+Obj.name+".mesh")  
+		messageBox "mesh exportado"
+				
+		format "\t<mesh_instance name=\"%\" core=\"%\" pos=\"%\" yaw=\"%\" pitch=\"%\" roll=\"%\" scale=\"%\" />\n" Obj.name "CoreObject" Translation YawAngle PitchAngle RollAngle ObjScale to:File
+	)
+	else
+	(
+		format "\t<mesh_instance name=\"%\" pos=\"%\" yaw=\"%\" pitch=\"%\" roll=\"%\" scale=\"%\" />\n"  Obj.name Translation YawAngle PitchAngle RollAngle ObjScale  to:File
+	)	
+	
 )
 
 function GetMeshesPathExport FilePath AbsPath =
