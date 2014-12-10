@@ -66,8 +66,10 @@ utility UABUtility "UAB Utility" width:152 height:360
 			format "Copiamos \n"
 			CopyTextures pathToCopy $
 		)
+		format "name is %\n" (pathToCopy + $.name + ".mesh")
+		ExportMesh $  (pathToCopy + $.name + ".mesh") realPath
 		--Si ExportMesh checked exportar el mesh
-		if ExportMeshCheck.checked == true then
+		/*if ExportMeshCheck.checked == true then
 		(
 			ExportStaticMesh true pathToCopy $
 		)
@@ -75,7 +77,7 @@ utility UABUtility "UAB Utility" width:152 height:360
 		(
 			-- Exportar solo transformación y posicion
 			ExportStaticMesh false pathToCopy $
-		)
+		)*/
 	)
 	on ExportStaticMeshManagerButton pressed do
 	(

@@ -1,4 +1,4 @@
-function ExportMesh Obj filename =
+function ExportMesh Obj filename file =
 (
 	local l_NumMaterials 
 	local l_Vtxs = #()
@@ -9,9 +9,10 @@ function ExportMesh Obj filename =
 
 	
 	-- Obtener numero de materiales del objeto
-	
+	local ismult = false
 	if classof(Obj.material) == Multimaterial then 
 	(  
+		ismult = true
 		format "el objeto tiene aplicado un multimaterial\n"
 		l_NumMaterials = Obj.material.numsubs
 	) else 
@@ -22,12 +23,18 @@ function ExportMesh Obj filename =
 	
 	
 	WriteShort file l_NumMaterials #unsigned
-	for i = 1 to l_NumMaterials do
-	(
+	if ismult then (
+		for i = 1 to l_NumMaterials do
+		(
+			WriteShort file 0x13 #unsigned --poner mascara
+			WriteShort file 1 #unsigned --numero texturas
+			ExportMaterial Obj.material[i] file
+		)
+	) else (
 		WriteShort file 0x13 #unsigned --poner mascara
 		WriteShort file 1 #unsigned --numero texturas
-		ExportMaterial Obj.material[i] file
-	)	
+		ExportMaterial Obj.material file
+	)
 	
 	GenerateVertexs Obj l_Vtxs l_Idxs
 	for idMaterial = 1 to l_NumMaterials do
@@ -56,17 +63,9 @@ function ExportMaterial _Material File =
 	for  i=1 to 1 do --numero de texturas
 	(
 		local fileName 
-		local arrayProps = getPropNames _Material
-		if arrayProps.count = 0 then
-		(
-			fileName = (openBitMap _Material.diffuseMap.bitmap.filename).fileName 
-		)
-		else
-		(
-			fileName = (openBitMap _Material.material.diffuseMap.bitmap.filename).fileName
-		)
+		fileName = (openBitMap _Material.diffuseMap.bitmap.filename).fileName 
 		format "path %\n" filename
-		local relPath = pathConfig.convertPathToRelativeTo fileName "C:\\users\\marc\desktop\UABEngine\UABEngine\bin\Videogame\\"
+		local relPath = pathConfig.convertPathToRelativeTo fileName File
 		format "rel path %\n" relPath
 		local numChars = relPath.count
 		WriteShort File numChars #unsigned
