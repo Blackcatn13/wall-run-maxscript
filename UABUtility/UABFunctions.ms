@@ -37,7 +37,7 @@ function ExportStaticMeshManager FilePath AbsPath=
 		makeDir FilePath all:true
 		format "directorio % creado \n" FilePath
 	)
-	local file=createfile (FilePath + "static_mesh_manager.xml")
+	local file=createfile (FilePath + "static_meshes.xml")
 	
 	-- Para escribir sobre el fichero de tipo carácter stream utilizando la función format
 	format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:file
@@ -48,13 +48,13 @@ function ExportStaticMeshManager FilePath AbsPath=
 		for i = 1 to arrayCores.count do
 		(
 			local pathaux = GetMeshesPathExport FilePath AbsPath
-			MeshFile = pathaux + arrayCores[i].name + ".mesh"
+			MeshFile = pathaux + "meshes//" + arrayCores[i].name + ".mesh"
 			format "\t<static_mesh name=\"%\" filename=\"%\">\n" arrayCores[i].name MeshFile to:file
 		)
 	)else
 	(
 		local pathaux = GetMeshesPathExport FilePath AbsPath
-		MeshFile = pathaux + $.name + ".mesh"
+		MeshFile = pathaux + "meshes//" + $.name + ".mesh"
 		format "\t<static_mesh name=\"%\" filename=\"%\">\n" $.name MeshFile to:file
 	)
 	format "</static_meshes>\n" to:file

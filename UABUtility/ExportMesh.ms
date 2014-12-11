@@ -1,5 +1,10 @@
-function ExportMesh Obj filename file =
+function ExportMesh Obj filepath _filename _file copy_textures=
 (
+	if doesFileExist (filepath + "meshes//") == false then (
+		makeDir (filepath + "meshes//") all:true
+		format "directorio % creado \n" filepath
+	)
+	local filename = filepath + "meshes//" + _filename
 	local l_NumMaterials 
 	local l_Vtxs = #()
 	local l_Idxs = #()
@@ -28,12 +33,12 @@ function ExportMesh Obj filename file =
 		(
 			WriteShort file 0x13 #unsigned --poner mascara
 			WriteShort file 1 #unsigned --numero texturas
-			ExportMaterial Obj.material[i] file
+			ExportMaterial Obj.material[i] file _file filepath copy_textures
 		)
 	) else (
 		WriteShort file 0x13 #unsigned --poner mascara
 		WriteShort file 1 #unsigned --numero texturas
-		ExportMaterial Obj.material file
+		ExportMaterial Obj.material file _file filepath copy_textures
 	)
 	
 	GenerateVertexs Obj l_Vtxs l_Idxs
@@ -57,15 +62,40 @@ function ExportMesh Obj filename file =
 	fclose file
 )
 
-function ExportMaterial _Material File =
+function ExportMaterial _Material File _file FilePath copy_textures=
 (
 	format "[ExportMaterial] mat name %\n" _Material
 	for  i=1 to 1 do --numero de texturas
 	(
-		local fileName 
-		fileName = (openBitMap _Material.diffuseMap.bitmap.filename).fileName 
-		format "path %\n" filename
-		local relPath = pathConfig.convertPathToRelativeTo fileName File
+		local _filename = (openBitMap _Material.diffuseMap.bitmap.filename).fileName 
+		
+		---------------------------------------
+		if copy_textures then (
+			local L_Path =  FilePath+"textures/"
+			if doesFileExist L_Path == false then (
+				makeDir L_Path all:true
+				format "directorio % creado \n" L_Path
+			)
+			if FilePath!=undefined then (		
+				--local out_name=GetSaveFileName filename:(GetMeshesPathExport L_Path/*()*/+$.name+".mesh") caption:"Select output file to export file" types:" mesh(*.mesh)|*.mesh|All Files(*.*)|*.*|"
+				FileName = filenameFromPath _filename
+				FilePathName = L_Path + FileName
+				format "Copy file Name: \"%\" \n" FilePathName
+				if doesFileExist FilePathName then (
+					if (queryBox "File already exists in destination folder. Override?" title: "File alreay exists" true) == true then (
+						deleteFile FilePathName
+						copyFile _filename FilePathName
+					)
+				) else (
+					copyFile _filename FilePathName
+				)
+			)
+		)
+		-----------------------------------------------
+		
+		format "path %\n" _filename
+		format "path to cut %\n" _file
+		local relPath = pathConfig.convertPathToRelativeTo FilePathName _file
 		format "rel path %\n" relPath
 		local numChars = relPath.count
 		WriteShort File numChars #unsigned

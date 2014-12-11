@@ -35,6 +35,7 @@ utility UABUtility "UAB Utility" width:152 height:360
 	
 	on btnSetPath pressed do
 	(
+		-- TODO, si el filtered[idx].count > 22 peta
 		local data_path = getSavePath caption:"Exe path" initialDir:"C:\\" 
 		PathLabel.text = data_path
 		realPath = data_path
@@ -61,13 +62,13 @@ utility UABUtility "UAB Utility" width:152 height:360
 	--Implementad aquí el código de pulsado de este botón
 		local pathToCopy = realPath + "\\Data\\" + LevelList.items[LevelList.selection] + "\\"
 		--Si CopyTextures checked copia las texturas
-		if CopyTexturesCheck.checked == true then
+		/*if CopyTexturesCheck.checked == true then
 		(
 			format "Copiamos \n"
 			CopyTextures pathToCopy $
-		)
-		format "name is %\n" (pathToCopy + $.name + ".mesh")
-		ExportMesh $  (pathToCopy + $.name + ".mesh") realPath
+		)*/
+		format "name is %\n" (pathToCopy + "meshes\\" + $.name + ".mesh")
+		ExportMesh $  pathToCopy ($.name + ".mesh") realPath true
 		--Si ExportMesh checked exportar el mesh
 		/*if ExportMeshCheck.checked == true then
 		(
@@ -82,6 +83,17 @@ utility UABUtility "UAB Utility" width:152 height:360
 	on ExportStaticMeshManagerButton pressed do
 	(
 		local pathToCopy = realPath + "\\Data\\" + LevelList.items[LevelList.selection] + "\\"
+		if (ExportMeshCheck.checked and CopyTexturesCheck.checked) then (
+			ExportMesh $  pathToCopy ($.name + ".mesh") realPath true
+		) else (
+			if ExportMeshCheck.checked then (
+				ExportMesh $  pathToCopy ($.name + ".mesh") realPath false
+			)
+			if CopyTexturesCheck.checked then (
+				CopyTextures pathToCopy $
+			)
+		)
+
 		format "pathToCopy %\n" pathToCopy
 		ExportStaticMeshManager pathToCopy realPath
 		format "Static Mesh Manager Exportado \n"
