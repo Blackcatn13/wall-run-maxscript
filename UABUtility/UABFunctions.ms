@@ -49,13 +49,13 @@ function ExportStaticMeshManager FilePath AbsPath=
 		(
 			local pathaux = GetMeshesPathExport FilePath AbsPath
 			MeshFile = pathaux + "meshes//" + arrayCores[i].name + ".mesh"
-			format "\t<static_mesh name=\"%\" filename=\"%\">\n" arrayCores[i].name MeshFile to:file
+			format "\t<static_mesh name=\"%\" filename=\"%\"/>\n" arrayCores[i].name MeshFile to:file
 		)
 	)else
 	(
 		local pathaux = GetMeshesPathExport FilePath AbsPath
 		MeshFile = pathaux + "meshes//" + $.name + ".mesh"
-		format "\t<static_mesh name=\"%\" filename=\"%\">\n" $.name MeshFile to:file
+		format "\t<static_mesh name=\"%\" filename=\"%\"/>\n" $.name MeshFile to:file
 	)
 	format "</static_meshes>\n" to:file
 	-- Para cerrar el fichero de tipo carácter stream

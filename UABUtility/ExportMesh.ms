@@ -70,8 +70,8 @@ function ExportMaterial _Material File _file FilePath copy_textures=
 		local _filename = (openBitMap _Material.diffuseMap.bitmap.filename).fileName 
 		
 		---------------------------------------
+		local L_Path =  FilePath+"textures/"
 		if copy_textures then (
-			local L_Path =  FilePath+"textures/"
 			if doesFileExist L_Path == false then (
 				makeDir L_Path all:true
 				format "directorio % creado \n" L_Path
@@ -95,7 +95,14 @@ function ExportMaterial _Material File _file FilePath copy_textures=
 		
 		format "path %\n" _filename
 		format "path to cut %\n" _file
-		local relPath = pathConfig.convertPathToRelativeTo FilePathName _file
+		local relPath 
+		if copy_textures then (
+			relPath = pathConfig.convertPathToRelativeTo FilePathName _file
+		) else (
+			FileName = filenameFromPath _filename
+			FilePathName = L_Path + FileName
+			relPath = pathConfig.convertPathToRelativeTo FilePathName _file
+		)
 		format "rel path %\n" relPath
 		local numChars = relPath.count
 		WriteShort File numChars #unsigned

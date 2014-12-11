@@ -44,10 +44,15 @@ utility UABUtility "UAB Utility" width:152 height:360
 		local auxstring = ""
 		PathLabel.text = auxstring
 		while idx <= filtered.count do (
+			
 			if (filtered[idx].count + auxstring.count) <  22 then (
 				auxstring = auxstring + filtered[idx] + "\\"
 				idx = idx + 1
 			) else (
+				if filtered[idx].count > 22 then (
+					auxstring = auxstring + filtered[idx] + "\\"
+					idx = idx + 1
+				)
 				auxstring = auxstring + "\n"
 				PathLabel.text = PathLabel.text + auxstring
 				auxstring = ""
