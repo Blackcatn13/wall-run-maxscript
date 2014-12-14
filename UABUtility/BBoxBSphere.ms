@@ -71,5 +71,5 @@ fn BoundingSphere Obj =
 
 --Dibujar esfera para probar
 
-BSphere = BoundingSphere $
-mySphere = sphere radius:BSphere[4] position: [BSphere[1],BSphere[2],BSphere[3]] xray: on
+/*BSphere = BoundingSphere $
+mySphere = sphere radius:BSphere[4] position: [BSphere[1],BSphere[2],BSphere[3]] xray: on*/
