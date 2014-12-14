@@ -65,12 +65,11 @@ fn BoundingSphere Obj =
 	)
 	format "BSRadius : % \n" BSRadius
 	
-	return #(BSRadius, BSCenter[1], BSCenter[2], BSCenter[3])
+	return #(BSCenter[1], BSCenter[2], BSCenter[3], BSRadius)
 	
 )
 
 --Dibujar esfera para probar
 
-/*BSphere = BoundingSphere $
-mySphere = sphere radius:BSphere[1] position: [BSphere[2],BSphere[3],BSphere[4]] xray: on
-*/
+BSphere = BoundingSphere $
+mySphere = sphere radius:BSphere[4] position: [BSphere[1],BSphere[2],BSphere[3]] xray: on

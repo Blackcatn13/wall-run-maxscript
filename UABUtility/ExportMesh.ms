@@ -68,7 +68,7 @@ function ExportMesh Obj filepath _filename _file copy_textures=
 	BSphere = BoundingSphere Obj
 	for BSIndex = 1 to BSphere.count do
 	(
-		WriteFloat file BSphere[BSIndex] --radius, center.x, center.y, center.z
+		WriteFloat file BSphere[BSIndex] -- center.x, center.y, center.z, radius
 	)
 	
 	
