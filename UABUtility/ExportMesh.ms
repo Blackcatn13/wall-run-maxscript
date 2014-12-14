@@ -1,3 +1,5 @@
+fileIn "BBoxBSphere.ms"
+
 function ExportMesh Obj filepath _filename _file copy_textures=
 (
 	if doesFileExist (filepath + "meshes//") == false then (
@@ -55,6 +57,20 @@ function ExportMesh Obj filepath _filename _file copy_textures=
 		WriteShort file numIndexes #unsigned
 		ExportIndexs l_Idxs file idMaterial
 	)
+	
+	--Exportar BoundingBox y BoundingSphere
+	BBox = BoundingBox Obj
+	for BBIndex = 1 to BBox.count do
+	(
+		WriteFloat file BBox[BBIndex] --x,y,z min, x,y,z max
+	)
+	
+	BSphere = BoundingSphere Obj
+	for BSIndex = 1 to BSphere.count do
+	(
+		WriteFloat file BSphere[BSIndex] --radius, center.x, center.y, center.z
+	)
+	
 	
 	WriteShort file 0xff55 #unsigned
 	
@@ -264,4 +280,4 @@ function GenerateVertexs Obj vtxs idxs=
 	)
 )
 
---ExportMesh $ "C:\\exported.mesh"
+--ExportMesh $ "C:\\" "exported.mesh" unkownargument false
