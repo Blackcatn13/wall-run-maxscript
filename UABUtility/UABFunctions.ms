@@ -37,29 +37,38 @@ function ExportStaticMeshManager FilePath AbsPath=
 		makeDir FilePath all:true
 		format "directorio % creado \n" FilePath
 	)
-	local file=createfile (FilePath + "static_meshes.xml")
-	
-	-- Para escribir sobre el fichero de tipo carácter stream utilizando la función format
-	format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:file
-	format "<static_meshes>\n" to:file
-	if (classof $)==ObjectSet then
-	(
-		local arrayCores = GetObjectCores $
-		for i = 1 to arrayCores.count do
+	local file
+	try(
+		 file=createfile (FilePath + "static_meshes.xml")
+		
+		-- Para escribir sobre el fichero de tipo carácter stream utilizando la función format
+		format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:file
+		format "<static_meshes>\n" to:file
+		if (classof $)==ObjectSet then
+		(
+			local arrayCores = GetObjectCores $
+			for i = 1 to arrayCores.count do
+			(
+				local pathaux = GetMeshesPathExport FilePath AbsPath
+				MeshFile = pathaux + "meshes//" + arrayCores[i].name + ".mesh"
+				format "\t<static_mesh name=\"%\" filename=\"%\"/>\n" arrayCores[i].name MeshFile to:file
+			)
+		)else
 		(
 			local pathaux = GetMeshesPathExport FilePath AbsPath
-			MeshFile = pathaux + "meshes//" + arrayCores[i].name + ".mesh"
-			format "\t<static_mesh name=\"%\" filename=\"%\"/>\n" arrayCores[i].name MeshFile to:file
+			MeshFile = pathaux + "meshes//" + $.name + ".mesh"
+			format "\t<static_mesh name=\"%\" filename=\"%\"/>\n" $.name MeshFile to:file
 		)
-	)else
+		format "</static_meshes>\n" to:file
+		-- Para cerrar el fichero de tipo carácter stream
+		close file
+	)catch
 	(
-		local pathaux = GetMeshesPathExport FilePath AbsPath
-		MeshFile = pathaux + "meshes//" + $.name + ".mesh"
-		format "\t<static_mesh name=\"%\" filename=\"%\"/>\n" $.name MeshFile to:file
+		close file
+		errorStr = getCurrentException() 
+		format "Exception in ExportStaticMeshManager: % \n" errorStr
+		
 	)
-	format "</static_meshes>\n" to:file
-	-- Para cerrar el fichero de tipo carácter stream
-	close file
 	return true
 )
 
@@ -69,29 +78,38 @@ function ExportStaticMesh ExportMeshCheck FilePath Obj=
 		makeDir FilePath all:true
 		format "directorio % creado \n" FilePath
 	)
-	
-	local file=createfile (FilePath + "renderable_objects.xml")
-	-- Para escribir sobre el fichero de tipo carácter stream utilizando la función format
-	format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:file
-	format "<renderable_objects>\n" to:file
-	
-	if (classof Obj)==ObjectSet then
-	(
-		local arrayCores = GetObjectCores Obj
-		for i = 1 to arrayCores.count do
+	local file
+	try(
+		file=createfile (FilePath + "renderable_objects.xml")
+		-- Para escribir sobre el fichero de tipo carácter stream utilizando la función format
+		format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:file
+		format "<renderable_objects>\n" to:file
+		
+		if (classof Obj)==ObjectSet then
 		(
-			ExportRenderableObjects ExportMeshCheck Obj[i] file (FilePath + "/Meshes")
+			local arrayCores = GetObjectCores Obj
+			for i = 1 to arrayCores.count do
+			(
+				ExportRenderableObjects ExportMeshCheck Obj[i] file (FilePath + "/Meshes")
+			)
+			
 		)
+		else
+		(
+			--TODO que pasa si solo hay un objeto seleccionado?
+			ExportRenderableObjects ExportMeshCheck Obj file (FilePath + "/Meshes")
+		)
+		format "</renderable_objects>\n" to:file
+		-- Para cerrar el fichero de tipo carácter stream
+		close file
+	)
+	catch
+	(
+		close file
+		errorStr = getCurrentException() 
+		format "Exception in ExportStaticMesh: % \n" errorStr
 		
 	)
-	else
-	(
-		--TODO que pasa si solo hay un objeto seleccionado?
-		ExportRenderableObjects ExportMeshCheck Obj file (FilePath + "/Meshes")
-	)
-	format "</renderable_objects>\n" to:file
-	-- Para cerrar el fichero de tipo carácter stream
-	close file
 )
 
 function ExportRenderableObjects ExportChecked Obj File MeshPath =
@@ -141,21 +159,24 @@ function GetObjectCores Objs =
 			(
 				format "% Solo tiene una instancia \n" Objs[i]
 				append arrayCores Objs[i]
-			)else --Si tiene más de una instancia mirar entre todos los objetos y añadir solo el primero de ellos
+			)else 
 			(
-			
-			/*	TODO
-				for j = 1 to Objs.count do
+			-- Recorrer arrayCores
+				-- Si Obj[i] no es instancia de ninguno de los elementos del vector se añade si no existe ya
+				addToArrayCores = true
+				for arrayCoresIndex = 1 to arrayCores.count do
 				(
-					format "bucle instances \n"
-					
-					if areNodesInstances Objs[i] Objs[j] == false then
+					if (areNodesInstances Objs[i] arrayCores[arrayCoresIndex]) = true or (Objs[i].name == arrayCores[arrayCoresIndex].name) then
 					(
-						append arrayCores Objs[i]
-						format "Elemento insertado: % \n" arrayCores Objs[i]
-						break
+						addToArrayCores = false
 					)
-				)*/
+				)
+				-- Si se cumplen las condiciones se añade
+				if addToArrayCores == true then
+				(
+					append arrayCores Objs[i]
+				)
+			
 			)
 		)
 	)
