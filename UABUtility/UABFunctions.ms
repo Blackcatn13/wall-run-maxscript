@@ -215,3 +215,32 @@ function GetScale _scale =
 	return point3 _scale.x _scale.z _scale.y
 )
 
+
+/***Catch functions*************/
+fn CloneObjects Objs StrError = 
+(
+
+	--Clonar objeto/s como Core o instance segun sea (Si no se especifica lo contrario se copia como sea)
+		maxOps.cloneNodes (Objs) cloneType:#instance newNodes:&nnl #nodialog
+		for i = 1 to nnl.count do
+		(
+			if(classof Objs) == ObjectSet then
+				nnl[i].name = (Objs[i].name +"_MeshCopy")
+			else
+				nnl[i].name = (Objs.name +"_MeshCopy")
+		format "Object % created \n" nnl[i].name
+		convertToMesh nnl[i]
+		)
+		
+	Select nnl	
+	return nnl
+	
+)
+
+fn DeleteClonedObjects ObjArray =
+(
+	for i = 1 to ObjArray.count do
+	(
+		delete ObjArray[i]	
+	)
+)

@@ -58,14 +58,32 @@ function ExportMesh Obj filepath _filename _file copy_textures=
 		ExportIndexs l_Idxs file idMaterial
 	)
 	
+	
 	--Exportar BoundingBox y BoundingSphere
-	BBox = BoundingBox Obj
+	local BBox, BSphere
+	try
+	(
+		BBox = BoundingBox Obj
+		BSphere = BoundingSphere Obj
+	)
+	catch
+	(
+		errorStr = getCurrentException() 
+		if (findString errorStr "Mesh operation on non-mesh") != undefined  then
+		(
+			ClonedObjects = CloneObjects Obj errorStr
+			--Hacer lo que tenga que hacer
+			BBox = BoundingBox ClonedObjects
+			BSphere = BoundingSphere ClonedObjects
+			--Eliminar clones
+			DeleteClonedObjects ClonedObjects
+		)	
+	)
 	for BBIndex = 1 to BBox.count do
 	(
 		WriteFloat file BBox[BBIndex] --x,y,z min, x,y,z max
 	)
 	
-	BSphere = BoundingSphere Obj
 	for BSIndex = 1 to BSphere.count do
 	(
 		WriteFloat file BSphere[BSIndex] -- center.x, center.y, center.z, radius
