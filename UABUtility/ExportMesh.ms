@@ -11,7 +11,8 @@ function ExportMesh Obj filepath _filename _file copy_textures=
 	local l_Vtxs = #()
 	local l_Idxs = #()
 	local file=fopen filename "wb"
-
+	local l_MaterialArray = #()
+	
 	WriteShort file 0x55ff #unsigned
 
 	
@@ -28,19 +29,31 @@ function ExportMesh Obj filepath _filename _file copy_textures=
 		l_NumMaterials = 1 --Obj.material -->Si no es multimaterial solo tiene 1?
 	)
 	
-	
+	l_MaterialArray = CreateMaterialArray Obj
 	WriteShort file l_NumMaterials #unsigned
 	if ismult then (
 		for i = 1 to l_NumMaterials do
 		(
-			WriteShort file 0x13 #unsigned --poner mascara
-			WriteShort file 1 #unsigned --numero texturas
-			ExportMaterial Obj.material[i] file _file filepath copy_textures
+			for matArray = 1 to l_MaterialArray.count do
+			(
+				if l_MaterialArray[matArray] == i then
+				(
+					WriteShort file 0x13 #unsigned --poner mascara
+					WriteShort file 1 #unsigned --numero texturas
+					ExportMaterial Obj.material[i] file _file filepath copy_textures
+				)
+			)
 		)
 	) else (
-		WriteShort file 0x13 #unsigned --poner mascara
-		WriteShort file 1 #unsigned --numero texturas
-		ExportMaterial Obj.material file _file filepath copy_textures
+		for matArray = 1 to l_MaterialArray.count do
+		(
+			if l_MaterialArray[matArray] == i then
+			(
+				WriteShort file 0x13 #unsigned --poner mascara
+				WriteShort file 1 #unsigned --numero texturas
+				ExportMaterial Obj.material file _file filepath copy_textures
+			)
+		)
 	)
 	
 	GenerateVertexs Obj l_Vtxs l_Idxs
@@ -57,7 +70,6 @@ function ExportMesh Obj filepath _filename _file copy_textures=
 		WriteShort file numIndexes #unsigned
 		ExportIndexs l_Idxs file idMaterial
 	)
-	
 	
 	--Exportar BoundingBox y BoundingSphere
 	local BBox, BSphere
@@ -88,7 +100,6 @@ function ExportMesh Obj filepath _filename _file copy_textures=
 	(
 		WriteFloat file BSphere[BSIndex] -- center.x, center.y, center.z, radius
 	)
-	
 	
 	WriteShort file 0xff55 #unsigned
 	
@@ -259,13 +270,14 @@ function CreateFullVertex vtx n tu1 tu2 col tn bn mater=
 function GenerateVertexs Obj vtxs idxs=
 (
 	local numFaces = getNumFaces Obj
-	--format "num faces %\n" numFaces
+	format "num faces %\n" numFaces
 	for face=1 to numFaces do
 	(
+		--format "Processing face number %\n" face
 		local aFace=getFace Obj face
-		local vtx1=getVert Obj aFace.z
-		local vtx2=getVert Obj aFace.y
-		local vtx3=getVert Obj aFace.x
+		local vtx1=(getVert Obj aFace.z) * inverse Obj.transform
+		local vtx2=(getVert Obj aFace.y) * inverse Obj.transform
+		local vtx3=(getVert Obj aFace.x) * inverse Obj.transform
 		
 		local Normal1 = getNormal Obj aFace.z
 		local Normal2 = getNormal Obj aFace.y
@@ -298,4 +310,22 @@ function GenerateVertexs Obj vtxs idxs=
 	)
 )
 
---ExportMesh $ "C:\\" "exported.mesh" unkownargument false
+--Función que genera un array de todos los materiales asignados a los objetos
+function CreateMaterialArray Obj =
+(
+	local array=#()
+
+	for i=1 to (getNumFaces Obj) do 
+	(
+		append array (getFaceMatID Obj i)
+	)
+	for i in array.count to 1 by -1 do
+	(
+		id = findItem array array[i]
+		if (id != i) do deleteItem array i
+	)
+	sort array
+	return array
+)
+
+--ExportMesh $ "C:\\exported.mesh"
