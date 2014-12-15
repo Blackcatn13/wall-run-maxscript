@@ -238,9 +238,32 @@ function GetScale _scale =
 
 
 /***Catch functions*************/
-fn CloneObjects Objs StrError = 
-(
 
+fn TryCloneObjects Obj =
+(
+	local ClonedObjects
+		try
+		(
+			if((classof Obj)==ObjectSet) then
+				getVert Obj[1] 1
+			else
+				getVert Obj 1
+		)
+		catch
+		(
+			--errorStr = getCurrentException() 
+			ClonedObjects = CloneObjects Obj
+		)
+		return ClonedObjects
+		
+)
+
+
+fn CloneObjects Objs = 
+(
+	format "Selection % \n" Objs
+	if Objs != undefined then
+	(
 	--Clonar objeto/s como Core o instance segun sea (Si no se especifica lo contrario se copia como sea)
 		maxOps.cloneNodes (Objs) cloneType:#instance newNodes:&nnl #nodialog
 		for i = 1 to nnl.count do
@@ -253,8 +276,13 @@ fn CloneObjects Objs StrError =
 		convertToMesh nnl[i]
 		)
 		
-	Select nnl	
-	return nnl
+		Select nnl	
+		return nnl
+	)
+	else
+	(
+		format "No selected Items \n"
+	)
 	
 )
 

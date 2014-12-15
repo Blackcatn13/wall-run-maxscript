@@ -82,41 +82,79 @@ rollout UABSetProperties "UAB Set Properties" width:280 height:392
 	
 	on SetButton pressed  do
 	(
-		if RenderExportCheckBox.checked then
-		(	
-			SetUserProperty $ "export_type" RenderExportList.items[RenderExportList.selection]
-		)
-		
-		SetUserProperty $ "visible" RenderVisibleCheckBox.checked
-		
-		if LayerCheckBox.checked then
-		(	
-			SetUserProperty $ "export_layer" RenderLayerList.items[RenderLayerList.selection]
-		)
-		
-		if PhysicsGenerateCheckBox.checked then
-		(	
-			SetUserProperty $ "generated_physics" PhysicsGenerateList.items[PhysicsGenerateList.selection]
-		)
-		
-		if PhysicsLayerCheckBox.checked then
-		(	
-			SetUserProperty $ "physics_layer" PhysicsLayerList.items[PhysicsLayerList.selection]
-		)
-		
-		if LogicGenerateCheckBox.checked then
-		(	
-			SetUserProperty $ "generate_logic" LogicGenerateList.items[LogicGenerateList.selection]
-		)
-		
-		if AnimModelText.text != "" or (getUserProp $ "anim_model")!=undefined then
+		if ((classof $) == ObjectSet) then
 		(
-			SetUserProperty $ "anim_model" AnimModelText.text
+			for i = 1 to $.count do
+			(
+				if RenderExportCheckBox.checked then
+				(	
+					SetUserProperty $[i] "export_type" RenderExportList.items[RenderExportList.selection]
+				)
+				
+				SetUserProperty $[i]  "visible" RenderVisibleCheckBox.checked
+				
+				if LayerCheckBox.checked then
+				(	
+					SetUserProperty $[i]  "export_layer" RenderLayerList.items[RenderLayerList.selection]
+				)
+				
+				if PhysicsGenerateCheckBox.checked then
+				(	
+					SetUserProperty $[i]  "generated_physics" PhysicsGenerateList.items[PhysicsGenerateList.selection]
+				)
+				
+				if PhysicsLayerCheckBox.checked then
+				(	
+					SetUserProperty $[i]  "physics_layer" PhysicsLayerList.items[PhysicsLayerList.selection]
+				)
+				
+				if LogicGenerateCheckBox.checked then
+				(	
+					SetUserProperty $[i]  "generate_logic" LogicGenerateList.items[LogicGenerateList.selection]
+				)
+				
+				if AnimModelText.text != "" or (getUserProp $ "anim_model")!=undefined then
+				(
+					SetUserProperty $[i]  "anim_model" AnimModelText.text
+				)
+			)
 		)
-	
+		else
+		(
+			if RenderExportCheckBox.checked then
+			(	
+				SetUserProperty $ "export_type" RenderExportList.items[RenderExportList.selection]
+			)
+				
+			SetUserProperty $ "visible" RenderVisibleCheckBox.checked
+			
+			if LayerCheckBox.checked then
+			(	
+				SetUserProperty $ "export_layer" RenderLayerList.items[RenderLayerList.selection]
+			)
+			
+			if PhysicsGenerateCheckBox.checked then
+			(	
+				SetUserProperty $ "generated_physics" PhysicsGenerateList.items[PhysicsGenerateList.selection]
+			)
+			
+			if PhysicsLayerCheckBox.checked then
+			(	
+				SetUserProperty $ "physics_layer" PhysicsLayerList.items[PhysicsLayerList.selection]
+			)
+			
+			if LogicGenerateCheckBox.checked then
+			(	
+				SetUserProperty $ "generate_logic" LogicGenerateList.items[LogicGenerateList.selection]
+			)
+			
+			if AnimModelText.text != "" or (getUserProp $ "anim_model")!=undefined then
+			(
+				SetUserProperty $ "anim_model" AnimModelText.text
+			)
+		)
 	)
 )
-
 fn GetUserProperty Obj GUIObj StrProperty = 
 (
 	--local message = (classof GUIObj)
