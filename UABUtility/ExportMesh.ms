@@ -30,6 +30,7 @@ function ExportMesh Obj filepath _filename _file copy_textures=
 	)
 	
 	l_MaterialArray = CreateMaterialArray Obj
+	l_NumMaterials = l_MaterialArray.count
 	WriteShort file l_NumMaterials #unsigned
 	if ismult then (
 		for i = 1 to l_NumMaterials do
@@ -61,14 +62,14 @@ function ExportMesh Obj filepath _filename _file copy_textures=
 	(	
 		--format "l_NumMaterials %\n" l_NumMaterials
 		--format "%\n" l_Vtxs
-		local numVertex = l_Vtxs[idMaterial].count
-		local numIndexes = l_Idxs[idMaterial].count
+		local numVertex = l_Vtxs[l_MaterialArray[idMaterial]].count
+		local numIndexes = l_Idxs[l_MaterialArray[idMaterial]].count
 		--format "num vertex = %\n" numVertex
 		--format "num index = %\n" numIndexes
 		WriteShort file numVertex #unsigned
-		ExportVertexs l_Vtxs file idMaterial     --Estos arrays en realiad son tridimensionales [][][]
+		ExportVertexs l_Vtxs file l_MaterialArray[idMaterial]     --Estos arrays en realiad son tridimensionales [][][]
 		WriteShort file numIndexes #unsigned
-		ExportIndexs l_Idxs file idMaterial
+		ExportIndexs l_Idxs file l_MaterialArray[idMaterial]
 	)
 	
 	--Exportar BoundingBox y BoundingSphere
@@ -317,13 +318,14 @@ function CreateMaterialArray Obj =
 
 	for i=1 to (getNumFaces Obj) do 
 	(
-		append array (getFaceMatID Obj i)
+		appendifUnique array (getFaceMatID Obj i)
 	)
-	for i in array.count to 1 by -1 do
+	format "\n--------------------\narray of idexes %\n--------------------------\n" array
+	/*for i in array.count to 1 by -1 do
 	(
 		id = findItem array array[i]
 		if (id != i) do deleteItem array i
-	)
+	)*/
 	sort array
 	return array
 )

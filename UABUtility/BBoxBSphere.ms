@@ -57,7 +57,7 @@ fn BoundingSphere Obj =
 	
 	format "BScenter % \n" BSCenter
 	
-	for i = 1 to $.numVerts do 
+	for i = 1 to Obj.numVerts do 
 	(
 		RadiusDistance = sqrt((((getVert Obj i).x - BSCenter[1])^2) + (((getVert Obj i).y - BSCenter[2])^2) + (((getVert Obj i).z - BSCenter[3])^2))
 		if RadiusDistance > BSRadius then
