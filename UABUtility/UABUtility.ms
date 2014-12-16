@@ -64,6 +64,9 @@ utility UABUtility "UAB Utility" width:152 height:411
 		if auxstring != "" then (
 			PathLabel.text = PathLabel.text + auxstring
 		)
+		format "==============================\n"
+		format "Path set correctly\n"
+		format "==============================\n"
 	)
 	on ExportMeshButton pressed do
 	(
@@ -72,14 +75,21 @@ utility UABUtility "UAB Utility" width:152 height:411
 		if $ != undefined then (
 			format "name is %\n" (pathToCopy + "meshes\\" + $.name + ".mesh")
 			ExportMesh $  pathToCopy ($.name + ".mesh") realPath true
+			format "==============================\n"
+			format "Mesh exported correctly\n"
+			format "==============================\n"
 		) else (
 			messageBox "No hi ha res seleccionat, no es pot exportar." title:"NO SELECTION"
 		)
+
 	)
 	on ExportSceneButton pressed do
 	(
 		local pathToCopy = realPath + "\\Data\\" + LevelList.items[LevelList.selection] + "\\"
-		ExportStaticMesh pathToCopy realPath 
+		ExportStaticMesh pathToCopy realPath
+		format "==============================\n"
+		format "Full scene exported correctly\n"
+		format "==============================\n"
 	)
 	on ExportStaticMeshManagerButton pressed do
 	(
@@ -87,7 +97,9 @@ utility UABUtility "UAB Utility" width:152 height:411
 	
 		format "pathToCopy %\n" pathToCopy
 		ExportStaticMeshManager $ pathToCopy realPath CopyTexturesCheck.checked ExportMeshCheck.checked
-		format "Static Mesh Manager Exportado \n"
+		format "==============================\n"
+		format "Static meshes exported correctly\n"
+		format "==============================\n"
 	)
 	on ExportAnimatedMeshManagerButton pressed do
 	(
