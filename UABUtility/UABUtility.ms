@@ -40,33 +40,35 @@ utility UABUtility "UAB Utility" width:152 height:411
 	(
 		-- TODO, si el filtered[idx].count > 22 peta
 		local data_path = getSavePath caption:"Exe path" initialDir:"C:\\" 
-		PathLabel.text = data_path
-		realPath = data_path
-		local filtered = filterString data_path "\\"
-		local idx = 1
-		local auxstring = ""
-		PathLabel.text = auxstring
-		while idx <= filtered.count do (
-			
-			if (filtered[idx].count + auxstring.count) <  22 then (
-				auxstring = auxstring + filtered[idx] + "\\"
-				idx = idx + 1
-			) else (
-				if filtered[idx].count > 22 then (
+		if data_path != undefined then (
+			PathLabel.text = data_path
+			realPath = data_path
+			local filtered = filterString data_path "\\"
+			local idx = 1
+			local auxstring = ""
+			PathLabel.text = auxstring
+			while idx <= filtered.count do (
+				
+				if (filtered[idx].count + auxstring.count) <  22 then (
 					auxstring = auxstring + filtered[idx] + "\\"
 					idx = idx + 1
+				) else (
+					if filtered[idx].count > 22 then (
+						auxstring = auxstring + filtered[idx] + "\\"
+						idx = idx + 1
+					)
+					auxstring = auxstring + "\n"
+					PathLabel.text = PathLabel.text + auxstring
+					auxstring = ""
 				)
-				auxstring = auxstring + "\n"
+			) 
+			if auxstring != "" then (
 				PathLabel.text = PathLabel.text + auxstring
-				auxstring = ""
 			)
-		) 
-		if auxstring != "" then (
-			PathLabel.text = PathLabel.text + auxstring
+			format "==============================\n"
+			format "Path set correctly\n"
+			format "==============================\n"
 		)
-		format "==============================\n"
-		format "Path set correctly\n"
-		format "==============================\n"
 	)
 	on ExportMeshButton pressed do
 	(
