@@ -95,6 +95,64 @@ function ExportStaticMeshManager objs FilePath AbsPath copyTexts expMesh=
 	return true
 )
 
+--Exportar Animated Meshed creando su XML y .mesh
+function ExportAnimMeshManager objs FilePath AbsPath copyTexts expMesh=
+(
+	if objs == undefined or objs.count == 0 then (
+		messageBox "No hi ha res animat seleccionat, no es pot exportar." title:"NO SELECTION"
+	) else (
+		if doesFileExist FilePath == false then (
+			makeDir FilePath all:true
+			format "directorio % creado \n" FilePath
+		)
+		local file=createfile (FilePath + "animated_models.xml")
+		
+		-- Para escribir sobre el fichero de tipo carácter stream utilizando la función format
+		format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:file
+		format "<animated_models>\n" to:file
+		if objs.count > 1 then
+		(
+			local arrayCores = GetObjectCores objs
+			for i = 1 to arrayCores.count do
+			(
+				local pathaux = GetMeshesPathExport FilePath AbsPath
+				MeshFile = pathaux + "meshes//" + arrayCores[i].name + ".mesh"
+				format "\t<animated_model name=\"%\" filename=\"%\"/>\n" arrayCores[i].name MeshFile to:file
+				if (expMesh and copyTexts) then (
+					ExportMesh arrayCores[i]  FilePath (arrayCores[i].name + ".mesh") realPath true
+				) else (
+					if expMesh then (
+						ExportMesh arrayCores[i]  FilePath (arrayCores[i].name + ".mesh") realPath false
+					)
+					if copyTexts then (
+						CopyTextures FilePath arrayCores[i]
+					)
+				)
+			)
+		) else (
+			local pathaux = GetMeshesPathExport FilePath AbsPath
+			MeshFile = pathaux + "meshes//" + objs[1].name + ".mesh"
+			format "\t<animated_model name=\"%\" filename=\"%\"/>\n" objs[1].name MeshFile to:file
+			if (expMesh and copyTexts) then (
+				ExportMesh objs[1]  FilePath (objs[1].name + ".mesh") realPath true
+			) else (
+				if expMesh then (
+					ExportMesh objs[1]  FilePath (objs[1].name + ".mesh") realPath false
+				)
+				if copyTexts then (
+					format "FilePath is %\n" FilePath
+					format "Object is %\n" objs[1]
+					CopyTextures FilePath objs[1]
+				)
+			)
+		)
+		format "</animated_models>\n" to:file
+		-- Para cerrar el fichero de tipo carácter stream
+		close file
+	)
+	return true
+)
+
 function ExportStaticMesh FilePath realPath=
 (
 	if doesFileExist FilePath == false then (
@@ -140,6 +198,7 @@ function ExportRenderableObjects Obj Core pathToCopy realPath File =
 )
 
 --Exportar Animated Meshed creando su XML y .mesh
+/*
 function ExportAnimMeshManager objs FilePath AbsPath copyTexts expMesh=
 (
 	if objs == undefined then (
@@ -195,7 +254,7 @@ function ExportAnimMeshManager objs FilePath AbsPath copyTexts expMesh=
 		close file
 	)
 	return true
-)
+)*/
 
 function ExportStaticMesh FilePath realPath=
 (

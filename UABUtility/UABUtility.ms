@@ -106,19 +106,33 @@ utility UABUtility "UAB Utility" width:152 height:411
 	on ExportAnimatedMeshManagerButton pressed do
 	(
 		local pathToCopy = realPath + "\\Data\\" + LevelList.items[LevelList.selection] + "\\"
+		local arrayObjs = #()
 		
-		
-			if (getUserProp $ "export_type") == "animated_mesh" then (	
-				if $ != undefined then (
+		if $ != undefined then (
+			if (classof $) == ObjectSet then (
+				for i = 1 to $.count do	(
+					if (getUserProp $[i] "export_type") != "animated_mesh" then (
+						format "L'objecte % no és de tipus Animated Mesh \n" i
+					) else (
+						append arrayObjs $[i]
+					)
+				)
+				format "pathToCopy %\n" pathToCopy
+				ExportAnimMeshManager arrayObjs pathToCopy realPath CopyTexturesCheck.checked ExportMeshCheck.checked
+				format "Animated Mesh Manager Exportado \n"
+			) else (
+				if (getUserProp $ "export_type") == "animated_mesh" then (
+					append arrayObjs $
 					format "pathToCopy %\n" pathToCopy
-					ExportAnimMeshManager $ pathToCopy realPath CopyTexturesCheck.checked ExportMeshCheck.checked
+					ExportAnimMeshManager arrayObjs pathToCopy realPath CopyTexturesCheck.checked ExportMeshCheck.checked
 					format "Animated Mesh Manager Exportado \n"
 				) else (
-					messageBox "No hi ha res seleccionat, no es pot exportar." title:"NO SELECTION"
-				)
-			) else (
 					messageBox "La selecció no és de tipus Animated Mesh." title:"WRONG TYPE"
+				)
 			)
+		) else (
+			messageBox "No hi ha res seleccionat, no es pot exportar." title:"NO SELECTION"
+		)
 	)
 	
 	on btnSetProperties pressed do
