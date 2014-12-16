@@ -376,7 +376,7 @@ fn CloneObjects Objs =
 	if Objs != undefined then
 	(
 	--Clonar objeto/s como Core o instance segun sea (Si no se especifica lo contrario se copia como sea)
-		maxOps.cloneNodes (Objs) cloneType:#instance newNodes:&nnl #nodialog
+		maxOps.cloneNodes (Objs) newNodes:&nnl #nodialog
 		for i = 1 to nnl.count do
 		(
 			if(classof Objs) == ObjectSet or  (classof Objs) == PathName then
