@@ -5,7 +5,7 @@ fileIn "BBoxBSphere.ms"
 
 global realPath
 
-utility UABUtility "UAB Utility" width:152 height:411
+utility UABUtility "UAB Utility" width:152 height:360
 (
 	-- Contenido de la utility
 	button btnSetPath "Set Path" pos:[8,8] width:136 height:28
@@ -18,9 +18,8 @@ utility UABUtility "UAB Utility" width:152 height:411
 	button ExportCameraButton "Camera" pos:[16,244] width:56 height:16
 	button ExportSceneButton "Scene" pos:[16,316] width:120 height:16
 	button ExportStaticMeshManagerButton "Static Mesh Manager" pos:[16,268] width:120 height:16
-	button ExportAnimatedMeshManagerButton "Anim Mesh Manager" pos:[16,292] width:120 height:16
-	GroupBox grp2 "Tools" pos:[8,351] width:136 height:48
-	button btnSetProperties "Set Properties" pos:[15,371] width:120 height:16
+	groupBox grp2 "Tools" pos:[8,324] width:136 height:48
+	button btnSetProperties "Set Properties" pos:[16,348] width:120 height:16
 	dropdownList LevelList "" pos:[8,172] width:136 height:21
 	
 	--Eventos de la utility
@@ -103,7 +102,13 @@ utility UABUtility "UAB Utility" width:152 height:411
 		format "Static meshes exported correctly\n"
 		format "==============================\n"
 	)
-	on ExportAnimatedMeshManagerButton pressed do
+	
+	on btnSetProperties pressed do
+	(
+		createDialog UABSetProperties
+	)
+
+		/*on ExportAnimatedMeshManagerButton pressed do
 	(
 		local pathToCopy = realPath + "\\Data\\" + LevelList.items[LevelList.selection] + "\\"
 		local arrayObjs = #()
@@ -133,10 +138,5 @@ utility UABUtility "UAB Utility" width:152 height:411
 		) else (
 			messageBox "No hi ha res seleccionat, no es pot exportar." title:"NO SELECTION"
 		)
-	)
-	
-	on btnSetProperties pressed do
-	(
-		createDialog UABSetProperties
-	)
+	)*/
 )

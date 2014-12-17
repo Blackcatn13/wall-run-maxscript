@@ -48,7 +48,7 @@ function ExportMesh Obj filepath _filename _file copy_textures=
 	) else (
 		for matArray = 1 to l_MaterialArray.count do
 		(
-			if l_MaterialArray[matArray] == i then
+			if l_MaterialArray[matArray] == 1 then
 			(
 				WriteShort file 0x13 #unsigned --poner mascara
 				WriteShort file 1 #unsigned --numero texturas
