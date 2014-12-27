@@ -12,11 +12,11 @@ utility UABUtility "UAB Utility" width:152 height:360
 	label PathLabel "" pos:[8,40] width:136 height:76 readOnly:true
 	checkbox ExportMeshCheck "Export Mesh" pos:[8,124] width:136 height:16
 	checkbox CopyTexturesCheck "Copy Textures" pos:[8,148] width:136 height:16
-	GroupBox grp1 "Export" pos:[8,196] width:136 height:142
+	GroupBox grp1 "Export" pos:[8,196] width:136 height:120
 	button ExportLightsButton "Lights" pos:[16,220] width:56 height:16
 	button ExportMeshButton "Mesh" pos:[80,220] width:56 height:16
 	button ExportCameraButton "Camera" pos:[16,244] width:56 height:16
-	button ExportSceneButton "Scene" pos:[16,316] width:120 height:16
+	button ExportSceneButton "Scene" pos:[16,292] width:120 height:16
 	button ExportStaticMeshManagerButton "Static Mesh Manager" pos:[16,268] width:120 height:16
 	groupBox grp2 "Tools" pos:[8,324] width:136 height:48
 	button btnSetProperties "Set Properties" pos:[16,348] width:120 height:16

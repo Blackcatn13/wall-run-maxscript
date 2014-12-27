@@ -57,7 +57,7 @@ function ExportMesh Obj filepath _filename _file copy_textures=
 		)
 	)
 	
-	GenerateVertexs Obj l_Vtxs l_Idxs
+	GenerateVertexs Obj l_Vtxs l_Idxs 
 	for idMaterial = 1 to l_NumMaterials do
 	(	
 		--format "l_NumMaterials %\n" l_NumMaterials
@@ -220,6 +220,34 @@ function FindVertex Vtxs Vtx =
 	return pos
 )
 
+function ConvertVtx vtx =
+(
+	local l_Text=stringstream ""
+	local l_value=""
+	for i=1 to vtx.count do (
+		format "%," vtx[i] to:l_Text
+	)
+	return (l_Text as string)
+)
+
+function dotNetAddVertex vtx vrtxs idMaterial vtxMap=
+(
+	local l_vtxString = ConvertVtx vtx
+	local l_idx = 1
+	if(vtxMap.ContainsKey(l_vtxString)) == false then (
+		while vrtxs.count<idMaterial do
+		(
+			append vrtxs (#())
+		)
+		append vrtxs[idMaterial] vtx
+		l_idx = vrtxs[idMaterial].count
+		vtxMap.Add l_vtxString l_idx
+	) else (
+		l_idx = vtxMap.Item[l_vtxString]
+	)
+	return l_idx
+)
+
 /*---------------------------------------*/
 function AddVertex vertex vrtxs idMaterial =
 (
@@ -270,6 +298,7 @@ function CreateFullVertex vtx n tu1 tu2 col tn bn mater=
 
 function GenerateVertexs Obj vtxs idxs=
 (
+	local l_vtxMap = dotnetobject "System.Collections.Generic.Dictionary`2[System.String,System.Int16]"
 	local numFaces = getNumFaces Obj
 	format "num faces %\n" numFaces
 	for face=1 to numFaces do
@@ -300,9 +329,9 @@ function GenerateVertexs Obj vtxs idxs=
 			idMaterial=1
 		)
 		
-		local index1=AddVertex totalVertex1 vtxs idMaterial
-		local index2=AddVertex totalVertex2 vtxs idMaterial
-		local index3=AddVertex totalVertex3 vtxs idMaterial
+		local index1=dotNetAddVertex totalVertex1 vtxs idMaterial l_vtxMap
+		local index2=dotNetAddVertex totalVertex2 vtxs idMaterial l_vtxMap
+		local index3=dotNetAddVertex totalVertex3 vtxs idMaterial l_vtxMap
 	
 		AddIndex index1 idxs idMaterial
 		AddIndex index2 idxs idMaterial
