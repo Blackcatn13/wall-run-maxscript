@@ -2,6 +2,7 @@ fileIn "setProperties.ms"
 fileIn "UABFunctions.ms"
 fileIn "ExportMesh.ms"
 fileIn "BBoxBSphere.ms"
+fileIn "ExportCamera.ms"
 
 global realPath
 
@@ -88,6 +89,7 @@ utility UABUtility "UAB Utility" width:152 height:360
 	(
 		local pathToCopy = realPath + "\\Data\\" + LevelList.items[LevelList.selection] + "\\"
 		ExportStaticMesh pathToCopy realPath
+		exportCameras pathToCopy realPath
 		format "==============================\n"
 		format "Full scene exported correctly\n"
 		format "==============================\n"
@@ -101,6 +103,12 @@ utility UABUtility "UAB Utility" width:152 height:360
 		format "==============================\n"
 		format "Static meshes exported correctly\n"
 		format "==============================\n"
+	)
+	
+	on ExportCameraButton pressed do
+	(
+		local pathToCopy = realPath + "\\Data\\" + LevelList.items[LevelList.selection] + "\\"
+		exportCameras pathToCopy realPath
 	)
 	
 	on btnSetProperties pressed do

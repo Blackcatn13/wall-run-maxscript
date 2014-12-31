@@ -1,4 +1,5 @@
 fileIn "BBoxBSphere.ms"
+fileIn "Common.ms"
 
 VERTEX_XYZ = 0x1
 VERTEX_NORMAL = 0x2
@@ -434,7 +435,7 @@ function GenerateVertexs Obj vtxs idxs vtxmask l_MaterialArray =
 		local Col
 		if classof(Obj.material)==Standardmaterial then
 		(
-			idMaterial=1
+			--idMaterial=1
 			Col = Obj.material.diffuse
 		)
 		else (
