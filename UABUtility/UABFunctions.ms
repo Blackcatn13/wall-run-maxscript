@@ -143,8 +143,8 @@ function ExportRenderableObjects Obj Core pathToCopy realPath File =
 	) else (
 		format "\t<mesh_instance name=\"%\" core=\"%\" " Obj.name Core to:File
 	)
-	format " pos=\" % % %\" yaw=\"%\" "  tranX tranZ tranY YawAngle to:File
-	format " pitch=\"%\" roll=\"%\" scale=\"%\" />\n" PitchAngle RollAngle ObjScale.x to:File
+	format " pos=\"% % %\" yaw=\"%\" "  tranX tranZ tranY YawAngle to:File
+	format " pitch=\"%\" roll=\"%\" scale=\"% % %\" />\n" PitchAngle RollAngle ObjScale.x ObjScale.z ObjScale.y to:File
 
 )
 
