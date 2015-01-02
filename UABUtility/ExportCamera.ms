@@ -1,15 +1,23 @@
 fileIn "Common.ms"
 
-function exportCameras _path absPath=
+function exportCameras _path absPath cameraList=
 (
-	format "[exportCameras] starting export of cameras\n"
+	if UABUtility.debug then
+		format "[exportCameras] starting export of cameras\n"
 	local file
-	local cams = cameras as array
+	local cams
+	if cameraList == undefined then (
+		cams = cameras as array
+	) else ( 
+		cams = #(cameraList)
+	)
 	if cams.count >= 1 then (
-		format "[exportCameras] exporting % cameras\n" cams.count
+		if UABUtility.debug then
+			format "[exportCameras] exporting % cameras\n" cams.count
 		if doesFileExist _path == false then (
 			makeDir _path all:true
-			format "[exportCameras] directorio % creado \n" _path
+			if UABUtility.debug then
+				format "[exportCameras] directorio % creado \n" _path
 		)
 		file = createfile (_path + "cameras.xml")
 		format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:file
@@ -17,16 +25,19 @@ function exportCameras _path absPath=
 		for i=1 to cams.count do (
 			if (findString ((classof cams[i]) as string) "camera") != undefined then (
 				if cams[i].pos.isAnimated == true then (
-					format "[exportCameras] exporting animated camera\n"
+					if UABUtility.debug then
+						format "[exportCameras] exporting animated camera\n"
 					exportAnimatedCamera cams[i] file _path absPath
 				) else (
-					format "[exportCameras] exporting static camera\n"
+					if UABUtility.debug then
+						format "[exportCameras] exporting static camera\n"
 					exportStaticCamera cams[i] file 
 				)
 			)
 		)
 		format "</cameras>\n" to:file
 		close file
+		
 	)
 	-- per cada camera
 		-- comprovar si es animada o no
@@ -41,7 +52,8 @@ function exportCameras _path absPath=
 
 function exportStaticCamera cam file =
 (
-	format "[exportStaticCamera] starting export of static camera\n"
+	if UABUtility.debug then
+		format "[exportStaticCamera] starting export of static camera\n"
 	local pos = RHTranslationToLH cam.pos
 	local targetDist
 	if cam.type == #free then (
@@ -54,29 +66,35 @@ function exportStaticCamera cam file =
 	format "\t<fixed_camera name=\"%\" " cam.name to:file
 	format " pos=\"% % %\" lookat=\"% % %\" " pos.x pos.y pos.z _lookat.x _lookat.y _lookat.z to:File
 	format " fov=\"%\" near_plane=\"%\" far_plane=\"%\" />\n" fov cam.nearClip cam.farClip to:File
-	format "[exportStaticCamera] camera exported\n"
+	if UABUtility.debug then
+		format "[exportStaticCamera] camera exported\n"
 )
 
 function exportAnimatedCamera cam file _path absPath= 
 (
-	format "[exportAnimatedCamera] starting export of animated camera\n"
+	if UABUtility.debug then
+		format "[exportAnimatedCamera] starting export of animated camera\n"
 	if doesFileExist (_path + "cameras//") == false then (
 		makeDir (_path + "cameras//") all:true
-		format "[exportAnimatedCamera] directorio % creado \n" _path
+		if UABUtility.debug then
+			format "[exportAnimatedCamera] directorio % creado \n" _path
 	)
 	local pathaux = GetMeshesPathExport (_path + "cameras/") absPath
 	local camXML = pathaux + cam.name + ".xml"
 	local camAbsXML = _path + "cameras/" + cam.name + ".xml"
 	format "\t<key_camera_controller name=\"%\" file=\"%\" />\n" cam.name camXML to:file
-	format "[exportAnimatedCamera] starting export of keys\n"
+	if UABUtility.debug then
+		format "[exportAnimatedCamera] starting export of keys\n"
 	exportCameraKeyFrames cam camAbsXML
-	format "[exportAnimatedCamera] camera exported\n"
+	if UABUtility.debug then
+		format "[exportAnimatedCamera] camera exported\n"
 )
 
 function exportCameraKeyFrames cam fileNameWithPath =
 (
 	select cam
-	format "[exportCameraKeyFrames] starting export of animated camera\n"
+	if UABUtility.debug then
+		format "[exportCameraKeyFrames] starting export of animated camera\n"
 	local file = createfile (fileNameWithPath)
 	format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:file
 	format "<camera_key_controller name=\"%\">\n" cam.name to:file
@@ -84,11 +102,14 @@ function exportCameraKeyFrames cam fileNameWithPath =
 	local animStop = animationRange.end
 	local fr = frameRate
 	local key = (at time animStop trackbar.getNextKeyTime()).frame
-	format "[exportCameraKeyFrames] range of animation % - %\n" animStart animStop
-	format "[exportCameraKeyFrames] frameRate of animation = %\n" fr
-	format "[exportCameraKeyFrames] first key to export %\n" key
+	if UABUtility.debug then (
+		format "[exportCameraKeyFrames] range of animation % - %\n" animStart animStop
+		format "[exportCameraKeyFrames] frameRate of animation = %\n" fr
+		format "[exportCameraKeyFrames] first key to export %\n" key
+	)
 	do (
-		format "[exportCameraKeyFrames] exporting key %\n" key
+		if UABUtility.debug then
+			format "[exportCameraKeyFrames] exporting key %\n" key
 		_time = key / fr
 		pos = at time key RHTranslationToLH(cam.pos)
 		dir = at time key cam.dir
@@ -108,5 +129,6 @@ function exportCameraKeyFrames cam fileNameWithPath =
     ) while key > animStart
 	format "</camera_key_controller>" to:file
 	close file
-	format "[exportCameraKeyFrames] export keys ended\n"
+	if UABUtility.debug then
+		format "[exportCameraKeyFrames] export keys ended\n"
 )

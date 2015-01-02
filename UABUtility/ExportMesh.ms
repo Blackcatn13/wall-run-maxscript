@@ -12,10 +12,13 @@ VERTEX_DIFFUSE = 0x40
 
 function ExportMesh Obj filepath _filename _file copy_textures=
 (
-	format "[ExportMesh] exporting %\n" _filename
+	if UABUtility.debug then
+		format "[ExportMesh] exporting %\n" _filename
+	
 	if doesFileExist (filepath + "meshes//") == false then (
 		makeDir (filepath + "meshes//") all:true
-		format "[ExportMesh] directorio % creado \n" filepath
+		if UABUtility.debug then
+			format "[ExportMesh] directorio % creado \n" filepath	
 	)
 	local filename = filepath + "meshes//" + _filename
 	local l_NumMaterials 
@@ -31,12 +34,14 @@ function ExportMesh Obj filepath _filename _file copy_textures=
 	if classof(Obj.material) == Multimaterial then 
 	(  
 		ismult = true
-		format "[ExportMesh] el objeto tiene aplicado un multimaterial\n"
+		if UABUtility.debug then
+			format "[ExportMesh] el objeto tiene aplicado un multimaterial\n"
 		l_NumMaterials = Obj.material.numsubs
 	) else 
 	(  
 		if classof(Obj.material) != UndefinedClass then (
-			format "[ExportMesh] el objeto tiene aplicado un material standard\n"
+			if UABUtility.debug then
+				format "[ExportMesh] el objeto tiene aplicado un material standard\n"
 			l_NumMaterials = 1 --Obj.material -->Si no es multimaterial solo tiene 1?
 		)
 	)
@@ -49,34 +54,44 @@ function ExportMesh Obj filepath _filename _file copy_textures=
 		l_NumMaterials = 1
 	)*/
 	WriteShort file l_NumMaterials #unsigned
-	format "[ExportMesh] exporting materials\n"
+	if UABUtility.debug then
+		format "[ExportMesh] exporting materials\n"
 	local vtxmask = #()
 	if ismult then (
-		format "[ExportMesh] is multimaterial\n"
+		if UABUtility.debug then
+			format "[ExportMesh] is multimaterial\n"
 		for i = 1 to l_NumMaterials do
 		(
 			local aux = l_MaterialArray[i]
-			format "[ExportMesh] material index is %\n" aux
+			if UABUtility.debug then
+				format "[ExportMesh] material index is %\n" aux
 			append vtxmask (ExportMaterial Obj.material[aux] file _file filepath copy_textures)
 		)
 	) else (
-		format "[ExportMesh] not multimaterial\n"
+		if UABUtility.debug then
+			format "[ExportMesh] not multimaterial\n"
 		for i = 1 to l_NumMaterials do
 		(
 			append vtxmask (ExportMaterial Obj.material file _file filepath copy_textures)
 		)
 	)
-	format "[ExportMesh] vertex masks % \n" vtxmask
-	format "[ExportMesh] Generating vertex\n"
+	if UABUtility.debug then (
+		format "[ExportMesh] vertex masks % \n" vtxmask
+		format "[ExportMesh] Generating vertex\n"
+	)
 	GenerateVertexs Obj l_Vtxs l_Idxs vtxmask l_MaterialArray
 	for idMaterial = 1 to l_NumMaterials do
 	(
-		--format "[ExportMesh] l_NumMaterials %\n" l_NumMaterials
-		--format "[ExportMesh] %\n" l_Vtxs
+		if UABUtility.debug then (
+			format "[ExportMesh] l_NumMaterials %\n" l_NumMaterials
+			format "[ExportMesh] %\n" l_Vtxs
+		)
 		local numVertex = l_Vtxs[l_MaterialArray[idMaterial]].count
 		local numIndexes = l_Idxs[l_MaterialArray[idMaterial]].count
-		--format "[ExportMesh] num vertex = %\n" numVertex
-		--format "[ExportMesh] num index = %\n" numIndexes
+		if UABUtility.debug then (
+			format "[ExportMesh] num vertex = %\n" numVertex
+			format "[ExportMesh] num index = %\n" numIndexes
+		)
 		local vtxmaskpos = findItem l_MaterialArray l_MaterialArray[idMaterial]
 		WriteShort file numVertex #unsigned
 		ExportVertexs l_Vtxs file l_MaterialArray[idMaterial] vtxmask[vtxmaskpos]    --Estos arrays en realiad son tridimensionales [][][]
@@ -125,7 +140,8 @@ function GetNumberOfTextures mat =
 	local num = 0
 	if mat == undefined then
 		return num
-	format "[GetNumberOfTextures] number of possible textures is %\n" mat.maps.count
+	if UABUtility.debug then
+		format "[GetNumberOfTextures] number of possible textures is %\n" mat.maps.count
 	for i=1 to mat.maps.count do (
 		if mat.maps[i] != undefined and mat.mapEnables[i] == true then
 		(
@@ -151,17 +167,22 @@ function getMask mat numText=
 
 function ExportMaterial _Material File _file FilePath copy_textures=
 (
-	format "[ExportMaterial] getting number of textures in material\n"
+	if UABUtility.debug then
+		format "[ExportMaterial] getting number of textures in material\n"
 	local textNum = GetNumberOfTextures _Material
-	format "[ExportMaterial] number of textures in material = %\n" textNum
-	format "[ExportMaterial] getting vertex mask\n"
+	if UABUtility.debug then (
+		format "[ExportMaterial] number of textures in material = %\n" textNum
+		format "[ExportMaterial] getting vertex mask\n"
+	)
 	local vtxmask = getMask _Material textNum
 	local vtxmaskToWrite = (formattedprint vtxmask format:"x") as integer
-	format "[ExportMaterial] vertex mask = %\n" vtxmaskToWrite
+	if UABUtility.debug then
+		format "[ExportMaterial] vertex mask = %\n" vtxmaskToWrite
 	
 	WriteShort File vtxmask #unsigned --poner mascara
 	WriteShort File textNum #unsigned --numero texturas
-	format "[ExportMaterial] mat name %\n" _Material
+	if UABUtility.debug then
+		format "[ExportMaterial] mat name %\n" _Material
 	for  i=1 to textNum do --numero de texturas
 	(
 		local _filename = (openBitMap _Material.diffuseMap.bitmap.filename).fileName 
@@ -171,13 +192,15 @@ function ExportMaterial _Material File _file FilePath copy_textures=
 		if copy_textures then (
 			if doesFileExist L_Path == false then (
 				makeDir L_Path all:true
-				format "[ExportMaterial] directorio % creado \n" L_Path
+				if UABUtility.debug then
+					format "[ExportMaterial] directorio % creado \n" L_Path
 			)
 			if FilePath!=undefined then (		
 				--local out_name=GetSaveFileName filename:(GetMeshesPathExport L_Path/*()*/+$.name+".mesh") caption:"Select output file to export file" types:" mesh(*.mesh)|*.mesh|All Files(*.*)|*.*|"
 				FileName = filenameFromPath _filename
 				FilePathName = L_Path + FileName
-				format "[ExportMaterial] Copy file Name: \"%\" \n" FilePathName
+				if UABUtility.debug then
+					format "[ExportMaterial] Copy file Name: \"%\" \n" FilePathName
 				if doesFileExist FilePathName and false then (
 					if (queryBox "File already exists in destination folder. Override?" title: "[ExportMaterial] File alreay exists" true) == true then (
 						deleteFile FilePathName
@@ -189,9 +212,10 @@ function ExportMaterial _Material File _file FilePath copy_textures=
 			)
 		)
 		-----------------------------------------------
-		
-		format "[ExportMaterial] path %\n" _filename
-		format "[ExportMaterial] path to cut %\n" _file
+		if UABUtility.debug then (
+			format "[ExportMaterial] path %\n" _filename
+			format "[ExportMaterial] path to cut %\n" _file
+		)
 		local relPath 
 		if copy_textures then (
 			relPath = pathConfig.convertPathToRelativeTo FilePathName _file
@@ -200,7 +224,8 @@ function ExportMaterial _Material File _file FilePath copy_textures=
 			FilePathName = L_Path + FileName
 			relPath = pathConfig.convertPathToRelativeTo FilePathName _file
 		)
-		format "[ExportMaterial] rel path %\n" relPath
+		if UABUtility.debug then
+			format "[ExportMaterial] rel path %\n" relPath
 		local numChars = relPath.count
 		WriteShort File numChars #unsigned
 		WriteString File relPath 
@@ -211,31 +236,36 @@ function ExportMaterial _Material File _file FilePath copy_textures=
 
 function ExportVertexs arrayVertex File idMaterial vtxmask=
 (
-	format "[ExportVertexs] Exporting vertex with idMaterial %\n" idMaterial
+	if UABUtility.debug then
+		format "[ExportVertexs] Exporting vertex with idMaterial %\n" idMaterial
 	for  j=1 to arrayVertex[idMaterial].count do
 	(            
 		local k = 1
 		if (bit.and vtxmask VERTEX_XYZ) == VERTEX_XYZ then (
-			format "[ExportVertexs] position: % % %\n" arrayVertex[idMaterial][j][k] arrayVertex[idMaterial][j][k+1] arrayVertex[idMaterial][j][k+2]
+			if UABUtility.debug then
+				format "[ExportVertexs] position: % % %\n" arrayVertex[idMaterial][j][k] arrayVertex[idMaterial][j][k+1] arrayVertex[idMaterial][j][k+2]
 			writeFloat File arrayVertex[idMaterial][j][k]
 			writeFloat File arrayVertex[idMaterial][j][k+1]
 			writeFloat File arrayVertex[idMaterial][j][k+2]
 			k = k + 3
 		)
 		if (bit.and vtxmask VERTEX_NORMAL) == VERTEX_NORMAL then (
-			format "[ExportVertexs] normal: % % %\n" arrayVertex[idMaterial][j][k] arrayVertex[idMaterial][j][k+1] arrayVertex[idMaterial][j][k+2]
+			if UABUtility.debug then
+				format "[ExportVertexs] normal: % % %\n" arrayVertex[idMaterial][j][k] arrayVertex[idMaterial][j][k+1] arrayVertex[idMaterial][j][k+2]
 			writeFloat File arrayVertex[idMaterial][j][k]
 			writeFloat File arrayVertex[idMaterial][j][k+1]
 			writeFloat File arrayVertex[idMaterial][j][k+2]
 			k = k + 3
 		)
 		if (bit.and vtxmask VERTEX_DIFFUSE) == VERTEX_DIFFUSE then (
-			format "[ExportVertexs] color: %\n" arrayVertex[idMaterial][j][k]
+			if UABUtility.debug then
+				format "[ExportVertexs] color: %\n" arrayVertex[idMaterial][j][k]
 			writeLong File arrayVertex[idMaterial][j][k] #unsigned
 			k = k + 1
 		)
 		if (bit.and vtxmask VERTEX_TEXTURE1) == VERTEX_TEXTURE1 then (
-			format "[ExportVertexs] uv: % %\n" arrayVertex[idMaterial][j][k] arrayVertex[idMaterial][j][k+1]
+			if UABUtility.debug then
+				format "[ExportVertexs] uv: % %\n" arrayVertex[idMaterial][j][k] arrayVertex[idMaterial][j][k+1]
 			writeFloat File arrayVertex[idMaterial][j][k]
 			writeFloat File arrayVertex[idMaterial][j][k+1]
 			k = k + 2
@@ -371,18 +401,12 @@ function CreateFullVertex vtx n tu1 tu2 col tn bn mater=
 		local redValue = bit.and col.r 0xff	
 		local greenValue = bit.and col.g 0xff
 		local blueValue = bit.and col.b 0xff
-		--format "[CreateFullVertex] alpha value as color %, as hexa %\n" col.a alphaValue
-		--format "[CreateFullVertex] red value as color %, as hexa %\n" col.r redValue
-		--format "[CreateFullVertex] green value as color %, as hexa %\n" col.g greenValue
-		--format "[CreateFullVertex] blue value as color %, as hexa %\n" col.b blueValue
 		local finalColor = bit.shift alphaValue 24
-		--format "[CreateFullVertex] finalColor is %\n" (formattedprint finalColor format:"x")
 		finalColor = finalColor + (bit.shift redValue 16)
-		--format "[CreateFullVertex] finalColor is %\n" (formattedprint finalColor format:"x")
 		finalColor = finalColor + (bit.shift greenValue 8)
-		--format "[CreateFullVertex] finalColor is %\n" (formattedprint finalColor format:"x")
 		finalColor = finalColor + blueValue
-		format "[CreateFullVertex] finalColor is %\n" (formattedprint finalColor format:"x")
+		if UABUtility.debug then
+			format "[CreateFullVertex] finalColor is %\n" (formattedprint finalColor format:"x")
 		append vertex finalColor
 	)
 	if (bit.and mater VERTEX_TEXTURE1) == VERTEX_TEXTURE1 then (
@@ -406,8 +430,10 @@ function GenerateVertexs Obj vtxs idxs vtxmask l_MaterialArray =
 	for i = 1 to numFaces do (
 		l_vtxMap[i] = dotnetobject "System.Collections.Generic.Dictionary`2[System.String,System.Int16]"
 	)
-	format "[GenerateVertexs] num faces %\n" numFaces
-	format "[GenerateVertexs] vertex mask size %\n" vtxmask.count
+	if UABUtility.debug then (
+		format "[GenerateVertexs] num faces %\n" numFaces
+		format "[GenerateVertexs] vertex mask size %\n" vtxmask.count
+	)
 	for face=1 to numFaces do
 	(
 		--format "Processing face number %\n" face
@@ -426,10 +452,12 @@ function GenerateVertexs Obj vtxs idxs vtxmask l_MaterialArray =
 		local TUVMap3 =  meshop.getMapVert Obj 1 IdxsMap.x
 		
 		local idMaterial = getFaceMatID Obj face
-		format "[GenerateVertexs] material of face is %\n" idMaterial
+		if UABUtility.debug then
+			format "[GenerateVertexs] material of face is %\n" idMaterial
 		local maskpos = findItem l_MaterialArray idMaterial
 		if maskpos == 0 then (
-			format "[GenerateVertexs] not found material % in the materialArray %\n" idMaterial l_MaterialArray
+			if UABUtility.debug then
+				format "[GenerateVertexs] not found material % in the materialArray %\n" idMaterial l_MaterialArray
 			maskpos = 1
 		)
 		local Col
@@ -447,8 +475,8 @@ function GenerateVertexs Obj vtxs idxs vtxmask l_MaterialArray =
 			)
 		)
 		
-		
-		format "[GenerateVertexs] vertex mask of this material is %\n" vtxmask[maskpos]
+		if UABUtility.debug then
+			format "[GenerateVertexs] vertex mask of this material is %\n" vtxmask[maskpos]
 		local totalVertex1 = CreateFullVertex vtx1 Normal1 TUVMap1 0 Col 0 0 vtxmask[maskpos]
 		local totalVertex2 = CreateFullVertex vtx2 Normal2 TUVMap2 0 Col 0 0 vtxmask[maskpos]
 		local totalVertex3 = CreateFullVertex vtx3 Normal3 TUVMap3 0 Col 0 0 vtxmask[maskpos]
@@ -467,15 +495,18 @@ function GenerateVertexs Obj vtxs idxs vtxmask l_MaterialArray =
 --Función que genera un array de todos los materiales asignados a los objetos
 function CreateMaterialArray Obj =
 (
-	format "[CreateMaterialArray] getting materials applied\n"
+	if UABUtility.debug then
+		format "[CreateMaterialArray] getting materials applied\n"
 	local array=#()
 	for i=1 to (getNumFaces Obj) do 
 	(
 		appendifUnique array (getFaceMatID Obj i)
 	)
-	format "[CreateMaterialArray]\n--------------------\narray of idexes %\n---------------------\n" array
+	if UABUtility.debug then
+		format "[CreateMaterialArray]\n--------------------\narray of idexes %\n--------------------\n" array
 	sort array
-	format "[CreateMaterialArray] ordered array is %\n" array
+	if UABUtility.debug then
+		format "[CreateMaterialArray] ordered array is %\n" array
 	return array
 )
 

@@ -8,6 +8,7 @@ global realPath
 
 utility UABUtility "UAB Utility" width:152 height:360
 (
+	local debug = true
 	-- Contenido de la utility
 	button btnSetPath "Set Path" pos:[8,8] width:136 height:28
 	label PathLabel "" pos:[8,40] width:136 height:76 readOnly:true
@@ -19,6 +20,7 @@ utility UABUtility "UAB Utility" width:152 height:360
 	button ExportCameraButton "Camera" pos:[16,244] width:56 height:16
 	button ExportSceneButton "Scene" pos:[16,292] width:120 height:16
 	button ExportStaticMeshManagerButton "Static Mesh Manager" pos:[16,268] width:120 height:16
+	checkbox DebugValue "Debug" pos:[80,244] width:56 height:16
 	groupBox grp2 "Tools" pos:[8,324] width:136 height:48
 	button btnSetProperties "Set Properties" pos:[16,348] width:120 height:16
 	dropdownList LevelList "" pos:[8,172] width:136 height:21
@@ -35,7 +37,14 @@ utility UABUtility "UAB Utility" width:152 height:360
 		--global ExportPath = PathLabel.text
 		local levels=#("","level1","level2", "level3","level4", "main menu", "select player")
 		LevelList.items=levels
+		DebugValue.checked = true
+		debug = DebugValue.checked
 	)
+	
+	on DebugValue changed newValue do (
+		debug = DebugValue.checked
+	)
+	
 	on btnSetPath pressed do
 	(
 		-- TODO, si el filtered[idx].count > 22 peta
@@ -75,7 +84,8 @@ utility UABUtility "UAB Utility" width:152 height:360
 	
 		local pathToCopy = realPath + "\\Data\\" + LevelList.items[LevelList.selection] + "\\"
 		if $ != undefined then (
-			format "name is %\n" (pathToCopy + "meshes\\" + $.name + ".mesh")
+			if UABUtility.debug then
+				format "name is %\n" (pathToCopy + "meshes\\" + $.name + ".mesh")
 			ExportMesh $  pathToCopy ($.name + ".mesh") realPath true
 			format "==============================\n"
 			format "Mesh exported correctly\n"
@@ -89,7 +99,7 @@ utility UABUtility "UAB Utility" width:152 height:360
 	(
 		local pathToCopy = realPath + "\\Data\\" + LevelList.items[LevelList.selection] + "\\"
 		ExportStaticMesh pathToCopy realPath
-		exportCameras pathToCopy realPath
+		exportCameras pathToCopy realPath undefined
 		format "==============================\n"
 		format "Full scene exported correctly\n"
 		format "==============================\n"
@@ -97,8 +107,8 @@ utility UABUtility "UAB Utility" width:152 height:360
 	on ExportStaticMeshManagerButton pressed do
 	(
 		local pathToCopy = realPath + "\\Data\\" + LevelList.items[LevelList.selection] + "\\"
-	
-		format "pathToCopy %\n" pathToCopy
+		if UABUtility.debug then
+			format "pathToCopy %\n" pathToCopy
 		ExportStaticMeshManager $ pathToCopy realPath CopyTexturesCheck.checked ExportMeshCheck.checked
 		format "==============================\n"
 		format "Static meshes exported correctly\n"
@@ -108,7 +118,10 @@ utility UABUtility "UAB Utility" width:152 height:360
 	on ExportCameraButton pressed do
 	(
 		local pathToCopy = realPath + "\\Data\\" + LevelList.items[LevelList.selection] + "\\"
-		exportCameras pathToCopy realPath
+		exportCameras pathToCopy realPath $
+		format "==============================\n"
+		format "camera exported correctly\n"
+		format "==============================\n"
 	)
 	
 	on btnSetProperties pressed do

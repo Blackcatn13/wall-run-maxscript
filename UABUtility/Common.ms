@@ -25,6 +25,7 @@ function GetScale _scale =
 function GetMeshesPathExport FilePath AbsPath =
 (
 	local newPath= pathConfig.convertPathToRelativeTo FilePath AbsPath
-	format "[GetMeshesPathExport] test %\n" newPath
+	if UABUtility.debug then
+		format "[GetMeshesPathExport] test %\n" newPath
 	return newPath
 )

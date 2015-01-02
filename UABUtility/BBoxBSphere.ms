@@ -54,8 +54,8 @@ fn BoundingSphere Obj =
 	ZCenter = (BBox[6] + BBox[3])/2
 	
 	BSCenter = [XCenter,YCenter,ZCenter]
-	
-	format "BScenter % \n" BSCenter
+	if UABUtility.debug then
+		format "BScenter % \n" BSCenter
 	
 	for i = 1 to Obj.numVerts do 
 	(
@@ -63,7 +63,8 @@ fn BoundingSphere Obj =
 		if RadiusDistance > BSRadius then
 			BSRadius = RadiusDistance
 	)
-	format "BSRadius : % \n" BSRadius
+	if UABUtility.debug then
+		format "BSRadius : % \n" BSRadius
 	
 	return #(BSCenter[1], BSCenter[2], BSCenter[3], BSRadius)
 	

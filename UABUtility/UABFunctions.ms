@@ -9,7 +9,8 @@ function CopyTextures FilePath Objs =
 		format "Path updated to: \"%\" \n" FilePath*/
 	if doesFileExist L_Path == false then (
 		makeDir L_Path all:true
-		format "[CopyTextures] directorio % creado \n" L_Path
+		if UABUtility.debug then
+			format "[CopyTextures] directorio % creado \n" L_Path
 	)
 	--)
 	if FilePath!=undefined then (		
@@ -24,7 +25,8 @@ function CopyTextures FilePath Objs =
 					(	
 						FileName = filenameFromPath TexturesArray[i]
 						FilePathName = L_Path + FileName
-						format "[CopyTextures] Copy file Name: \"%\" \n" FilePathName
+						if UABUtility.debug then
+							format "[CopyTextures] Copy file Name: \"%\" \n" FilePathName
 						if doesFileExist FilePathName and false then (
 							if (queryBox "File already exists in destination folder. Override?" title: "File alreay exists" true) == true then (
 								deleteFile FilePathName
@@ -47,7 +49,8 @@ function ExportStaticMeshManager objs FilePath AbsPath copyTexts expMesh=
 	) else (
 		if doesFileExist FilePath == false then (
 			makeDir FilePath all:true
-			format "[ExportStaticMeshManager] directorio % creado \n" FilePath
+			if UABUtility.debug then
+				format "[ExportStaticMeshManager] directorio % creado \n" FilePath
 		)
 		local file=createfile (FilePath + "static_meshes.xml")
 		
@@ -84,8 +87,10 @@ function ExportStaticMeshManager objs FilePath AbsPath copyTexts expMesh=
 					ExportMesh objs  FilePath ($.name + ".mesh") realPath false
 				)
 				if copyTexts then (
-					format "[ExportStaticMeshManager] FilePath is %\n" FilePath
-					format "[ExportStaticMeshManager] Object is %\n" objs
+					if UABUtility.debug then (
+						format "[ExportStaticMeshManager] FilePath is %\n" FilePath
+						format "[ExportStaticMeshManager] Object is %\n" objs
+					)
 					CopyTextures FilePath objs
 				)
 			)
@@ -101,7 +106,8 @@ function ExportStaticMesh FilePath realPath=
 (
 	if doesFileExist FilePath == false then (
 		makeDir FilePath all:true
-		format "[ExportStaticMesh] directorio % creado \n" FilePath
+		if UABUtility.debug then
+			format "[ExportStaticMesh] directorio % creado \n" FilePath
 	)
 	
 	local file=createfile (FilePath + "renderable_objects.xml")
@@ -111,7 +117,8 @@ function ExportStaticMesh FilePath realPath=
 	local geom = geometry as array
 	local cores = GetObjectCores geom
 	for obj in Objects do (
-		format "[ExportStaticMesh] Object %\n" a
+		if UABUtility.debug then
+			format "[ExportStaticMesh] Object %\n" a
 		if iskindof obj Editable_Mesh do (
 			ExportRenderableObjects obj (GetObjectCore cores obj) FilePath realPath file
 		)
@@ -145,7 +152,6 @@ function ExportRenderableObjects Obj Core pathToCopy realPath File =
 	)
 	format " pos=\"% % %\" yaw=\"%\" "  tranX tranZ tranY YawAngle to:File
 	format " pitch=\"%\" roll=\"%\" scale=\"% % %\" />\n" PitchAngle RollAngle ObjScale.x ObjScale.z ObjScale.y to:File
-
 )
 
 function GetObjectCore cores obj = 
@@ -168,45 +174,56 @@ function GetObjectCores Objs =
 (
 	ss = Objs as array
 	ss2 = Objs as array
-	format "[GetObjectCores] Objects in scene %\n" ss
+	if UABUtility.debug then
+		format "[GetObjectCores] Objects in scene %\n" ss
 	exclud = #()
 	for i=1 to ss.count do (
-		format "[GetObjectCores] looking for item % in exclude: %\n" ss[i] exclud
+		if UABUtility.debug then
+			format "[GetObjectCores] looking for item % in exclude: %\n" ss[i] exclud
 		InstanceMgr.GetInstances ss[i] &instances
-		format "[GetObjectCores] Instances of % are %\n" ss[i] instances		
+		if UABUtility.debug then
+			format "[GetObjectCores] Instances of % are %\n" ss[i] instances		
 		if notInArray exclud instances then (
 			appendIfUnique exclud ss[i]
 		) else (
-			format "\n[GetObjectCores] % is an instance of a core\n" ss[i]
+			if UABUtility.debug then
+				format "\n[GetObjectCores] % is an instance of a core\n" ss[i]
 			continue
 		)
 	)
-	format "\n[GetObjectCores] final cores %\n" exclud
+	if UABUtility.debug then
+		format "\n[GetObjectCores] final cores %\n" exclud
 	return exclud
 )
 
 function notInArray array1 array2 =
 (
 	local cores = deepcopy array1
-	format "[notInArray] array of cores contains %\n" cores
-	format "[notInArray] instances to look for %\n" array2
-	format "[notInArray] size of cores %\n" cores.count
+	if UABUtility.debug then (
+		format "[notInArray] array of cores contains %\n" cores
+		format "[notInArray] instances to look for %\n" array2
+		format "[notInArray] size of cores %\n" cores.count
+	)
 	if cores.count >= 1 then (
 		pos = findItem array2 cores[1]
 		if pos != 0 then (
-			format "[notInArray] returning false\n"
+			if UABUtility.debug then
+				format "[notInArray] returning false\n"
 			return false
 		) else (
 			if cores.count > 1 then (
-				format "[notInArray] returning true and going to next element\n"
+				if UABUtility.debug then
+					format "[notInArray] returning true and going to next element\n"
 				return (true and notInArray (deleteItem cores 1) array2)
 			) else (
-				format "[notInArray] returning true\n"
+				if UABUtility.debug then
+					format "[notInArray] returning true\n"
 				return true
 			)
 		)
 	)
-	format "[notInArray] returning true\n"
+	if UABUtility.debug then
+		format "[notInArray] returning true\n"
 	return true
 )
 
@@ -235,7 +252,8 @@ function GetTextures Objs =
 			append arrayTextures Objs.material.diffuseMap.bitmap.filename
 		)
 	)
-	format "[GetTextures] Textures to copy %\n" arrayTextures
+	if UABUtility.debug then
+		format "[GetTextures] Textures to copy %\n" arrayTextures
 	return arrayTextures
 )
 
@@ -265,7 +283,8 @@ fn TryCloneObjects Obj =
 
 fn CloneObjects Objs = 
 (
-	format "[CloneObjects] Selection % \n" Objs
+	if UABUtility.debug then
+		format "[CloneObjects] Selection % \n" Objs
 	if Objs != undefined then
 	(
 	--Clonar objeto/s como Core o instance segun sea (Si no se especifica lo contrario se copia como sea)
@@ -276,8 +295,9 @@ fn CloneObjects Objs =
 				nnl[i].name = uniqueName (Objs[i].name +"_MeshCopy_") numDigits:3
 			else
 				nnl[i].name = uniqueName (Objs.name +"_MeshCopy_") numDigits:3
-		format "[CloneObjects] Object % created \n" nnl[i].name
-		convertToMesh nnl[i]
+			if UABUtility.debug then
+				format "[CloneObjects] Object % created \n" nnl[i].name
+			convertToMesh nnl[i]
 		)
 		
 		if (classof Objs) != PathName then	
@@ -287,7 +307,8 @@ fn CloneObjects Objs =
 	)
 	else
 	(
-		format "[CloneObjects] No selected Items \n"
+		if UABUtility.debug then
+			format "[CloneObjects] No selected Items \n"
 	)
 	
 )
@@ -296,7 +317,8 @@ fn DeleteClonedObjects ObjArray =
 (
 	for i = 1 to ObjArray.count do
 	(
-		format "[DeleteClonedObjects] Eliminando % \n" ObjArray[i]
+		if UABUtility.debug then
+			format "[DeleteClonedObjects] Eliminando % \n" ObjArray[i]
 		delete ObjArray[i]	
 	)
 )
