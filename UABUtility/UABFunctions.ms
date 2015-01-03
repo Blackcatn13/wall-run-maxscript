@@ -192,31 +192,6 @@ function GetObjectCores Objs =
 	local end = timeStamp()
 	format "[GetObjectCores] time to calculate cores is %\n" (end - start)
 	return cores
-	
-	/*ss = Objs as array
-	ss2 = Objs as array
-	if UABUtility.debug then
-		format "[GetObjectCores] Objects in scene %\n" ss
-	exclud = #()
-	for i=1 to ss.count do (
-		if UABUtility.debug then
-			format "[GetObjectCores] looking for item % in exclude: %\n" ss[i] exclud
-		InstanceMgr.GetInstances ss[i] &instances
-		if UABUtility.debug then
-			format "[GetObjectCores] Instances of % are %\n" ss[i] instances		
-		if notInArray exclud instances then (
-			appendIfUnique exclud ss[i]
-		) else (
-			if UABUtility.debug then
-				format "\n[GetObjectCores] % is an instance of a core\n" ss[i]
-			continue
-		)
-	)
-	if UABUtility.debug then
-		format "\n[GetObjectCores] final cores %\n" exclud
-	local end = timeStamp()
-	format "[GetObjectCores] time to calculate cores is %" (end - start)
-	return exclud*/
 )
 
 function notInArray array1 array2 =
