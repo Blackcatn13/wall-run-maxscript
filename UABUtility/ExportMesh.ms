@@ -461,6 +461,10 @@ function GenerateVertexs Obj vtxs idxs vtxmask l_MaterialArray =
 			maskpos = 1
 		)
 		local Col
+		if UABUtility.debug then (
+			format "[GenerateVertexs] class of material %\n" (classof(Obj.material))
+			format "[GenerateVertexs] maskpos is %\n" maskpos
+		)
 		if classof(Obj.material)==Standardmaterial then
 		(
 			--idMaterial=1
@@ -471,7 +475,11 @@ function GenerateVertexs Obj vtxs idxs vtxmask l_MaterialArray =
 			(
 				Col = Obj.wirecolor
 			) else (
-				Col = Obj.material[maskpos].diffuse
+				if maskpos > Obj.material.count then (
+					Col = Obj.wirecolor
+				) else (
+					Col = Obj.material[maskpos].diffuse
+				)
 			)
 		)
 		

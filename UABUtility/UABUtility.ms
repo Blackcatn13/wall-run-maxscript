@@ -3,10 +3,11 @@ fileIn "UABFunctions.ms"
 fileIn "ExportMesh.ms"
 fileIn "BBoxBSphere.ms"
 fileIn "ExportCamera.ms"
+fileIn "ExportCinematic.ms"
 
 global realPath
 
-utility UABUtility "UAB Utility" width:152 height:360
+utility UABUtility "UAB Utility" width:152 height:404
 (
 	local debug = true
 	-- Contenido de la utility
@@ -14,15 +15,16 @@ utility UABUtility "UAB Utility" width:152 height:360
 	label PathLabel "" pos:[8,40] width:136 height:76 readOnly:true
 	checkbox ExportMeshCheck "Export Mesh" pos:[8,124] width:136 height:16
 	checkbox CopyTexturesCheck "Copy Textures" pos:[8,148] width:136 height:16
-	GroupBox grp1 "Export" pos:[8,196] width:136 height:120
+	GroupBox grp1 "Export" pos:[8,196] width:136 height:144
 	button ExportLightsButton "Lights" pos:[16,220] width:56 height:16
 	button ExportMeshButton "Mesh" pos:[80,220] width:56 height:16
 	button ExportCameraButton "Camera" pos:[16,244] width:56 height:16
 	button ExportSceneButton "Scene" pos:[16,292] width:120 height:16
 	button ExportStaticMeshManagerButton "Static Mesh Manager" pos:[16,268] width:120 height:16
+	button ExportCinematicButton "Cinematic" pos:[16,316] width:120 height:16
 	checkbox DebugValue "Debug" pos:[80,244] width:56 height:16
-	groupBox grp2 "Tools" pos:[8,324] width:136 height:48
-	button btnSetProperties "Set Properties" pos:[16,348] width:120 height:16
+	groupBox grp2 "Tools" pos:[8,348] width:136 height:48
+	button btnSetProperties "Set Properties" pos:[16,372] width:120 height:16
 	dropdownList LevelList "" pos:[8,172] width:136 height:21
 	
 	--Eventos de la utility
@@ -127,6 +129,22 @@ utility UABUtility "UAB Utility" width:152 height:360
 	on btnSetProperties pressed do
 	(
 		createDialog UABSetProperties
+	)
+	
+	on ExportCinematicButton pressed do
+	(
+		local _name = filterString maxFileName ".max"
+		local dialog = dotNetObject "MaxCustomControls.RenameInstanceDialog" _name[1]
+		dialog.text = "What's the cinematic name?"
+		local dialogResult = dialog.Showmodal()
+		if dotnet.compareenums dialog.DialogResult ((dotnetclass "System.Windows.Forms.DialogResult").OK) then (
+			local cinematicName = dialog.InstanceName
+			local pathToCopy = realPath + "\\Data\\" + LevelList.items[LevelList.selection] + "\\"
+			ExportCinematics pathToCopy realPath cinematicName
+			format "==============================\n"
+			format "cinematic exported correctly\n"
+			format "==============================\n"
+		)
 	)
 
 		/*on ExportAnimatedMeshManagerButton pressed do

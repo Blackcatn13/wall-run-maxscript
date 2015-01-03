@@ -209,15 +209,15 @@ rollout UABSetProperties "UAB Set Properties" width:544 height:456
 		)
 	)
 	
-	on AnimModelText changed key do (
+	on AnimModelText entered key do (
 			AnimModelText.bold = false
 	)
 		
-	on TechniqueText changed key do (
+	on TechniqueText entered key do (
 		TechniqueText.bold = false
 	)
 	
-	on LinkedBoneText changed key do (
+	on LinkedBoneText entered key do (
 		LinkedBoneText.bold = false
 	)
 )
@@ -236,7 +236,10 @@ fn GetUserProperty Obj GUIObj StrProperty =
 		)
 		
 		if (classof GUIObj) == CheckBoxControl then (
-			GUIObj.checked = (getUserProp Obj StrProperty)
+			if (getUserProp Obj StrProperty) == true then
+				GUIObj.checked = true
+			else
+				GUIObj.checked = false
 		)
 		
 		if (classof GUIObj) == EditTextControl then (

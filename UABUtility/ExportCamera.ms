@@ -35,19 +35,10 @@ function exportCameras _path absPath cameraList=
 				)
 			)
 		)
-		format "</cameras>\n" to:file
+		format "</cameras>" to:file
 		close file
 		
 	)
-	-- per cada camera
-		-- comprovar si es animada o no
-			-- si no animada exportar tal qual <fixed_camera name, pos, lookat, near, far, fov/>
-			-- si es animada
-				-- <key_camera_controller name="cam" file="...cam.xml"/>
-					-- generar el nou xml ...cam.xml amb la info de cada keyframe
-						-- <camera_key_controller name="CameraMOV2">
-							--<key time="0.0" pos="-26.8859 9.80159 -6.46455" look_at="-20.3781 3.19479
-							-- 8.47801" fov="0.602417" near_plane="1.0" far_plane="1000.0"/>
 )
 
 function exportStaticCamera cam file =
@@ -97,7 +88,21 @@ function exportCameraKeyFrames cam fileNameWithPath =
 		format "[exportCameraKeyFrames] starting export of animated camera\n"
 	local file = createfile (fileNameWithPath)
 	format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:file
-	format "<camera_key_controller name=\"%\">\n" cam.name to:file
+	format "<camera_key_controller name=\"%\" " cam.name to:file
+	if (getUserProp cam "cam_once") == true then
+		local once = true
+	else 
+		local once = false
+	if (getUserProp cam "cam_cycle") == true then
+		local cycle = true
+	else 
+		local cycle = false
+	if (getUserProp cam "cam_reverse") == true then
+		local _reverse = true
+	else 
+		local _reverse = false
+	
+	format "once=\"%\" cycle=\"%\" reverse=\"%\">\n" once cycle _reverse to:file
 	local animStart = animationRange.start
 	local animStop = animationRange.end
 	local fr = frameRate

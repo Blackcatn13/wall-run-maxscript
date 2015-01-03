@@ -118,7 +118,7 @@ function ExportStaticMesh FilePath realPath=
 	local cores = GetObjectCores geom
 	for obj in Objects do (
 		if UABUtility.debug then
-			format "[ExportStaticMesh] Object %\n" a
+			format "[ExportStaticMesh] Object %\n" obj
 		if iskindof obj Editable_Mesh do (
 			ExportRenderableObjects obj (GetObjectCore cores obj) FilePath realPath file
 		)
@@ -172,7 +172,28 @@ function GetObjectCore cores obj =
 
 function GetObjectCores Objs = 
 (
+	local start = timeStamp()
+	local list = dotnetobject "System.Collections.Generic.List`1[System.String]"
+	local cores=#()
 	ss = Objs as array
+	for i = 1 to ss.count do (
+		InstanceMgr.GetInstances ss[i] &instances
+		local isCore = true
+		for j = 1 to instances.count do (
+			if list.Contains instances[j].name then (
+				isCore = false
+			)
+		)
+		if isCore then (
+			list.Add ss[i].name
+			appendifUnique cores ss[i]
+		)
+	)
+	local end = timeStamp()
+	format "[GetObjectCores] time to calculate cores is %\n" (end - start)
+	return cores
+	
+	/*ss = Objs as array
 	ss2 = Objs as array
 	if UABUtility.debug then
 		format "[GetObjectCores] Objects in scene %\n" ss
@@ -193,7 +214,9 @@ function GetObjectCores Objs =
 	)
 	if UABUtility.debug then
 		format "\n[GetObjectCores] final cores %\n" exclud
-	return exclud
+	local end = timeStamp()
+	format "[GetObjectCores] time to calculate cores is %" (end - start)
+	return exclud*/
 )
 
 function notInArray array1 array2 =
