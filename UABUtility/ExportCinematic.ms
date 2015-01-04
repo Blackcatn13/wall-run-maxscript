@@ -31,7 +31,7 @@ function ExportAnimatedObject Obj file =
 	if UABUtility.debug then 
 		format "[ExportAnimatedObject] starting export of animated object %\n" Obj.name
 	local object_manager = "solid"
-	format "\t<cinemati_object resource=\"%\" renderable_objects_manager=\"%\">\n" Obj.name object_manager to:file
+	format "\t<cinematic_object resource=\"%\" renderable_objects_manager=\"%\">\n" Obj.name object_manager to:file
 	local animStart = animationRange.start
 	local animStop = animationRange.end
 	local fr = frameRate
@@ -51,7 +51,7 @@ function ExportAnimatedObject Obj file =
 		local roll = DegToRad (GetRoll (at time key Obj.transform))
 		local _scale = at time key RHTranslationToLH(Obj.scale)
 		format "\t\t<cinematic_object_key_frame time=\"%\" " _time to:file
-		format "pos =\"% % %\ yaw=\"%\" " pos.x pos.y pos.z yaw to:file
+		format "pos =\"% % %\" yaw=\"%\" " pos.x pos.y pos.z yaw to:file
 		format "pitch=\"%\" roll=\"%\" scale=\"% % %\"/>\n" pitch roll _scale.x _scale.y _scale.z to:file
 		key = (at time key trackbar.getNextKeyTime()).frame
 	) while key > animStart
