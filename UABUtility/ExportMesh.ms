@@ -86,17 +86,22 @@ function ExportMesh Obj filepath _filename _file copy_textures=
 			format "[ExportMesh] l_NumMaterials %\n" l_NumMaterials
 			format "[ExportMesh] %\n" l_Vtxs
 		)
-		local numVertex = l_Vtxs[l_MaterialArray[idMaterial]].count
-		local numIndexes = l_Idxs[l_MaterialArray[idMaterial]].count
+		local numVertex = l_Vtxs[idxAccesArray[idMaterial]].count
+		local numIndexes = l_Idxs[idxAccesArray[idMaterial]].count
 		if UABUtility.debug then (
 			format "[ExportMesh] num vertex = %\n" numVertex
 			format "[ExportMesh] num index = %\n" numIndexes
 		)
+		if numVertex == 0 or numIndexes == 0 then (
+			if UABUtility.debug then
+				format "[ExportMesh] excluding face \n"
+			continue
+		)
 		local vtxmaskpos = findItem l_MaterialArray l_MaterialArray[idMaterial]
 		WriteShort file numVertex #unsigned
-		ExportVertexs l_Vtxs file l_MaterialArray[idMaterial] vtxmask[vtxmaskpos]    --Estos arrays en realiad son tridimensionales [][][]
+		ExportVertexs l_Vtxs file idxAccesArray[idMaterial] vtxmask[vtxmaskpos]    --Estos arrays en realiad son tridimensionales [][][]
 		WriteShort file numIndexes #unsigned
-		ExportIndexs l_Idxs file l_MaterialArray[idMaterial]
+		ExportIndexs l_Idxs file idxAccesArray[idMaterial]
 	)
 	
 	--Exportar BoundingBox y BoundingSphere
@@ -452,18 +457,21 @@ function GenerateVertexs Obj vtxs idxs vtxmask l_MaterialArray =
 		local TUVMap3 =  meshop.getMapVert Obj 1 IdxsMap.x
 		
 		local idMaterial = getFaceMatID Obj face
-		if UABUtility.debug then
+		if UABUtility.debug then (
 			format "[GenerateVertexs] material of face is %\n" idMaterial
-		local maskpos = findItem l_MaterialArray idMaterial
+			format "[GenerateVertex] old idnx Array is %\n" idxAccesArray
+		)
+		local maskpos = findItem idxAccesArray idMaterial
 		if maskpos == 0 then (
 			if UABUtility.debug then
-				format "[GenerateVertexs] not found material % in the materialArray %\n" idMaterial l_MaterialArray
+				format "[GenerateVertexs] not found material % in the materialArray %\n" idMaterial idxAccesArray
 			maskpos = 1
 		)
+		local realpos = l_MaterialArray[maskpos]
 		local Col
 		if UABUtility.debug then (
 			format "[GenerateVertexs] class of material %\n" (classof(Obj.material))
-			format "[GenerateVertexs] maskpos is %\n" maskpos
+			format "[GenerateVertexs] maskpos is %\n" realpos
 		)
 		if classof(Obj.material)==Standardmaterial then
 		(
@@ -474,6 +482,7 @@ function GenerateVertexs Obj vtxs idxs vtxmask l_MaterialArray =
 			if classof(Obj.material) == UndefinedClass then 
 			(
 				Col = Obj.wirecolor
+				realpos = 1
 			) else (
 				if maskpos > Obj.material.count then (
 					Col = Obj.wirecolor
@@ -484,10 +493,10 @@ function GenerateVertexs Obj vtxs idxs vtxmask l_MaterialArray =
 		)
 		
 		if UABUtility.debug then
-			format "[GenerateVertexs] vertex mask of this material is %\n" vtxmask[maskpos]
-		local totalVertex1 = CreateFullVertex vtx1 Normal1 TUVMap1 0 Col 0 0 vtxmask[maskpos]
-		local totalVertex2 = CreateFullVertex vtx2 Normal2 TUVMap2 0 Col 0 0 vtxmask[maskpos]
-		local totalVertex3 = CreateFullVertex vtx3 Normal3 TUVMap3 0 Col 0 0 vtxmask[maskpos]
+			format "[GenerateVertexs] vertex mask of this material is %\n" vtxmask[realpos]
+		local totalVertex1 = CreateFullVertex vtx1 Normal1 TUVMap1 0 Col 0 0 vtxmask[realpos]
+		local totalVertex2 = CreateFullVertex vtx2 Normal2 TUVMap2 0 Col 0 0 vtxmask[realpos]
+		local totalVertex3 = CreateFullVertex vtx3 Normal3 TUVMap3 0 Col 0 0 vtxmask[realpos]
 		
 		local index1=dotNetAddVertex totalVertex1 vtxs idMaterial l_vtxMap
 		local index2=dotNetAddVertex totalVertex2 vtxs idMaterial l_vtxMap
@@ -513,6 +522,20 @@ function CreateMaterialArray Obj =
 	if UABUtility.debug then
 		format "[CreateMaterialArray]\n--------------------\narray of idexes %\n--------------------\n" array
 	sort array
+	global idxAccesArray = deepcopy array
+	if UABUtility.debug then
+		format "[CreateMaterialArray] looking for cicle ids\n"
+	for i =1 to array.count do (
+		if classof(Obj.material) == Multimaterial then (
+			local pos = array[i]
+			if Obj.material[pos] == undefined then (
+				local newIndex = mod pos Obj.material.count as integer
+				if newIndex == 0 then
+					newIndex = Obj.material.count
+				array[i] = newIndex
+			)
+		)
+	)
 	if UABUtility.debug then
 		format "[CreateMaterialArray] ordered array is %\n" array
 	return array

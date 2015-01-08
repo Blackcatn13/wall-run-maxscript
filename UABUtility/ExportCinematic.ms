@@ -51,7 +51,7 @@ function ExportAnimatedObject Obj file =
 		local roll = DegToRad (GetRoll (at time key Obj.transform))
 		local _scale = at time key RHTranslationToLH(Obj.scale)
 		format "\t\t<cinematic_object_key_frame time=\"%\" " _time to:file
-		format "pos =\"% % %\" yaw=\"%\" " pos.x pos.y pos.z yaw to:file
+		format "pos=\"% % %\" yaw=\"%\" " pos.x pos.y pos.z yaw to:file
 		format "pitch=\"%\" roll=\"%\" scale=\"% % %\"/>\n" pitch roll _scale.x _scale.y _scale.z to:file
 		key = (at time key trackbar.getNextKeyTime()).frame
 	) while key > animStart

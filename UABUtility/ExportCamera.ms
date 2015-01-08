@@ -120,10 +120,12 @@ function exportCameraKeyFrames cam fileNameWithPath =
 		dir = at time key cam.dir
 		if cam.type == #free then (
 			targetDist = at time key cam.baseObject.TargetDistance
+			_lookat = RHTranslationToLH (pos - dir * targetDist)
 		) else (
 			targetDist = at time key cam.TargetDistance
+			_lookat = at time key RHTranslationToLH(cam.Target.pos)
 		)
-		_lookat = RHTranslationToLH (pos - dir * targetDist)
+		--_lookat = RHTranslationToLH (pos - dir * targetDist)
 		fov = DegToRad (at time key cam.fov)
 		near = at time key cam.nearClip
 		far = at time key cam.farclip
