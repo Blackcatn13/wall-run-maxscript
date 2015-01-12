@@ -9,7 +9,11 @@ function exportCameras _path absPath cameraList=
 	if cameraList == undefined then (
 		cams = cameras as array
 	) else ( 
-		cams = #(cameraList)
+		if classof cameraList == ObjectSet then (
+			cams = cameraList
+		) else (
+			cams = #(cameraList)
+		)
 	)
 	if cams.count >= 1 then (
 		if UABUtility.debug then

@@ -4,6 +4,7 @@ fileIn "ExportMesh.ms"
 fileIn "BBoxBSphere.ms"
 fileIn "ExportCamera.ms"
 fileIn "ExportCinematic.ms"
+fileIn "ExportLights.ms"
 
 global realPath
 
@@ -102,6 +103,7 @@ utility UABUtility "UAB Utility" width:152 height:404
 		local pathToCopy = realPath + "\\Data\\" + LevelList.items[LevelList.selection] + "\\"
 		ExportStaticMesh pathToCopy realPath
 		exportCameras pathToCopy realPath undefined
+		exportLights pathToCopy realPath undefined
 		format "==============================\n"
 		format "Full scene exported correctly\n"
 		format "==============================\n"
@@ -123,6 +125,15 @@ utility UABUtility "UAB Utility" width:152 height:404
 		exportCameras pathToCopy realPath $
 		format "==============================\n"
 		format "camera exported correctly\n"
+		format "==============================\n"
+	)
+	
+	on ExportLightsButton pressed do
+	(
+		local pathToCopy = realPath + "\\Data\\" + LevelList.items[LevelList.selection] + "\\"
+		exportLights pathToCopy realPath $
+		format "==============================\n"
+		format "ligths exported correctly\n"
 		format "==============================\n"
 	)
 	
