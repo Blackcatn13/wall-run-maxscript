@@ -427,9 +427,69 @@ function CreateFullVertex vtx n tu1 tu2 col tn bn mater=
 	return vertex
 )
 
+global UABVtxsNormals=#()
+
+function UABClearNormalsArray =
+(
+	while UABVtxsNormals.count>0 do (
+		deleteItem UABVtxsNormals 1
+	)
+)
+
+function IsSmoothingGroupEnabled IdGroup Value =
+(
+	local ValueMask=2^(IdGroup-1)	
+	return (bit.and Value ValueMask)==ValueMask
+)
+
+function UABGetVertexNormal obj IdVertex SmoothValue FaceNormal =
+(
+	local HasNormal=false
+	local Normal=point3 0 0 0
+	for b=1 to 32 do (
+		if((IsSmoothingGroupEnabled b SmoothValue)==true) then (
+			Normal=Normal+UABVtxsNormals[IdVertex][b]
+			HasNormal=true
+		)
+	)
+	if HasNormal==false then (
+		Normal=FaceNormal
+	)
+	return Normal
+)
+
+
+function UABCalcVertexsNormals obj =
+(
+	UABClearNormalsArray()
+	local NumVtxs=getNumVerts obj
+	for b=1 to NumVtxs do (
+		UABVtxsNormals[b]=#()
+		for t=1 to 32 do (
+			UABVtxsNormals[b][t]=point3 0 0 0
+		)
+	)
+	local NumFaces=getNumFaces obj
+	local InvTransform=inverse obj.transform
+	for IdFace=1 to NumFaces do (
+		local IdxsFace=getFace obj IdFace
+		local Vtx1=(getVert obj IdxsFace.x)*InvTransform
+		local Vtx3=(getVert obj IdxsFace.z)*InvTransform
+		local FaceNormal=getFaceNormal obj IdFace
+		local SmoothValue=getFaceSmoothGroup obj IdFace
+		for b=1 to 32 do (
+			if((IsSmoothingGroupEnabled b SmoothValue)==true) then (
+				UABVtxsNormals[IdxsFace.x][b]=UABVtxsNormals[IdxsFace.x][b] + FaceNormal
+				UABVtxsNormals[IdxsFace.y][b]=UABVtxsNormals[IdxsFace.y][b] + FaceNormal
+				UABVtxsNormals[IdxsFace.z][b]=UABVtxsNormals[IdxsFace.z][b] + FaceNormal
+			)
+		)
+	)
+)
+
 function GenerateVertexs Obj vtxs idxs vtxmask l_MaterialArray =
 (
-	
+	UABCalcVertexsNormals Obj
 	local numFaces = getNumFaces Obj
 	local l_vtxMap = array=#()
 	for i = 1 to numFaces do (
@@ -447,9 +507,16 @@ function GenerateVertexs Obj vtxs idxs vtxmask l_MaterialArray =
 		local vtx2=(getVert Obj aFace.y) * inverse Obj.transform
 		local vtx3=(getVert Obj aFace.x) * inverse Obj.transform
 		
-		local Normal1 = getNormal Obj aFace.z
-		local Normal2 = getNormal Obj aFace.y
-		local Normal3 = getNormal Obj aFace.x
+		local sm1 =getFaceSmoothGroup Obj face
+		local sm2 =getFaceSmoothGroup Obj face
+		local sm3 =getFaceSmoothGroup Obj face
+		--UABGetVertexNormal obj IdVertex SmoothValue FaceNormal 
+		local n1 = getNormal Obj aFace.z
+		local n2 = getNormal Obj aFace.y
+		local n3 = getNormal Obj aFace.x
+		local Normal1 = UABGetVertexNormal Obj aFace.z sm1 n1
+		local Normal2 = UABGetVertexNormal Obj aFace.y sm2 n2
+		local Normal3 = UABGetVertexNormal Obj aFace.x sm3 n3
 		
 		local IdxsMap= meshop.getMapFace Obj 1 face
 		local TUVMap1 =  meshop.getMapVert Obj 1 IdxsMap.z
