@@ -166,7 +166,14 @@ function getMask mat numText=
 	if(numText == 1 and mat.diffuseMapEnable) then (
 		VtxMask = bit.or VtxMask VERTEX_NORMAL
 		VtxMask = bit.or VtxMask VERTEX_TEXTURE1
+		if(mat.bumpMapEnable) then (
+			VtxMask = bit.or VtxMask VERTEX_TANGENT
+			VtxMask = bit.or VtxMask VERTEX_BINORMAL
+			VtxMask = bit.or VtxMask VERTEX_TEXTURE2
+		)
+		
 	)
+	
 	return VtxMask
 )
 

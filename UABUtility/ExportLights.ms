@@ -6,15 +6,17 @@ function exportLights _path absPath lightsList=
 		format "[exportLights] starting export of lights\n"
 	local file
 	local _lights
+	format "lights list %\n" lightsList
 	if lightsList == undefined then (
 		_lights = lights as array
 	) else ( 
-		if classof ligthsList == ObjectSet then (
-			_lights = lightsList
+		if classof lightsList == ObjectSet then (
+			_lights = lightsList as array
 		) else (
 			_lights = #(lightsList)
 		)
 	)
+	format "lights list %\n" _lights
 	if _lights.count >= 1 then (
 		if UABUtility.debug then
 			format "[exportLights] exporting % ligths\n" _lights.count
