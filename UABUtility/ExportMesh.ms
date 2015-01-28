@@ -163,15 +163,17 @@ function getMask mat numText=
 	if numText == 0 then (
 		VtxMask = bit.or VtxMask VERTEX_DIFFUSE
 	)
-	if(numText == 1 and mat.diffuseMapEnable) then (
+	if(numText >= 1 and mat.diffuseMapEnable) then (
 		VtxMask = bit.or VtxMask VERTEX_NORMAL
 		VtxMask = bit.or VtxMask VERTEX_TEXTURE1
-		if(mat.bumpMapEnable) then (
+		if mat.bumpMapEnable then (
 			VtxMask = bit.or VtxMask VERTEX_TANGENT
 			VtxMask = bit.or VtxMask VERTEX_BINORMAL
 			VtxMask = bit.or VtxMask VERTEX_TEXTURE2
 		)
-		
+		if mat.selfIllumMapEnable then (
+			VtxMask = bit.or VtxMask VERTEX_TEXTURE2
+		)
 	)
 	
 	return VtxMask
@@ -197,7 +199,19 @@ function ExportMaterial _Material File _file FilePath copy_textures=
 		format "[ExportMaterial] mat name %\n" _Material
 	for  i=1 to textNum do --numero de texturas
 	(
-		local _filename = (openBitMap _Material.diffuseMap.bitmap.filename).fileName 
+		local _filename 
+		if i == 1 then (
+			_filename = (openBitMap _Material.diffuseMap.bitmap.filename).fileName 
+	    ) else (
+      		if i == 2 then (
+				if _Material.bumpMapEnable then (
+					_filename = (openBitMap _Material.bumpMap.bitmap.filename).fileName
+				)
+				if _Material.selfIllumMapEnable then (
+					_filename = (openBitMap _Material.selfIllumMap.bitmap.filename).fileName
+				)
+			)
+		)
 		
 		---------------------------------------
 		local L_Path =  FilePath+"textures/"
@@ -269,6 +283,22 @@ function ExportVertexs arrayVertex File idMaterial vtxmask=
 			writeFloat File arrayVertex[idMaterial][j][k+2]
 			k = k + 3
 		)
+		if (bit.and vtxmask VERTEX_TANGENT) == VERTEX_TANGENT then (
+			if UABUtility.debug then
+				format "[ExportVertexs] tangent: % % %\n" arrayVertex[idMaterial][j][k] arrayVertex[idMaterial][j][k+1] arrayVertex[idMaterial][j][k+2]
+			writeFloat File arrayVertex[idMaterial][j][k]
+			writeFloat File arrayVertex[idMaterial][j][k+1]
+			writeFloat File arrayVertex[idMaterial][j][k+2]
+			k = k + 3
+		)
+		if (bit.and vtxmask VERTEX_BINORMAL) == VERTEX_BINORMAL then (
+			if UABUtility.debug then
+				format "[ExportVertexs] binormal: % % %\n" arrayVertex[idMaterial][j][k] arrayVertex[idMaterial][j][k+1] arrayVertex[idMaterial][j][k+2]
+			writeFloat File arrayVertex[idMaterial][j][k]
+			writeFloat File arrayVertex[idMaterial][j][k+1]
+			writeFloat File arrayVertex[idMaterial][j][k+2]
+			k = k + 3
+		)
 		if (bit.and vtxmask VERTEX_DIFFUSE) == VERTEX_DIFFUSE then (
 			if UABUtility.debug then
 				format "[ExportVertexs] color: %\n" arrayVertex[idMaterial][j][k]
@@ -278,6 +308,13 @@ function ExportVertexs arrayVertex File idMaterial vtxmask=
 		if (bit.and vtxmask VERTEX_TEXTURE1) == VERTEX_TEXTURE1 then (
 			if UABUtility.debug then
 				format "[ExportVertexs] uv: % %\n" arrayVertex[idMaterial][j][k] arrayVertex[idMaterial][j][k+1]
+			writeFloat File arrayVertex[idMaterial][j][k]
+			writeFloat File arrayVertex[idMaterial][j][k+1]
+			k = k + 2
+		)
+		if(bit.and vtxmask VERTEX_TEXTURE2) == VERTEX_TEXTURE2 then (
+			if UABUtility.debug then
+				format "[ExportVertexs] uv2: % %\n" arrayVertex[idMaterial][j][k] arrayVertex[idMaterial][j][k+1]
 			writeFloat File arrayVertex[idMaterial][j][k]
 			writeFloat File arrayVertex[idMaterial][j][k+1]
 			k = k + 2
@@ -408,6 +445,16 @@ function CreateFullVertex vtx n tu1 tu2 col tn bn mater=
 		append vertex n.z
 		append vertex n.y
 	)
+	if(bit.and mater VERTEX_TANGENT) == VERTEX_TANGENT then (
+		append vertex 0.0
+		append vertex 0.0
+		append vertex 0.0
+	)
+	if(bit.and mater VERTEX_BINORMAL) == VERTEX_BINORMAL then (
+		append vertex 0.0
+		append vertex 0.0
+		append vertex 0.0
+	)
 	if (bit.and mater VERTEX_DIFFUSE) == VERTEX_DIFFUSE then (
 		local alphaValue = bit.and col.a 0xff
 		local redValue = bit.and col.r 0xff	
@@ -431,6 +478,7 @@ function CreateFullVertex vtx n tu1 tu2 col tn bn mater=
 		local v =  (0.0f - (tu2.y - 1.0f))
 		append vertex v
 	)
+	
 	return vertex
 )
 
@@ -568,9 +616,9 @@ function GenerateVertexs Obj vtxs idxs vtxmask l_MaterialArray =
 		
 		if UABUtility.debug then
 			format "[GenerateVertexs] vertex mask of this material is %\n" vtxmask[realpos]
-		local totalVertex1 = CreateFullVertex vtx1 Normal1 TUVMap1 0 Col 0 0 vtxmask[realpos]
-		local totalVertex2 = CreateFullVertex vtx2 Normal2 TUVMap2 0 Col 0 0 vtxmask[realpos]
-		local totalVertex3 = CreateFullVertex vtx3 Normal3 TUVMap3 0 Col 0 0 vtxmask[realpos]
+		local totalVertex1 = CreateFullVertex vtx1 Normal1 TUVMap1 TUVMap1 Col 0 0 vtxmask[realpos]
+		local totalVertex2 = CreateFullVertex vtx2 Normal2 TUVMap2 TUVMap1 Col 0 0 vtxmask[realpos]
+		local totalVertex3 = CreateFullVertex vtx3 Normal3 TUVMap3 TUVMap1 Col 0 0 vtxmask[realpos]
 		
 		local index1=dotNetAddVertex totalVertex1 vtxs idMaterial l_vtxMap
 		local index2=dotNetAddVertex totalVertex2 vtxs idMaterial l_vtxMap
