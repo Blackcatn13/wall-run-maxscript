@@ -617,8 +617,8 @@ function GenerateVertexs Obj vtxs idxs vtxmask l_MaterialArray =
 		if UABUtility.debug then
 			format "[GenerateVertexs] vertex mask of this material is %\n" vtxmask[realpos]
 		local totalVertex1 = CreateFullVertex vtx1 Normal1 TUVMap1 TUVMap1 Col 0 0 vtxmask[realpos]
-		local totalVertex2 = CreateFullVertex vtx2 Normal2 TUVMap2 TUVMap1 Col 0 0 vtxmask[realpos]
-		local totalVertex3 = CreateFullVertex vtx3 Normal3 TUVMap3 TUVMap1 Col 0 0 vtxmask[realpos]
+		local totalVertex2 = CreateFullVertex vtx2 Normal2 TUVMap2 TUVMap2 Col 0 0 vtxmask[realpos]
+		local totalVertex3 = CreateFullVertex vtx3 Normal3 TUVMap3 TUVMap3 Col 0 0 vtxmask[realpos]
 		
 		local index1=dotNetAddVertex totalVertex1 vtxs idMaterial l_vtxMap
 		local index2=dotNetAddVertex totalVertex2 vtxs idMaterial l_vtxMap
