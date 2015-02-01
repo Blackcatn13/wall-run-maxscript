@@ -87,7 +87,7 @@ utility UABUtility "UAB Utility" width:152 height:404
 	
 		local pathToCopy = realPath + "\\Data\\" + LevelList.items[LevelList.selection] + "\\"
 		if $ != undefined then (
-			if UABUtility.debug then
+			if debug then
 				format "name is %\n" (pathToCopy + "meshes\\" + $.name + ".mesh")
 			ExportMesh $  pathToCopy ($.name + ".mesh") realPath true
 			format "==============================\n"
@@ -111,7 +111,7 @@ utility UABUtility "UAB Utility" width:152 height:404
 	on ExportStaticMeshManagerButton pressed do
 	(
 		local pathToCopy = realPath + "\\Data\\" + LevelList.items[LevelList.selection] + "\\"
-		if UABUtility.debug then
+		if debug then
 			format "pathToCopy %\n" pathToCopy
 		ExportStaticMeshManager $ pathToCopy realPath CopyTexturesCheck.checked ExportMeshCheck.checked
 		format "==============================\n"

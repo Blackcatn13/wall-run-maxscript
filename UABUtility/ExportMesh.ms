@@ -159,8 +159,17 @@ function GetNumberOfTextures mat =
 function getMask mat numText= 
 (
 	local VtxMask = VERTEX_XYZ
-	
-	if numText == 0 then (
+	if UABUtility.debug then (
+		format "[getMask] number of textures %\n" numText
+		if numText >= 1 then (
+			format "[getMask] is diffuse enabled? % \n" mat.diffuseMapEnable
+			format "[getMask] is bump enabled? % \n" mat.bumpMapEnable
+			format "[getMask] is selfIllum enabled? % \n" mat.selfIllumMapEnable
+		)
+	)
+	if numText == 0 then
+		VtxMask = bit.or VtxMask VERTEX_DIFFUSE
+	else if mat.diffuseMapEnable == false then (
 		VtxMask = bit.or VtxMask VERTEX_DIFFUSE
 	)
 	if(numText >= 1 and mat.diffuseMapEnable) then (
@@ -175,7 +184,15 @@ function getMask mat numText=
 			VtxMask = bit.or VtxMask VERTEX_TEXTURE2
 		)
 	)
-	
+	else if(numText >= 1 and mat.bumpMapEnable) then (
+		VtxMask = bit.or VtxMask VERTEX_NORMAL
+		VtxMask = bit.or VtxMask VERTEX_TANGENT
+		VtxMask = bit.or VtxMask VERTEX_BINORMAL
+		VtxMask = bit.or VtxMask VERTEX_TEXTURE1
+		if mat.selfIllumMapEnable then (
+			VtxMask = bit.or VtxMask VERTEX_TEXTURE2
+		)
+	)		
 	return VtxMask
 )
 
@@ -201,7 +218,15 @@ function ExportMaterial _Material File _file FilePath copy_textures=
 	(
 		local _filename 
 		if i == 1 then (
-			_filename = (openBitMap _Material.diffuseMap.bitmap.filename).fileName 
+			if _Material.diffuseMapEnable then (
+				_filename = (openBitMap _Material.diffuseMap.bitmap.filename).fileName 
+			)
+			else if _Material.bumpMapEnable then (
+				_filename = (openBitMap _Material.bumpMap.bitmap.filename).fileName
+			)
+			else if _Material.selfIllumMapEnable then (
+				_filename = (openBitMap _Material.selfIllumMap.bitmap.filename).fileName
+			)
 	    ) else (
       		if i == 2 then (
 				if _Material.bumpMapEnable then (
