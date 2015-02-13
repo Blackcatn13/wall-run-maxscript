@@ -314,7 +314,8 @@ function ExportVertexs arrayVertex File idMaterial vtxmask=
 			writeFloat File arrayVertex[idMaterial][j][k]
 			writeFloat File arrayVertex[idMaterial][j][k+1]
 			writeFloat File arrayVertex[idMaterial][j][k+2]
-			k = k + 3
+			writeFloat File arrayVertex[idMaterial][j][k+3]
+			k = k + 4
 		)
 		if (bit.and vtxmask VERTEX_BINORMAL) == VERTEX_BINORMAL then (
 			if UABUtility.debug then
@@ -322,7 +323,8 @@ function ExportVertexs arrayVertex File idMaterial vtxmask=
 			writeFloat File arrayVertex[idMaterial][j][k]
 			writeFloat File arrayVertex[idMaterial][j][k+1]
 			writeFloat File arrayVertex[idMaterial][j][k+2]
-			k = k + 3
+			writeFloat File arrayVertex[idMaterial][j][k+3]
+			k = k + 4
 		)
 		if (bit.and vtxmask VERTEX_DIFFUSE) == VERTEX_DIFFUSE then (
 			if UABUtility.debug then
@@ -474,8 +476,10 @@ function CreateFullVertex vtx n tu1 tu2 col tn bn mater=
 		append vertex 0.0
 		append vertex 0.0
 		append vertex 0.0
+		append vertex 0.0
 	)
 	if(bit.and mater VERTEX_BINORMAL) == VERTEX_BINORMAL then (
+		append vertex 0.0
 		append vertex 0.0
 		append vertex 0.0
 		append vertex 0.0
@@ -598,10 +602,25 @@ function GenerateVertexs Obj vtxs idxs vtxmask l_MaterialArray =
 		local Normal2 = UABGetVertexNormal Obj aFace.y sm2 n2
 		local Normal3 = UABGetVertexNormal Obj aFace.x sm3 n3
 		
+		if UABUtility.debug then (
+			format "[GenerateVertexs] number of texture maps %\n" ((meshop.getNumMaps Obj) - 1)
+		)
+		
 		local IdxsMap= meshop.getMapFace Obj 1 face
 		local TUVMap1 =  meshop.getMapVert Obj 1 IdxsMap.z
 		local TUVMap2 =  meshop.getMapVert Obj 1 IdxsMap.y
 		local TUVMap3 =  meshop.getMapVert Obj 1 IdxsMap.x
+		
+		local TUV2Map1 = TUVMap1
+		local TUV2Map2 = TUVMap2
+		local TUV2Map3 = TUVMap3
+		
+		if (meshop.getNumMaps Obj)  - 1 > 1 then (
+			Idxs2Map = meshop.getMapFace Obj 2 face
+			TUV2Map1 = meshop.getMapVert Obj 2 Idxs2Map.z
+			TUV2Map2 = meshop.getMapVert Obj 2 Idxs2Map.y
+			TUV2Map3 = meshop.getMapVert Obj 2 Idxs2Map.x
+		)
 		
 		local idMaterial = getFaceMatID Obj face
 		if UABUtility.debug then (
@@ -641,9 +660,9 @@ function GenerateVertexs Obj vtxs idxs vtxmask l_MaterialArray =
 		
 		if UABUtility.debug then
 			format "[GenerateVertexs] vertex mask of this material is %\n" vtxmask[realpos]
-		local totalVertex1 = CreateFullVertex vtx1 Normal1 TUVMap1 TUVMap1 Col 0 0 vtxmask[realpos]
-		local totalVertex2 = CreateFullVertex vtx2 Normal2 TUVMap2 TUVMap2 Col 0 0 vtxmask[realpos]
-		local totalVertex3 = CreateFullVertex vtx3 Normal3 TUVMap3 TUVMap3 Col 0 0 vtxmask[realpos]
+		local totalVertex1 = CreateFullVertex vtx1 Normal1 TUVMap1 TUV2Map1 Col 0 0 vtxmask[realpos]
+		local totalVertex2 = CreateFullVertex vtx2 Normal2 TUVMap2 TUV2Map2 Col 0 0 vtxmask[realpos]
+		local totalVertex3 = CreateFullVertex vtx3 Normal3 TUVMap3 TUV2Map3 Col 0 0 vtxmask[realpos]
 		
 		local index1=dotNetAddVertex totalVertex1 vtxs idMaterial l_vtxMap
 		local index2=dotNetAddVertex totalVertex2 vtxs idMaterial l_vtxMap
