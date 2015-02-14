@@ -54,7 +54,7 @@ function ExportDirectional _light file =
 		format "[ExportDirectional] starting export of directional light\n"
 	local pos = RHTranslationToLH(_light.pos)
 	local dir = RHTranslationToLH(_light.target.pos - _light.pos)
-	local col = _light.rgb
+	local col = _light.rgb / 255
 	local inten = _light.multiplier
 	local start = _light.farAttenStart
 	local end = _light.farAttenEnd
@@ -72,7 +72,7 @@ function ExportSpot _light file =
 		format "[ExportSpot] starting export of Spot\n"
 	local pos = RHTranslationToLH(_light.pos)
 	local dir = RHTranslationToLH(_light.target.pos - _light.pos)
-	local col = _light.rgb
+	local col = _light.rgb / 255 
 	local inten = _light.multiplier
 	local start = _light.farAttenStart
 	local end = _light.farAttenEnd
@@ -92,7 +92,7 @@ function ExportOmniLight obj file =
 	local namel = obj.name
 	local type = "omni"
 	local pos = RHTranslationToLH obj.pos
-	local colorl = obj.rgb
+	local colorl = obj.rgb / 255
 	local intensity = obj.multiplier
 	local startatt = obj.farAttenStart
 	local endatt = obj.farAttenEnd

@@ -178,7 +178,6 @@ function getMask mat numText=
 		if mat.bumpMapEnable then (
 			VtxMask = bit.or VtxMask VERTEX_TANGENT
 			VtxMask = bit.or VtxMask VERTEX_BINORMAL
-			VtxMask = bit.or VtxMask VERTEX_TEXTURE2
 		)
 		if mat.selfIllumMapEnable then (
 			VtxMask = bit.or VtxMask VERTEX_TEXTURE2
@@ -307,10 +306,16 @@ function ExportVertexs arrayVertex File idMaterial vtxmask=
 			writeFloat File arrayVertex[idMaterial][j][k+1]
 			writeFloat File arrayVertex[idMaterial][j][k+2]
 			k = k + 3
+			if (bit.and vtxmask VERTEX_TANGENT) == VERTEX_TANGENT then (
+				if UABUtility.debug then
+					format "[ExportVertexs] normal w: %\n" arrayVertex[idMaterial][j][k]
+				writeFloat File arrayVertex[idMaterial][j][k]
+				k = k + 1
+			)
 		)
 		if (bit.and vtxmask VERTEX_TANGENT) == VERTEX_TANGENT then (
 			if UABUtility.debug then
-				format "[ExportVertexs] tangent: % % %\n" arrayVertex[idMaterial][j][k] arrayVertex[idMaterial][j][k+1] arrayVertex[idMaterial][j][k+2]
+				format "[ExportVertexs] tangent: % % % %\n" arrayVertex[idMaterial][j][k] arrayVertex[idMaterial][j][k+1] arrayVertex[idMaterial][j][k+2] arrayVertex[idMaterial][j][k+3]
 			writeFloat File arrayVertex[idMaterial][j][k]
 			writeFloat File arrayVertex[idMaterial][j][k+1]
 			writeFloat File arrayVertex[idMaterial][j][k+2]
@@ -319,7 +324,7 @@ function ExportVertexs arrayVertex File idMaterial vtxmask=
 		)
 		if (bit.and vtxmask VERTEX_BINORMAL) == VERTEX_BINORMAL then (
 			if UABUtility.debug then
-				format "[ExportVertexs] binormal: % % %\n" arrayVertex[idMaterial][j][k] arrayVertex[idMaterial][j][k+1] arrayVertex[idMaterial][j][k+2]
+				format "[ExportVertexs] binormal: % % % %\n" arrayVertex[idMaterial][j][k] arrayVertex[idMaterial][j][k+1] arrayVertex[idMaterial][j][k+2] arrayVertex[idMaterial][j][k+3]
 			writeFloat File arrayVertex[idMaterial][j][k]
 			writeFloat File arrayVertex[idMaterial][j][k+1]
 			writeFloat File arrayVertex[idMaterial][j][k+2]
@@ -468,9 +473,13 @@ function CreateFullVertex vtx n tu1 tu2 col tn bn mater=
 		append vertex vtx.y	
 	)
 	if (bit.and mater VERTEX_NORMAL) == VERTEX_NORMAL then (
+		n = normalize(n)
 		append vertex n.x
 		append vertex n.z
 		append vertex n.y
+		if(bit.and mater VERTEX_TANGENT) == VERTEX_TANGENT then (
+			append vertex 0.0
+		)
 	)
 	if(bit.and mater VERTEX_TANGENT) == VERTEX_TANGENT then (
 		append vertex 0.0
@@ -591,16 +600,14 @@ function GenerateVertexs Obj vtxs idxs vtxmask l_MaterialArray =
 		local vtx2=(getVert Obj aFace.y) * inverse Obj.transform
 		local vtx3=(getVert Obj aFace.x) * inverse Obj.transform
 		
-		local sm1 =getFaceSmoothGroup Obj face
-		local sm2 =getFaceSmoothGroup Obj face
-		local sm3 =getFaceSmoothGroup Obj face
+		local sm =getFaceSmoothGroup Obj face
 		--UABGetVertexNormal obj IdVertex SmoothValue FaceNormal 
 		local n1 = getNormal Obj aFace.z
 		local n2 = getNormal Obj aFace.y
 		local n3 = getNormal Obj aFace.x
-		local Normal1 = UABGetVertexNormal Obj aFace.z sm1 n1
-		local Normal2 = UABGetVertexNormal Obj aFace.y sm2 n2
-		local Normal3 = UABGetVertexNormal Obj aFace.x sm3 n3
+		local Normal1 = UABGetVertexNormal Obj aFace.z sm n1
+		local Normal2 = UABGetVertexNormal Obj aFace.y sm n2
+		local Normal3 = UABGetVertexNormal Obj aFace.x sm n3
 		
 		if UABUtility.debug then (
 			format "[GenerateVertexs] number of texture maps %\n" ((meshop.getNumMaps Obj) - 1)
@@ -615,7 +622,7 @@ function GenerateVertexs Obj vtxs idxs vtxmask l_MaterialArray =
 		local TUV2Map2 = TUVMap2
 		local TUV2Map3 = TUVMap3
 		
-		if (meshop.getNumMaps Obj)  - 1 > 1 then (
+		if ((meshop.getNumMaps Obj)  - 1) > 1 then (
 			Idxs2Map = meshop.getMapFace Obj 2 face
 			TUV2Map1 = meshop.getMapVert Obj 2 Idxs2Map.z
 			TUV2Map2 = meshop.getMapVert Obj 2 Idxs2Map.y
