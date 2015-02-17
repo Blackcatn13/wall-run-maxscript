@@ -8,6 +8,7 @@ VERTEX_BINORMAL = 0x8
 VERTEX_TEXTURE1 = 0x10
 VERTEX_TEXTURE2 = 0x20
 VERTEX_DIFFUSE = 0x40
+VERTEX_CUBEMAP = 0x200
 
 
 function ExportMesh Obj filepath _filename _file copy_textures=
@@ -182,6 +183,9 @@ function getMask mat numText=
 		if mat.selfIllumMapEnable then (
 			VtxMask = bit.or VtxMask VERTEX_TEXTURE2
 		)
+		if mat.reflectionMapEnable then (
+			VtxMask = bit.or VtxMask VERTEX_CUBEMAP
+		)
 	)
 	else if(numText >= 1 and mat.bumpMapEnable) then (
 		VtxMask = bit.or VtxMask VERTEX_NORMAL
@@ -191,7 +195,10 @@ function getMask mat numText=
 		if mat.selfIllumMapEnable then (
 			VtxMask = bit.or VtxMask VERTEX_TEXTURE2
 		)
-	)		
+	)
+	else if(numText >= 1 and mat.reflectionMapEnable) then (
+		VtxMask = bit.or VtxMask VERTEX_CUBEMAP
+	)
 	return VtxMask
 )
 
@@ -226,6 +233,9 @@ function ExportMaterial _Material File _file FilePath copy_textures=
 			else if _Material.selfIllumMapEnable then (
 				_filename = (openBitMap _Material.selfIllumMap.bitmap.filename).fileName
 			)
+			else if _Material.reflectionMapEnable then (
+				_filename = (openBitMap _Material.reflectionMap.bitmap.filename).fileName
+			)
 	    ) else (
       		if i == 2 then (
 				if _Material.bumpMapEnable then (
@@ -233,6 +243,9 @@ function ExportMaterial _Material File _file FilePath copy_textures=
 				)
 				if _Material.selfIllumMapEnable then (
 					_filename = (openBitMap _Material.selfIllumMap.bitmap.filename).fileName
+				)
+				if _Material.reflectionMapEnable then (
+				_filename = (openBitMap _Material.reflectionMap.bitmap.filename).fileName
 				)
 			)
 		)
@@ -478,7 +491,7 @@ function CreateFullVertex vtx n tu1 tu2 col tn bn mater=
 		append vertex n.z
 		append vertex n.y
 		if(bit.and mater VERTEX_TANGENT) == VERTEX_TANGENT then (
-			append vertex 0.0
+			append vertex 1.0
 		)
 	)
 	if(bit.and mater VERTEX_TANGENT) == VERTEX_TANGENT then (
@@ -596,27 +609,27 @@ function GenerateVertexs Obj vtxs idxs vtxmask l_MaterialArray =
 	(
 		--format "Processing face number %\n" face
 		local aFace=getFace Obj face
-		local vtx1=(getVert Obj aFace.z) * inverse Obj.transform
+		local vtx1=(getVert Obj aFace.x) * inverse Obj.transform
 		local vtx2=(getVert Obj aFace.y) * inverse Obj.transform
-		local vtx3=(getVert Obj aFace.x) * inverse Obj.transform
+		local vtx3=(getVert Obj aFace.z) * inverse Obj.transform
 		
 		local sm =getFaceSmoothGroup Obj face
 		--UABGetVertexNormal obj IdVertex SmoothValue FaceNormal 
-		local n1 = getNormal Obj aFace.z
+		local n1 = getNormal Obj aFace.x
 		local n2 = getNormal Obj aFace.y
-		local n3 = getNormal Obj aFace.x
-		local Normal1 = UABGetVertexNormal Obj aFace.z sm n1
+		local n3 = getNormal Obj aFace.z
+		local Normal1 = UABGetVertexNormal Obj aFace.x sm n1
 		local Normal2 = UABGetVertexNormal Obj aFace.y sm n2
-		local Normal3 = UABGetVertexNormal Obj aFace.x sm n3
+		local Normal3 = UABGetVertexNormal Obj aFace.z sm n3
 		
 		if UABUtility.debug then (
 			format "[GenerateVertexs] number of texture maps %\n" ((meshop.getNumMaps Obj) - 1)
 		)
 		
 		local IdxsMap= meshop.getMapFace Obj 1 face
-		local TUVMap1 =  meshop.getMapVert Obj 1 IdxsMap.z
+		local TUVMap1 =  meshop.getMapVert Obj 1 IdxsMap.x
 		local TUVMap2 =  meshop.getMapVert Obj 1 IdxsMap.y
-		local TUVMap3 =  meshop.getMapVert Obj 1 IdxsMap.x
+		local TUVMap3 =  meshop.getMapVert Obj 1 IdxsMap.z
 		
 		local TUV2Map1 = TUVMap1
 		local TUV2Map2 = TUVMap2
@@ -624,9 +637,9 @@ function GenerateVertexs Obj vtxs idxs vtxmask l_MaterialArray =
 		
 		if ((meshop.getNumMaps Obj)  - 1) > 1 then (
 			Idxs2Map = meshop.getMapFace Obj 2 face
-			TUV2Map1 = meshop.getMapVert Obj 2 Idxs2Map.z
+			TUV2Map1 = meshop.getMapVert Obj 2 Idxs2Map.x
 			TUV2Map2 = meshop.getMapVert Obj 2 Idxs2Map.y
-			TUV2Map3 = meshop.getMapVert Obj 2 Idxs2Map.x
+			TUV2Map3 = meshop.getMapVert Obj 2 Idxs2Map.z
 		)
 		
 		local idMaterial = getFaceMatID Obj face
@@ -675,9 +688,9 @@ function GenerateVertexs Obj vtxs idxs vtxmask l_MaterialArray =
 		local index2=dotNetAddVertex totalVertex2 vtxs idMaterial l_vtxMap
 		local index3=dotNetAddVertex totalVertex3 vtxs idMaterial l_vtxMap
 	
-		AddIndex index1 idxs idMaterial
-		AddIndex index2 idxs idMaterial
 		AddIndex index3 idxs idMaterial
+		AddIndex index2 idxs idMaterial
+		AddIndex index1 idxs idMaterial
 	
 	)
 )
