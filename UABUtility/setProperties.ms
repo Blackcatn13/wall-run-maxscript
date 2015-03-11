@@ -39,14 +39,14 @@ rollout UABSetProperties "UAB Set Properties" width:544 height:456
 	button SetButton "Set" pos:[272,416] width:104 height:32
 	
 	--Eventos 
-
+	local RenderLayers = #("solid", "skybox", "alpha_objects","alpha_blend_objects", "particles")
 	
 	
 	on UABSetProperties open do
 	(
 		-- malla estática, malla animada
 		local ExportMeshes=#("instance_mesh", "animated_mesh")
-		local RenderLayers = #("solid", "alpha_objects","alpha_blend_objects", "particles")
+		
 		--malla triangular, forma convexa, forma caja, forma esfera, forma plano, forma cápsula
 		local PhysicsGenerate=#("triangle_mesh", "convex_shape","box_shape", "plane_shape","capsule_shape")
 		local PhysicsLayer=#("logic")

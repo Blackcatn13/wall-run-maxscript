@@ -1,10 +1,12 @@
 fileIn "setProperties.ms"
 fileIn "UABFunctions.ms"
-fileIn "ExportMesh.ms"
 fileIn "BBoxBSphere.ms"
 fileIn "ExportCamera.ms"
 fileIn "ExportCinematic.ms"
 fileIn "ExportLights.ms"
+fileIn "ExportMesh.ms"
+--fileIn "trycatch.ms"
+fileIn "Common.ms"
 
 global realPath
 
@@ -41,7 +43,7 @@ utility UABUtility "UAB Utility" width:152 height:404
 		local levels=#("","level1","level2", "level3","level4", "level5", "main menu", "select player")
 		LevelList.items=levels
 		DebugValue.checked = true
-		debug = DebugValue.checked
+		--debug = DebugValue.checked
 	)
 	
 	on DebugValue changed newValue do (
@@ -84,7 +86,7 @@ utility UABUtility "UAB Utility" width:152 height:404
 	)
 	on ExportMeshButton pressed do
 	(
-	
+
 		local pathToCopy = realPath + "\\Data\\" + LevelList.items[LevelList.selection] + "\\"
 		if $ != undefined then (
 			if debug then

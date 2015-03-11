@@ -9,6 +9,7 @@ VERTEX_TEXTURE1 = 0x10
 VERTEX_TEXTURE2 = 0x20
 VERTEX_DIFFUSE = 0x40
 VERTEX_CUBEMAP = 0x200
+VERTEX_RNM = 0x400
 
 
 function ExportMesh Obj filepath _filename _file copy_textures=
@@ -154,6 +155,10 @@ function GetNumberOfTextures mat =
 			num = num + 1
 		)
 	)
+	if mat.selfIllumMapEnable and classof(mat.selfIllumMap) == Multi_Sub_Map then
+	(
+		num = num + 2;
+	)
 	return num
 )
 
@@ -168,10 +173,13 @@ function getMask mat numText=
 			format "[getMask] is selfIllum enabled? % \n" mat.selfIllumMapEnable
 		)
 	)
-	if numText == 0 then
+	if numText == 0 then (
 		VtxMask = bit.or VtxMask VERTEX_DIFFUSE
+		VtxMask = bit.or VtxMask VERTEX_NORMAL
+	)
 	else if mat.diffuseMapEnable == false then (
 		VtxMask = bit.or VtxMask VERTEX_DIFFUSE
+		VtxMask = bit.or VtxMask VERTEX_NORMAL
 	)
 	if(numText >= 1 and mat.diffuseMapEnable) then (
 		VtxMask = bit.or VtxMask VERTEX_NORMAL
@@ -181,6 +189,9 @@ function getMask mat numText=
 			VtxMask = bit.or VtxMask VERTEX_BINORMAL
 		)
 		if mat.selfIllumMapEnable then (
+			if classof(mat.selfIllumMap) == Multi_Sub_Map then (
+				VtxMask = bit.or VtxMask VERTEX_RNM
+			)
 			VtxMask = bit.or VtxMask VERTEX_TEXTURE2
 		)
 		if mat.reflectionMapEnable then (
@@ -220,6 +231,7 @@ function ExportMaterial _Material File _file FilePath copy_textures=
 	WriteShort File textNum #unsigned --numero texturas
 	if UABUtility.debug then
 		format "[ExportMaterial] mat name %\n" _Material
+	local j=1
 	for  i=1 to textNum do --numero de texturas
 	(
 		local _filename 
@@ -241,14 +253,33 @@ function ExportMaterial _Material File _file FilePath copy_textures=
 				if _Material.bumpMapEnable then (
 					_filename = (openBitMap _Material.bumpMap.bitmap.filename).fileName
 				)
-				if _Material.selfIllumMapEnable then (
+				else if _Material.selfIllumMapEnable then (
 					_filename = (openBitMap _Material.selfIllumMap.bitmap.filename).fileName
 				)
-				if _Material.reflectionMapEnable then (
+				else if _Material.reflectionMapEnable then (
 				_filename = (openBitMap _Material.reflectionMap.bitmap.filename).fileName
 				)
+			) else if i >= 3 then (
+				if _Material.selfIllumMapEnable then (
+					if classof(_Material.selfIllumMap) == Multi_Sub_Map then (
+						if (j==1) then (
+							_filename = (openBitMap _Material.selfIllumMap.id_0_color_shader.bitmap.filename).filename
+							j = j + 1
+						) else if (j==2) then (
+							_filename = (openBitMap _Material.selfIllumMap.id_1_color_shader.bitmap.filename).filename
+							j = j + 1
+						) else if (j==3) then (
+							_filename = (openBitMap _Material.selfIllumMap.id_2_color_shader.bitmap.filename).filename
+						)
+					) else (
+						_filename = (openBitMap _Material.selfIllumMap.bitmap.filename).fileName
+					)
+				)
+				else if _Material.reflectionMapEnable then (
+					_filename = (openBitMap _Material.reflectionMap.bitmap.filename).fileName
+				)
 			)
-		)
+		) 
 		
 		---------------------------------------
 		local L_Path =  FilePath+"textures/"
