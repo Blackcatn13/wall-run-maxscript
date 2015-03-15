@@ -1,5 +1,5 @@
 fileIn "Common.ms"
-fileIn "ExportPlatforms.ms"
+
 
 function CopyTextures FilePath Objs =
 (
