@@ -29,6 +29,8 @@ utility UABUtility "UAB export Utility" width:152 height:404
 
 	Include "ExportStaticMesh.ms"
 
+	Include "ExportRenderableObjects.ms"
+
 	on LevelList selected lvl do
 	(
 		PathToCopy = realPath + DataDirectory + LevelList.items[LevelList.selection] + "\\"
@@ -107,6 +109,19 @@ utility UABUtility "UAB export Utility" width:152 height:404
 		ExportStaticMesh()
 		format "==============================\n"
 		format "Static meshes exported correctly\n"
+		format "==============================\n"
+	)
+
+	on ExportSceneButton pressed do
+	(
+		MeshPath = PathToCopy + MeshDirectory
+		TexturePath = PathToCopy + TextureDirectory
+		if debug then
+			format "Exporting Renderable Objects\n"
+		ExportRenderableObjects()
+
+		format "==============================\n"
+		format "Full scene exported correctly\n"
 		format "==============================\n"
 	)
 

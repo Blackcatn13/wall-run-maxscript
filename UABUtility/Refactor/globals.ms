@@ -7,13 +7,26 @@ global DataDirectory = "\\Data\\"
 global MeshDirectory = "meshes\\"
 global TextureDirectory = "textures\\"
 global staticMeshFileName = "static_meshes.xml"
+global renderableObjectsFileName = "renderable_objects.xml"
 global CopyTextures = true
 global ExportMeshes = false
 global Override = true
 global PathToCopy
+
+-- XMLStrings
+
 global XMLVersion = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n"
 global XMLCloseTag = "/>\n"
-global XMLSpace = " "
+global XMLName = " name="
+global XMLFilename = " filename="
+global XMLCore = " core="
+global XMLPos = " pos="
+global XMLYaw = " yaw="
+global XMLPitch = " pitch="
+global XMLRoll = " roll="
+global XMLScale = " scale="
+global XMLVisible = " visible="
+
 
 -- Properties values
 global RenderLayers = #("solid", "skybox", "alpha_objects", "alpha_blend_objects", "particles")
