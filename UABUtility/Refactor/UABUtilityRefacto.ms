@@ -13,7 +13,7 @@ utility UABUtility "UAB export Utility" width:152 height:404
 	button ExportMeshButton "Mesh" tooltip:"Export only selected mesh" pos:[80,220] width:56 height:16
 	button ExportCameraButton "Camera" tooltip:"Export cameras" pos:[16,244] width:56 height:16
 	button ExportSceneButton "Scene" tooltip:"Export all the scene" pos:[16,292] width:120 height:16
-	button ExportStaticMeshManagerButton "Static Mesh Manager" tooltip:"Export only static meshes" pos:[16,268] width:120 height:16
+	button ExportStaticMeshButton "Static Meshes" tooltip:"Export only static meshes" pos:[16,268] width:120 height:16
 	button ExportCinematicButton "Cinematic" tooltip:"Export cinematics" pos:[16,316] width:120 height:16
 	checkbox DebugValue "D" tooltip:"Debug value" pos:[80,244] width:30 height:16
 	checkbox OverrideValue "O" tooltip:"Override Always" pos:[110,244] width:30 height:16
@@ -66,6 +66,11 @@ utility UABUtility "UAB export Utility" width:152 height:404
 			messageBox "No hi ha res seleccionat, no es pot exportar." title:"NO SELECTION"
 		)
 
+	)
+
+	on btnSetProperties pressed do
+	(
+		createDialog UABSetProperties
 	)
 
 )
