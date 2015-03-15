@@ -15,6 +15,14 @@ global XMLVersion = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n"
 global XMLCloseTag = "/>\n"
 global XMLSpace = " "
 
+-- Properties values
+global RenderLayers = #("solid", "skybox", "alpha_objects", "alpha_blend_objects", "particles")
+global MeshType = #("mesh_instance", "animated_model")
+global PhysicsType = #("triangle_mesh", "convex_shape", "box_shape", "plane_shape", "capsule_shape")
+global PhysicsLayer = #("logic")
+global logicGenerate = #("box_event", "sphere_event")
+global EventList = #("event1")
+
 -- Vertex declaration
 global VERTEX_XYZ 		= 0x1
 global VERTEX_NORMAL 	= 0x2

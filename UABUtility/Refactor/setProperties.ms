@@ -77,27 +77,14 @@ rollout UABSetProperties "UAB Set Properties" width:544 height:456
 	button GetButton "Get" pos:[160,416] width:104 height:32
 	button SetButton "Set" pos:[272,416] width:104 height:32
 	
-	--Eventos 
-	local RenderLayers = #("solid", "skybox", "alpha_objects","alpha_blend_objects", "particles")
-	
-	
 	on UABSetProperties open do
-	(
-		-- malla estática, malla animada
-		local ExportMeshes=#("instance_mesh", "animated_mesh")
-		
-		--malla triangular, forma convexa, forma caja, forma esfera, forma plano, forma cápsula
-		local PhysicsGenerate=#("triangle_mesh", "convex_shape","box_shape", "plane_shape","capsule_shape")
-		local PhysicsLayer=#("logic")
-		--cajas de eventos, esferas de eventos, escaleras, filos agarrables, filos dónde dejarse caer
-		local LogicGenerate=#("box_event", "sphere_event","stairs", "holding_edges","falling_edges")
-		local EventGenerate=#("event1")
-		RenderExportList.items = ExportMeshes
+	(	
+		RenderExportList.items = MeshType
 		RenderLayerList.items = RenderLayers
-		PhysicsGenerateList.items = PhysicsGenerate
+		PhysicsGenerateList.items = PhysicsType
 		PhysicsLayerList.items=PhysicsLayer
-		LogicGenerateList.items = LogicGenerate
-		EventGenerateList.items = EventGenerate
+		LogicGenerateList.items = logicGenerate
+		EventGenerateList.items = EventList
 	)
 	
 	on GetButton pressed  do
