@@ -30,11 +30,11 @@ function ExportRenderableObjects =
 			local visible = GetUserProp scene_geometry_toExport[i] "visible"
 
 			if (GetUserProp scene_geometry_toExport[i] "export_type" == "mesh_instance") then
-				format (ro_mesh + XMLName + "\"%\"" + XMLCore + "\"%\"") ObjName (GetObjectCore scene_geometry_toExport[i]) to:ro_file
+				format (ro_mesh + XMLName + XML1Value + XMLCore + XML1Value) ObjName (GetObjectCore scene_geometry_toExport[i]) to:ro_file
 			if (GetUserProp scene_geometry_toExport[i] "export_type" == "animated_model") then
-				format (ro_animated + XMLName + "\"%\"" + XMLCore + "\"%\"") ObjName (GetUserProp scene_geometry_toExport[i] "anim_model") to:ro_file
-			format (XMLPos + "\"% % %\"" + XMLYaw + "\"%\"") tranX tranY tranZ yawAng to:ro_file
-			format (XMLPitch + "\"%\"" + XMLRoll + "\"%\"" + XMLScale + "\"% % %\"" + XMLVisible + "\"%\"" + XMLCloseTag) pitchAng rollAnf ObjScale.x ObjScale.y ObjScale.z visible to:ro_file
+				format (ro_animated + XMLName + XML1Value + XMLCore + XML1Value) ObjName (GetUserProp scene_geometry_toExport[i] "anim_model") to:ro_file
+			format (XMLPos + XML3Value + XMLYaw + XML1Value) tranX tranY tranZ yawAng to:ro_file
+			format (XMLPitch + XML1Value + XMLRoll + XML1Value + XMLScale + XML3Value + XMLVisible + XML1Value + XMLCloseTag) pitchAng rollAnf ObjScale.x ObjScale.y ObjScale.z visible to:ro_file
 		)
 	)
 	format (ro_close_file_tag) to:ro_file

@@ -8,24 +8,38 @@ global MeshDirectory = "meshes\\"
 global TextureDirectory = "textures\\"
 global staticMeshFileName = "static_meshes.xml"
 global renderableObjectsFileName = "renderable_objects.xml"
+global CamerasFileName = "cameras.xml"
+global AnimatedCamerasPath = "cameras\\"
 global CopyTextures = true
 global ExportMeshes = false
 global Override = true
 global PathToCopy
+global RelativePathToCopy
 
 -- XMLStrings
 
-global XMLVersion = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n"
-global XMLCloseTag = "/>\n"
-global XMLName = " name="
-global XMLFilename = " filename="
-global XMLCore = " core="
-global XMLPos = " pos="
-global XMLYaw = " yaw="
-global XMLPitch = " pitch="
-global XMLRoll = " roll="
-global XMLScale = " scale="
-global XMLVisible = " visible="
+global XMLVersion		= "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n"
+global XMLCloseTag		= "/>\n"
+global XMLName			= " name="
+global XMLFilename		= " filename="
+global XMLCore			= " core="
+global XMLPos			= " pos="
+global XMLYaw			= " yaw="
+global XMLPitch			= " pitch="
+global XMLRoll			= " roll="
+global XMLScale			= " scale="
+global XMLVisible		= " visible="
+global XMLLookAt		= " lookat="
+global XMLFov			= " fov="
+global XMLNear_plane	= " near_plane="
+global XMLFar_plane		= " far_plane="
+global XMLFile			= " file="
+global XMLTime			= " time="
+global XMLOnce 			= " once="
+global XMLCycle 		= " cycle="
+global XMLReverse		= " reverse="
+global XML1Value      	= "\"%\""
+global XML3Value		= "\"% % %\""
 
 
 -- Properties values
@@ -50,3 +64,5 @@ global VERTEX_RNM 		= 0x400
 -- ExportMesh Variables
 global MeshPath
 global TexturePath
+global RelativeMeshPath
+global RelativeTexturePath

@@ -31,9 +31,16 @@ utility UABUtility "UAB export Utility" width:152 height:404
 
 	Include "ExportRenderableObjects.ms"
 
+	Include "ExportCameras.ms"
+
 	on LevelList selected lvl do
 	(
 		PathToCopy = realPath + DataDirectory + LevelList.items[LevelList.selection] + "\\"
+		RelativePathToCopy = DataDirectory + LevelList.items[LevelList.selection] + "\\"
+		MeshPath = PathToCopy + MeshDirectory
+		TexturePath = PathToCopy + TextureDirectory
+		RelativeMeshPath = RelativePathToCopy + MeshDirectory
+		RelativeTexturePath = RelativePathToCopy + TextureDirectory
 	) 
 
 	on UABUtility open do
@@ -64,6 +71,11 @@ utility UABUtility "UAB export Utility" width:152 height:404
 	(
 		Include "PathReductor.ms"
 		PathToCopy = realPath + DataDirectory + LevelList.items[LevelList.selection] + "\\"
+		RelativePathToCopy = DataDirectory + LevelList.items[LevelList.selection] + "\\"
+		MeshPath = PathToCopy + MeshDirectory
+		TexturePath = PathToCopy + TextureDirectory
+		RelativeMeshPath = RelativePathToCopy + MeshDirectory
+		RelativeTexturePath = RelativePathToCopy + TextureDirectory
 	)
 
 	on ExportMeshButton pressed do
@@ -102,8 +114,6 @@ utility UABUtility "UAB export Utility" width:152 height:404
 
 	on ExportStaticMeshButton pressed do
 	(			
-		MeshPath = PathToCopy + MeshDirectory
-		TexturePath = PathToCopy + TextureDirectory
 		if debug then
 			format "Exporting static mesh of scene\n"
 		ExportStaticMesh()
@@ -114,14 +124,24 @@ utility UABUtility "UAB export Utility" width:152 height:404
 
 	on ExportSceneButton pressed do
 	(
-		MeshPath = PathToCopy + MeshDirectory
-		TexturePath = PathToCopy + TextureDirectory
 		if debug then
 			format "Exporting Renderable Objects\n"
 		ExportRenderableObjects()
-
+		if debug then
+			format "Exporting Camera(s)\n"
+		exportCameras undefined
 		format "==============================\n"
 		format "Full scene exported correctly\n"
+		format "==============================\n"
+	)
+
+	on ExportCameraButton pressed do
+	(
+		if debug then
+			format "Exporting Camera(s)\n"
+		exportCameras $
+		format "==============================\n"
+		format "camera exported correctly\n"
 		format "==============================\n"
 	)
 
