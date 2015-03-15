@@ -6,9 +6,14 @@ global FileExtension = ".mesh"
 global DataDirectory = "\\Data\\"
 global MeshDirectory = "meshes\\"
 global TextureDirectory = "textures\\"
+global staticMeshFileName = "static_meshes.xml"
 global CopyTextures = true
+global ExportMeshes = false
 global Override = true
 global PathToCopy
+global XMLVersion = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n"
+global XMLCloseTag = "/>\n"
+global XMLSpace = " "
 
 -- Vertex declaration
 global VERTEX_XYZ 		= 0x1

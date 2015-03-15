@@ -21,17 +21,41 @@ utility UABUtility "UAB export Utility" width:152 height:404
 	button btnSetProperties "Set Properties" tooltip:"Open Property menu" pos:[16,372] width:120 height:16
 	dropdownList LevelList "" tooltip:"Level on save the files" pos:[8,172] width:136 height:21
 
+	Include "setProperties.ms"
+
+	Include "Utilities.ms"
+
+	Include "ExportMesh.ms"
+
+	Include "ExportStaticMesh.ms"
+
+	on LevelList selected lvl do
+	(
+		PathToCopy = realPath + DataDirectory + LevelList.items[LevelList.selection] + "\\"
+	) 
+
 	on UABUtility open do
 	(
 		LevelList.items = levels
 		DebugValue.checked = debug
 		CopyTexturesCheck.checked = CopyTextures
 		OverrideValue.checked = Override
+		ExportMeshCheck.checked = ExportMeshes
 	)
 
 	on DebugValue changed newValue do
 	(
 		debug = DebugValue.checked
+	)
+
+	on ExportMeshCheck changed newValue do
+	(
+		ExportMeshes = ExportMeshCheck.checked
+	)
+
+	on CopyTexturesCheck changed newValue do
+	(
+		CopyTextures = newValue
 	)
 
 	on btnSetPath pressed do
@@ -42,7 +66,6 @@ utility UABUtility "UAB export Utility" width:152 height:404
 
 	on ExportMeshButton pressed do
 	(
-		Include "ExportMesh.ms"
 		if $ != undefined then
 		(
 			if classof $ == ObjectSet then
@@ -53,9 +76,11 @@ utility UABUtility "UAB export Utility" width:152 height:404
 			(
 				MeshPath = PathToCopy + MeshDirectory
 				TexturePath = PathToCopy + TextureDirectory
+				ExportMeshes = true
 				if debug then
 					format "name is %\n" (MeshPath + $.name + FileExtension)
 				ExportMesh $ ($.name + FileExtension)
+				ExportMeshes = false
 				format "==============================\n"
 				format "Mesh exported correctly\n"
 				format "==============================\n"
@@ -72,5 +97,18 @@ utility UABUtility "UAB export Utility" width:152 height:404
 	(
 		createDialog UABSetProperties
 	)
+
+	on ExportStaticMeshButton pressed do
+	(			
+		MeshPath = PathToCopy + MeshDirectory
+		TexturePath = PathToCopy + TextureDirectory
+		if debug then
+			format "Exporting static mesh of scene\n"
+		ExportStaticMesh()
+		format "==============================\n"
+		format "Static meshes exported correctly\n"
+		format "==============================\n"
+	)
+
 
 )

@@ -8,135 +8,6 @@ global g_idxAccesArray
 global g_VertexMsks
 global UABVtxsNormals=#()
 
--- Global functions 
-global ExportMaterial
-global GenerateVertexs
-global UABClearNormalsArray
-global IsSmoothingGroupEnabled
-global UABGetVertexNormal
-global UABCalcVertexsNormals
-global BoundingBox
-global BoundingSphere
-global CreateMaterialArray
-global ExportMaterials
-global GetNumberOfTextures
-global getMask
-global TryCloneObjects
-global CloneObjects
-global DeleteClonedObjects
-global CreateFullVertex
-global ExportVertexs
-global ExportIndexs
-global ConvertVtx
-global dotNetAddVertex
-global AddIndex
-
-
-
-function ExportMesh Obj filename=
-(
-	if debug then
-		format "[ExportMesh] exporting %\n" filename
-
-	if debug then
-		format "[ExportMesh] Cloning object\n"
-
-	ClonedObj_A = CloneObjects Obj
-	ClonedObj = ClonedObj_A[1]
-
-	if doesFileExist (MeshPath) == false then 
-	(
-		makeDir (MeshPath) all:true
-		if debug then
-			format "[ExportMesh] directorio % creado \n" MeshPath
-	)
-
-	g_Vtxs = #()
-	g_Idxs = #()
-	g_file = fopen (MeshPath + filename) "wb"
-	--g_MaterialArray = #()
-
-	-- Starting export of mesh
-	-- First write header of file 0x55FF
-	WriteShort g_file 0x55FF #unsigned
-
-	-- Check if material assigned is Multimaterial
-	if classOf (ClonedObj.material) == Multimaterial then 
-	(
-		g_IsMultimaterial = true
-		if debug then
-			format "[ExportMesh] el objeto tiene aplicado un multimaterial\n"
-		--g_NumMaterials = Obj.material.numsubs
-	)
-	else
-	(
-		if classOf (ClonedObj.material) != UndefinedClass then
-		(
-			if debug then
-				format "[ExportMesh] el objeto tiene aplicado un material standard\n"
-			--g_NumMaterials = 1
-		)
-	)
-	-- We get the real materials applied to the object
-	g_MaterialArray = CreateMaterialArray ClonedObj
-	g_NumMaterials = g_MaterialArray.count
-
-	-- Write to the file the number of Materials
-	WriteShort g_file g_NumMaterials #unsigned
-	if debug then
-		format "[ExportMesh] exporting materials\n"
-	g_VertexMsks = #()
-	ExportMaterials ClonedObj
-	if debug then
-	(
-		format "[ExportMesh] vertex masks % \n" g_VertexMsks
-		format "[ExportMesh] Generating vertex\n"
-	)
-	-- Generate Vertex information
-	GenerateVertexs ClonedObj
-	-- Write vertex information
-	for idMaterial = 1 to g_NumMaterials do
-	(
-		if debug then (
-			format "[ExportMesh] l_NumMaterials %\n" g_NumMaterials
-			format "[ExportMesh] %\n" g_Vtxs
-		)
-		local numVertex = g_Vtxs[g_idxAccesArray[idMaterial]].count
-		local numIndexes = g_Idxs[g_idxAccesArray[idMaterial]].count
-		if debug then (
-			format "[ExportMesh] num vertex = %\n" numVertex
-			format "[ExportMesh] num index = %\n" numIndexes
-		)
-		if numVertex == 0 or numIndexes == 0 then (
-			if debug then
-				format "[ExportMesh] excluding face \n"
-			continue
-		)
-		local vtxmaskpos = findItem g_MaterialArray g_MaterialArray[idMaterial]
-		WriteShort g_file numVertex #unsigned
-		ExportVertexs g_idxAccesArray[idMaterial] g_VertexMsks[vtxmaskpos]    --Estos arrays en realiad son tridimensionales [][][]
-		WriteShort g_file numIndexes #unsigned
-		ExportIndexs g_idxAccesArray[idMaterial]
-	)
-	-- Calculate BB and BS
-	local BBox, BSphere
-	BBox = BoundingBox ClonedObj
-	BSphere = BoundingSphere ClonedObj
-	for BBIndex = 1 to BBox.count do
-	(
-		WriteFloat g_file BBox[BBindex]
-	)
-	for BBIndex = 1 to BSphere.count do
-	(
-		WriteFloat g_file BSphere[BBindex]
-	)
-	-- Export footer
-	WriteShort g_file 0xFF55 #unsigned
-	fflush g_file
-	fclose g_file
-	DeleteClonedObjects ClonedObj_A
-)
-
 Include "ExportMaterial.ms"
 
 Include "Vertex.ms"
@@ -248,5 +119,114 @@ function ExportIndexs idMaterial =
 	for  j=1 to g_Idxs[idMaterial].count do
 	(   
 		WriteShort g_file g_Idxs[idMaterial][j] #unsigned
+	)
+)
+
+function ExportMesh Obj filename=
+(
+	if ExportMeshes or CopyTextures then 
+	(
+		if debug then
+			format "[ExportMesh] exporting %\n" filename
+
+		if debug then
+			format "[ExportMesh] Cloning object\n"
+
+		ClonedObj_A = CloneObjects Obj
+		ClonedObj = ClonedObj_A[1]
+
+		CreatePath MeshPath
+
+		g_Vtxs = #()
+		g_Idxs = #()
+		if ExportMeshes then
+			g_file = fopen (MeshPath + filename) "wb"
+		--g_MaterialArray = #()
+
+		-- Starting export of mesh
+		-- First write header of file 0x55FF
+		if ExportMeshes then
+			WriteShort g_file 0x55FF #unsigned
+
+		-- Check if material assigned is Multimaterial
+		if classOf (ClonedObj.material) == Multimaterial then 
+		(
+			g_IsMultimaterial = true
+			if debug then
+				format "[ExportMesh] el objeto tiene aplicado un multimaterial\n"
+			--g_NumMaterials = Obj.material.numsubs
+		)
+		else
+		(
+			if classOf (ClonedObj.material) != UndefinedClass then
+			(
+				if debug then
+					format "[ExportMesh] el objeto tiene aplicado un material standard\n"
+				--g_NumMaterials = 1
+			)
+		)
+		-- We get the real materials applied to the object
+		g_MaterialArray = CreateMaterialArray ClonedObj
+		g_NumMaterials = g_MaterialArray.count
+
+		-- Write to the file the number of Materials
+		if ExportMeshes then
+			WriteShort g_file g_NumMaterials #unsigned
+		if debug then
+			format "[ExportMesh] exporting materials\n"
+		g_VertexMsks = #()
+		ExportMaterials ClonedObj
+		if debug then
+		(
+			format "[ExportMesh] vertex masks % \n" g_VertexMsks
+			format "[ExportMesh] Generating vertex\n"
+		)
+		-- Generate Vertex information
+		if ExportMeshes then 
+		(
+			GenerateVertexs ClonedObj
+		    -- Write vertex information
+
+			for idMaterial = 1 to g_NumMaterials do
+			(
+				if debug then (
+					format "[ExportMesh] l_NumMaterials %\n" g_NumMaterials
+					format "[ExportMesh] %\n" g_Vtxs
+				)
+				local numVertex = g_Vtxs[g_idxAccesArray[idMaterial]].count
+				local numIndexes = g_Idxs[g_idxAccesArray[idMaterial]].count
+				if debug then (
+					format "[ExportMesh] num vertex = %\n" numVertex
+					format "[ExportMesh] num index = %\n" numIndexes
+				)
+				if numVertex == 0 or numIndexes == 0 then (
+					if debug then
+						format "[ExportMesh] excluding face \n"
+					continue
+				)
+				local vtxmaskpos = findItem g_MaterialArray g_MaterialArray[idMaterial]
+				WriteShort g_file numVertex #unsigned
+				ExportVertexs g_idxAccesArray[idMaterial] g_VertexMsks[vtxmaskpos]    --Estos arrays en realiad son tridimensionales [][][]
+				WriteShort g_file numIndexes #unsigned
+				ExportIndexs g_idxAccesArray[idMaterial]
+			)
+			-- Calculate BB and BS
+			local BBox, BSphere
+			BBox = BoundingBox ClonedObj
+			BSphere = BoundingSphere ClonedObj
+			for BBIndex = 1 to BBox.count do
+			(
+				WriteFloat g_file BBox[BBindex]
+			)
+			for BBIndex = 1 to BSphere.count do
+			(
+				WriteFloat g_file BSphere[BBindex]
+			)
+			-- Export footer
+			WriteShort g_file 0xFF55 #unsigned
+			fflush g_file
+			fclose g_file
+		)
+		DeleteClonedObjects ClonedObj_A
 	)
 )

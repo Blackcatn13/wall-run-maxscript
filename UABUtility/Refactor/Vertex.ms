@@ -1,3 +1,153 @@
+function UABClearNormalsArray =
+(
+	while UABVtxsNormals.count>0 do (
+		deleteItem UABVtxsNormals 1
+	)
+)
+
+function IsSmoothingGroupEnabled IdGroup Value =
+(
+	local ValueMask=2^(IdGroup-1)	
+	return (bit.and Value ValueMask)==ValueMask
+)
+
+function UABCalcVertexsNormals obj =
+(
+	UABClearNormalsArray()
+	local NumVtxs=getNumVerts obj
+	for b=1 to NumVtxs do (
+		UABVtxsNormals[b]=#()
+		for t=1 to 32 do (
+			UABVtxsNormals[b][t]=point3 0 0 0
+		)
+	)
+	local NumFaces=getNumFaces obj
+	local InvTransform=inverse obj.transform
+	for IdFace=1 to NumFaces do (
+		local IdxsFace=getFace obj IdFace
+		local Vtx1=(getVert obj IdxsFace.x)*InvTransform
+		local Vtx3=(getVert obj IdxsFace.z)*InvTransform
+		local FaceNormal=getFaceNormal obj IdFace
+		local SmoothValue=getFaceSmoothGroup obj IdFace
+		for b=1 to 32 do (
+			if((IsSmoothingGroupEnabled b SmoothValue)==true) then (
+				UABVtxsNormals[IdxsFace.x][b]=UABVtxsNormals[IdxsFace.x][b] + FaceNormal
+				UABVtxsNormals[IdxsFace.y][b]=UABVtxsNormals[IdxsFace.y][b] + FaceNormal
+				UABVtxsNormals[IdxsFace.z][b]=UABVtxsNormals[IdxsFace.z][b] + FaceNormal
+			)
+		)
+	)
+)
+
+function UABGetVertexNormal obj IdVertex SmoothValue FaceNormal =
+(
+	local HasNormal=false
+	local Normal=point3 0 0 0
+	for b=1 to 32 do (
+		if((IsSmoothingGroupEnabled b SmoothValue)==true) then (
+			Normal=Normal+UABVtxsNormals[IdVertex][b]
+			HasNormal=true
+		)
+	)
+	if HasNormal==false then (
+		Normal=FaceNormal
+	)
+	return Normal
+)
+
+
+function CreateFullVertex vtx n tu1 tu2 col tn bn mater=
+(
+	local vertex=#()
+	if (bit.and mater VERTEX_XYZ) == VERTEX_XYZ then (
+		append vertex vtx.x
+		append vertex vtx.z
+		append vertex vtx.y	
+	)
+	if (bit.and mater VERTEX_NORMAL) == VERTEX_NORMAL then (
+		n = normalize(n)
+		append vertex n.x
+		append vertex n.z
+		append vertex n.y
+	)
+	if(bit.and mater VERTEX_TANGENT) == VERTEX_TANGENT then (
+		append vertex 1.0
+		append vertex 0.0
+		append vertex 0.0
+		append vertex 0.0
+		append vertex 0.0
+	)
+	if(bit.and mater VERTEX_BINORMAL) == VERTEX_BINORMAL then (
+		append vertex 0.0
+		append vertex 0.0
+		append vertex 0.0
+		append vertex 0.0
+	)
+	if (bit.and mater VERTEX_DIFFUSE) == VERTEX_DIFFUSE then (
+		local alphaValue = bit.and col.a 0xff
+		local redValue = bit.and col.r 0xff	
+		local greenValue = bit.and col.g 0xff
+		local blueValue = bit.and col.b 0xff
+		local finalColor = bit.shift alphaValue 24
+		finalColor = finalColor + (bit.shift redValue 16)
+		finalColor = finalColor + (bit.shift greenValue 8)
+		finalColor = finalColor + blueValue
+		if debug then
+			format "[CreateFullVertex] finalColor is %\n" (formattedprint finalColor format:"x")
+		append vertex finalColor
+	)
+	if (bit.and mater VERTEX_TEXTURE1) == VERTEX_TEXTURE1 then (
+		append vertex tu1.x
+		local v =  (0.0f - (tu1.y - 1.0f))
+		append vertex v
+	)
+	if (bit.and mater VERTEX_TEXTURE2) == VERTEX_TEXTURE2 then (
+		append vertex tu2.x
+		local v =  (0.0f - (tu2.y - 1.0f))
+		append vertex v
+	)
+	
+	return vertex
+)
+
+function ConvertVtx vtx =
+(
+	local l_Text=stringstream ""
+	local l_value=""
+	for i=1 to vtx.count do (
+		format "%," vtx[i] to:l_Text
+	)
+	return (l_Text as string)
+)
+
+function dotNetAddVertex vtx vrtxs idMaterial vtxMap=
+(
+	local l_vtxString = ConvertVtx vtx
+	local l_idx = 1
+	if(vtxMap[idMaterial].ContainsKey(l_vtxString)) == false then (
+		while vrtxs.count<idMaterial do
+		(
+			append vrtxs (#())
+		)
+		append vrtxs[idMaterial] vtx
+		l_idx = vrtxs[idMaterial].count
+		vtxMap[idMaterial].Add l_vtxString l_idx
+	) else (
+		l_idx = vtxMap[idMaterial].Item[l_vtxString]
+	)
+	return l_idx
+)
+
+function AddIndex index idxs idMaterial =
+(
+	while idxs.count<idMaterial do
+	(
+		append idxs (#())
+	)
+	
+	append idxs[idMaterial] (index-1)
+)
+
 function GenerateVertexs Obj =
 (
 	UABCalcVertexsNormals Obj
@@ -98,154 +248,4 @@ function GenerateVertexs Obj =
 		AddIndex index1 g_Idxs idMaterial
 	
 	)
-)
-
-function UABClearNormalsArray =
-(
-	while UABVtxsNormals.count>0 do (
-		deleteItem UABVtxsNormals 1
-	)
-)
-
-function IsSmoothingGroupEnabled IdGroup Value =
-(
-	local ValueMask=2^(IdGroup-1)	
-	return (bit.and Value ValueMask)==ValueMask
-)
-
-function UABGetVertexNormal obj IdVertex SmoothValue FaceNormal =
-(
-	local HasNormal=false
-	local Normal=point3 0 0 0
-	for b=1 to 32 do (
-		if((IsSmoothingGroupEnabled b SmoothValue)==true) then (
-			Normal=Normal+UABVtxsNormals[IdVertex][b]
-			HasNormal=true
-		)
-	)
-	if HasNormal==false then (
-		Normal=FaceNormal
-	)
-	return Normal
-)
-
-
-function UABCalcVertexsNormals obj =
-(
-	UABClearNormalsArray()
-	local NumVtxs=getNumVerts obj
-	for b=1 to NumVtxs do (
-		UABVtxsNormals[b]=#()
-		for t=1 to 32 do (
-			UABVtxsNormals[b][t]=point3 0 0 0
-		)
-	)
-	local NumFaces=getNumFaces obj
-	local InvTransform=inverse obj.transform
-	for IdFace=1 to NumFaces do (
-		local IdxsFace=getFace obj IdFace
-		local Vtx1=(getVert obj IdxsFace.x)*InvTransform
-		local Vtx3=(getVert obj IdxsFace.z)*InvTransform
-		local FaceNormal=getFaceNormal obj IdFace
-		local SmoothValue=getFaceSmoothGroup obj IdFace
-		for b=1 to 32 do (
-			if((IsSmoothingGroupEnabled b SmoothValue)==true) then (
-				UABVtxsNormals[IdxsFace.x][b]=UABVtxsNormals[IdxsFace.x][b] + FaceNormal
-				UABVtxsNormals[IdxsFace.y][b]=UABVtxsNormals[IdxsFace.y][b] + FaceNormal
-				UABVtxsNormals[IdxsFace.z][b]=UABVtxsNormals[IdxsFace.z][b] + FaceNormal
-			)
-		)
-	)
-)
-
-function CreateFullVertex vtx n tu1 tu2 col tn bn mater=
-(
-	local vertex=#()
-	if (bit.and mater VERTEX_XYZ) == VERTEX_XYZ then (
-		append vertex vtx.x
-		append vertex vtx.z
-		append vertex vtx.y	
-	)
-	if (bit.and mater VERTEX_NORMAL) == VERTEX_NORMAL then (
-		n = normalize(n)
-		append vertex n.x
-		append vertex n.z
-		append vertex n.y
-	)
-	if(bit.and mater VERTEX_TANGENT) == VERTEX_TANGENT then (
-		append vertex 1.0
-		append vertex 0.0
-		append vertex 0.0
-		append vertex 0.0
-		append vertex 0.0
-	)
-	if(bit.and mater VERTEX_BINORMAL) == VERTEX_BINORMAL then (
-		append vertex 0.0
-		append vertex 0.0
-		append vertex 0.0
-		append vertex 0.0
-	)
-	if (bit.and mater VERTEX_DIFFUSE) == VERTEX_DIFFUSE then (
-		local alphaValue = bit.and col.a 0xff
-		local redValue = bit.and col.r 0xff	
-		local greenValue = bit.and col.g 0xff
-		local blueValue = bit.and col.b 0xff
-		local finalColor = bit.shift alphaValue 24
-		finalColor = finalColor + (bit.shift redValue 16)
-		finalColor = finalColor + (bit.shift greenValue 8)
-		finalColor = finalColor + blueValue
-		if debug then
-			format "[CreateFullVertex] finalColor is %\n" (formattedprint finalColor format:"x")
-		append vertex finalColor
-	)
-	if (bit.and mater VERTEX_TEXTURE1) == VERTEX_TEXTURE1 then (
-		append vertex tu1.x
-		local v =  (0.0f - (tu1.y - 1.0f))
-		append vertex v
-	)
-	if (bit.and mater VERTEX_TEXTURE2) == VERTEX_TEXTURE2 then (
-		append vertex tu2.x
-		local v =  (0.0f - (tu2.y - 1.0f))
-		append vertex v
-	)
-	
-	return vertex
-)
-
-function ConvertVtx vtx =
-(
-	local l_Text=stringstream ""
-	local l_value=""
-	for i=1 to vtx.count do (
-		format "%," vtx[i] to:l_Text
-	)
-	return (l_Text as string)
-)
-
-function dotNetAddVertex vtx vrtxs idMaterial vtxMap=
-(
-	local l_vtxString = ConvertVtx vtx
-	local l_idx = 1
-	if(vtxMap[idMaterial].ContainsKey(l_vtxString)) == false then (
-		while vrtxs.count<idMaterial do
-		(
-			append vrtxs (#())
-		)
-		append vrtxs[idMaterial] vtx
-		l_idx = vrtxs[idMaterial].count
-		vtxMap[idMaterial].Add l_vtxString l_idx
-	) else (
-		l_idx = vtxMap[idMaterial].Item[l_vtxString]
-	)
-	return l_idx
-)
-
-function AddIndex index idxs idMaterial =
-(
-	while idxs.count<idMaterial do
-	(
-		append idxs (#())
-	)
-	
-	append idxs[idMaterial] (index-1)
 )
