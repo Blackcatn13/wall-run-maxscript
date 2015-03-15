@@ -121,6 +121,13 @@ utility UABUtility "UAB export Utility" width:152 height:404
 		global TryCloneObjects
 		global CloneObjects
 		global DeleteClonedObjects
+		global CreateFullVertex
+		global ExportVertexs
+		global ExportIndexs
+		global ConvertVtx
+		global dotNetAddVertex
+		global AddIndex
+
 
 
 		function ExportMesh Obj filename=
@@ -131,7 +138,8 @@ utility UABUtility "UAB export Utility" width:152 height:404
 			if debug then
 				format "[ExportMesh] Cloning object\n"
 
-			ClonedObj = CloneObjects Obj
+			ClonedObj_A = CloneObjects Obj
+			ClonedObj = ClonedObj_A[1]
 
 			if doesFileExist (MeshPath) == false then 
 			(
@@ -184,7 +192,7 @@ utility UABUtility "UAB export Utility" width:152 height:404
 				format "[ExportMesh] Generating vertex\n"
 			)
 			-- Generate Vertex information
-			GenerateVertex ClonedObj
+			GenerateVertexs ClonedObj
 			-- Write vertex information
 			for idMaterial = 1 to g_NumMaterials do
 			(
@@ -225,6 +233,7 @@ utility UABUtility "UAB export Utility" width:152 height:404
 			WriteShort g_file 0xFF55 #unsigned
 			fflush g_file
 			fclose g_file
+			DeleteClonedObjects ClonedObj_A
 		)
 
 		global g_texturesName = #() 
@@ -402,7 +411,7 @@ utility UABUtility "UAB export Utility" width:152 height:404
 			)
 			if debug then (
 				format "[GenerateVertexs] num faces %\n" numFaces
-				format "[GenerateVertexs] vertex mask size %\n" vtxmask.count
+				format "[GenerateVertexs] vertex mask size %\n" g_VertexMsks.count
 			)
 			for face=1 to numFaces do
 			(
@@ -552,6 +561,98 @@ utility UABUtility "UAB export Utility" width:152 height:404
 			)
 		)
 
+		function CreateFullVertex vtx n tu1 tu2 col tn bn mater=
+		(
+			local vertex=#()
+			if (bit.and mater VERTEX_XYZ) == VERTEX_XYZ then (
+				append vertex vtx.x
+				append vertex vtx.z
+				append vertex vtx.y	
+			)
+			if (bit.and mater VERTEX_NORMAL) == VERTEX_NORMAL then (
+				n = normalize(n)
+				append vertex n.x
+				append vertex n.z
+				append vertex n.y
+			)
+			if(bit.and mater VERTEX_TANGENT) == VERTEX_TANGENT then (
+				append vertex 1.0
+				append vertex 0.0
+				append vertex 0.0
+				append vertex 0.0
+				append vertex 0.0
+			)
+			if(bit.and mater VERTEX_BINORMAL) == VERTEX_BINORMAL then (
+				append vertex 0.0
+				append vertex 0.0
+				append vertex 0.0
+				append vertex 0.0
+			)
+			if (bit.and mater VERTEX_DIFFUSE) == VERTEX_DIFFUSE then (
+				local alphaValue = bit.and col.a 0xff
+				local redValue = bit.and col.r 0xff	
+				local greenValue = bit.and col.g 0xff
+				local blueValue = bit.and col.b 0xff
+				local finalColor = bit.shift alphaValue 24
+				finalColor = finalColor + (bit.shift redValue 16)
+				finalColor = finalColor + (bit.shift greenValue 8)
+				finalColor = finalColor + blueValue
+				if debug then
+					format "[CreateFullVertex] finalColor is %\n" (formattedprint finalColor format:"x")
+				append vertex finalColor
+			)
+			if (bit.and mater VERTEX_TEXTURE1) == VERTEX_TEXTURE1 then (
+				append vertex tu1.x
+				local v =  (0.0f - (tu1.y - 1.0f))
+				append vertex v
+			)
+			if (bit.and mater VERTEX_TEXTURE2) == VERTEX_TEXTURE2 then (
+				append vertex tu2.x
+				local v =  (0.0f - (tu2.y - 1.0f))
+				append vertex v
+			)
+			
+			return vertex
+		)
+
+		function ConvertVtx vtx =
+		(
+			local l_Text=stringstream ""
+			local l_value=""
+			for i=1 to vtx.count do (
+				format "%," vtx[i] to:l_Text
+			)
+			return (l_Text as string)
+		)
+
+		function dotNetAddVertex vtx vrtxs idMaterial vtxMap=
+		(
+			local l_vtxString = ConvertVtx vtx
+			local l_idx = 1
+			if(vtxMap[idMaterial].ContainsKey(l_vtxString)) == false then (
+				while vrtxs.count<idMaterial do
+				(
+					append vrtxs (#())
+				)
+				append vrtxs[idMaterial] vtx
+				l_idx = vrtxs[idMaterial].count
+				vtxMap[idMaterial].Add l_vtxString l_idx
+			) else (
+				l_idx = vtxMap[idMaterial].Item[l_vtxString]
+			)
+			return l_idx
+		)
+
+		function AddIndex index idxs idMaterial =
+		(
+			while idxs.count<idMaterial do
+			(
+				append idxs (#())
+			)
+			
+			append idxs[idMaterial] (index-1)
+		)
+
 		fn BoundingBox Obj =
 		(
 			local Xmin, Ymin, Zmin, Xmax, Ymax,Zmax
@@ -600,7 +701,7 @@ utility UABUtility "UAB export Utility" width:152 height:404
 			ZCenter = (BBox[6] + BBox[3])/2
 			
 			BSCenter = [XCenter,YCenter,ZCenter]
-			if UABUtility.debug then
+			if debug then
 				format "BScenter % \n" BSCenter
 			
 			for i = 1 to Obj.numVerts do 
@@ -609,35 +710,12 @@ utility UABUtility "UAB export Utility" width:152 height:404
 				if RadiusDistance > BSRadius then
 					BSRadius = RadiusDistance
 			)
-			if UABUtility.debug then
+			if debug then
 				format "BSRadius : % \n" BSRadius
 			
 			return #(BSCenter[1], BSCenter[2], BSCenter[3], BSRadius)
 			
 		)
-
-		fn TryCloneObjects Obj =
-		(
-			local ClonedObjects
-				try
-				(
-					if((classof Obj)==ObjectSet or (classof Obj) == PathName) then
-					(
-						for i = 1 to Obj.count do
-							getVert Obj[i] 1
-					)
-					else
-						getVert Obj 1
-				)
-				catch
-				(
-					--errorStr = getCurrentException() 
-					ClonedObjects = CloneObjects Obj
-				)
-				return ClonedObjects
-				
-		)
-
 
 		fn CloneObjects Objs = 
 		(

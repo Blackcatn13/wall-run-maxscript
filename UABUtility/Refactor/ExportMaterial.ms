@@ -20,7 +20,38 @@ function ExportMaterial _Material=
 		format "[ExportMaterial] mat name %\n" _Material
 	for i=1 to textNum do
 	(
-		Include "CopyTextures.ms"
+		if CopyTextures then 
+		(
+			if doesFileExist TexturePath == false then
+			(
+				makeDir TexturePath all:true
+				if debug then
+					format "[ExportMaterial] directorio % creado \n" TexturePath
+			)
+			FileName = filenameFromPath g_texturesName[i]
+			FilePathName = TexturePath + filenameFromPath
+			if debug then
+				format "[ExportMaterial] Copy file Name: \"%\" \n" FilePathName
+			if doesFileExist FilePathNamem and false then
+			(
+				if (Override == false) then
+				(
+					if (queryBox "File already exists in destination folder. Override?" title: "[ExportMaterial] File alreay exists" true) == true then (
+						deleteFile FilePathName
+						copyFile g_texturesName[i] FilePathName
+					)
+					else
+					(
+						copyFile g_texturesName[i] FilePathName
+					)
+				)
+				else
+				(
+					deleteFile FilePathName
+					copyFile g_texturesName[i] FilePathName
+				)
+			)
+		)
 		if debug then (
 			format "[ExportMaterial] path %\n" g_texturesName[i]
 			format "[ExportMaterial] path to cut %\n" realPath
@@ -77,6 +108,10 @@ function GetNumberOfTextures mat =
 			num = num + 1
 		)
 	)
+	if mat.selfIllumMapEnable and classOf(mat.selfIllumMap) == Multi_Sub_Map then
+	(
+		num = num + 2
+	)
 	return num
 )
 
@@ -116,9 +151,19 @@ function getMask mat numText=
 		)
 		if mat.selfIllumMapEnable then 
 		(
-			VtxMask = bit.or VtxMask VERTEX_NORMAL
-			VtxMask = bit.or VtxMask VERTEX_TEXTURE2
-			append g_texturesName (openBitMap mat.selfIllumMap.bitmap.filename).fileName
+			if classof(mat.selfIllumMap) == Multi_Sub_Map then
+			(
+				VtxMask = bit.or VtxMask VERTEX_NORMAL
+				VtxMask = bit.or VtxMask VERTEX_TEXTURE2
+				VtxMask = bit.or VtxMask VERTEX_RNM
+				append g_texturesName (openBitMap mat.selfIllumMap.id_0_color_shader.bitmap.filename).fileName
+				append g_texturesName (openBitMap mat.selfIllumMap.id_1_color_shader.bitmap.filename).fileName
+				append g_texturesName (openBitMap mat.selfIllumMap.id_2_color_shader.bitmap.filename).fileName
+			) else (
+				VtxMask = bit.or VtxMask VERTEX_NORMAL
+				VtxMask = bit.or VtxMask VERTEX_TEXTURE2
+				append g_texturesName (openBitMap mat.selfIllumMap.bitmap.filename).fileName
+			)
 		)
 		if mat.reflectionMapEnable then 
 		(

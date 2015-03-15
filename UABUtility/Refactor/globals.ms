@@ -19,6 +19,7 @@ global VERTEX_TEXTURE1 	= 0x10
 global VERTEX_TEXTURE2 	= 0x20
 global VERTEX_DIFFUSE 	= 0x40
 global VERTEX_CUBEMAP 	= 0x200
+global VERTEX_RNM 		= 0x400
 
 -- ExportMesh Variables
 global MeshPath

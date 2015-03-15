@@ -24,6 +24,13 @@ global getMask
 global TryCloneObjects
 global CloneObjects
 global DeleteClonedObjects
+global CreateFullVertex
+global ExportVertexs
+global ExportIndexs
+global ConvertVtx
+global dotNetAddVertex
+global AddIndex
+
 
 
 function ExportMesh Obj filename=
@@ -34,20 +41,19 @@ function ExportMesh Obj filename=
 	if debug then
 		format "[ExportMesh] Cloning object\n"
 
-	ClonedObj = CloneObjects Obj
+	ClonedObj_A = CloneObjects Obj
+	ClonedObj = ClonedObj_A[1]
 
 	if doesFileExist (MeshPath) == false then 
 	(
 		makeDir (MeshPath) all:true
 		if debug then
-		(
 			format "[ExportMesh] directorio % creado \n" MeshPath
-		)
 	)
 
 	g_Vtxs = #()
 	g_Idxs = #()
-	g_file = fopen filename "wb"
+	g_file = fopen (MeshPath + filename) "wb"
 	--g_MaterialArray = #()
 
 	-- Starting export of mesh
@@ -87,7 +93,7 @@ function ExportMesh Obj filename=
 		format "[ExportMesh] Generating vertex\n"
 	)
 	-- Generate Vertex information
-	GenerateVertex ClonedObj
+	GenerateVertexs ClonedObj
 	-- Write vertex information
 	for idMaterial = 1 to g_NumMaterials do
 	(
@@ -128,6 +134,7 @@ function ExportMesh Obj filename=
 	WriteShort g_file 0xFF55 #unsigned
 	fflush g_file
 	fclose g_file
+	DeleteClonedObjects ClonedObj_A
 )
 
 Include "ExportMaterial.ms"
@@ -136,7 +143,7 @@ Include "Vertex.ms"
 
 Include "Bounding.ms"
 
-Inlcude "CloneObjects.ms"
+Include "CloneObjects.ms"
 
 function CreateMaterialArray Obj =
 (

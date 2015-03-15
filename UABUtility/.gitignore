@@ -1,3 +1,2 @@
-/asa.ms
-/BoundingSphere.ms
-*.sublime-project
+*.mesh
+*.sublime-workspace
