@@ -111,10 +111,10 @@ function ExportMaterial _Material=
 					format "[ExportMaterial] directorio % creado \n" TexturePath
 			)
 			FileName = filenameFromPath g_texturesName[i]
-			FilePathName = TexturePath + filenameFromPath
+			FilePathName = RelativeTexturePath + FileName
 			if debug then
 				format "[ExportMaterial] Copy file Name: \"%\" \n" FilePathName
-			if doesFileExist FilePathNamem and false then
+			if doesFileExist FilePathName and false then
 			(
 				if (Override == false) then
 				(
@@ -138,14 +138,14 @@ function ExportMaterial _Material=
 			format "[ExportMaterial] path %\n" g_texturesName[i]
 			format "[ExportMaterial] path to cut %\n" realPath
 		)
-		local relPath 
-		if CopyTextures then (
-			relPath = pathConfig.convertPathToRelativeTo FilePathName realPath
-		) else (
-			FileNameAux = filenameFromPath g_texturesName[i]
-			FilePathNameAux = TexturePath + FileNameAux
-			relPath = pathConfig.convertPathToRelativeTo FilePathNameAux realPath
-		)
+		local relPath = FilePathName
+		--if CopyTextures then (
+		--	relPath = pathConfig.convertPathToRelativeTo FilePathName realPath
+		--) else (
+		--	FileNameAux = filenameFromPath g_texturesName[i]
+		--	FilePathNameAux = TexturePath + FileNameAux
+		--	relPath = pathConfig.convertPathToRelativeTo FilePathNameAux realPath
+		--)
 		if debug then
 			format "[ExportMaterial] rel path %\n" relPath
 		local numChars = relPath.count
