@@ -1,4 +1,5 @@
 fileIn "Common.ms"
+fileIn "ExportPlatforms.ms"
 
 function CopyTextures FilePath Objs =
 (
@@ -147,12 +148,101 @@ function ExportRenderableObjects Obj Core pathToCopy realPath File =
 
 	if (getUserProp Obj "export_type") == "animated_mesh" then (
 		format "\t<animated_model name=\"%\" core=\"%\" " Obj.name (getUserProp Obj "anim_model") to:File
-	) else (
+	) else 
+	(
 		format "\t<mesh_instance name=\"%\" core=\"%\" " Obj.name Core to:File
-	)
+	) 
+		--//TODO Platforms
+	
 	format " pos=\"% % %\" yaw=\"%\" "  tranX tranZ tranY YawAngle to:File
 	format " pitch=\"%\" roll=\"%\" scale=\"% % %\" />\n" PitchAngle RollAngle ObjScale.x ObjScale.z ObjScale.y to:File
 )
+
+function ExportPlatformMesh FilePath realPath=
+(
+	if doesFileExist FilePath == false then (
+		makeDir FilePath all:true
+		if UABUtility.debug then
+			format "[ExportPlatformMesh] directorio % creado \n" FilePath
+	)
+	
+	local file=createfile (FilePath + "platform_objects.xml")
+	-- Para escribir sobre el fichero de tipo carácter stream utilizando la función format
+	format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:file
+	format "<platforms>\n" to:file
+	local geom = geometry as array
+	local cores = GetObjectCores geom
+	for obj in $ do (
+		if UABUtility.debug then
+			format "[ExportPlatformMesh] Object %\n" obj
+		if iskindof obj Editable_Mesh do (
+			ExportRenderablePlatform obj (GetObjectCore cores obj)  file
+		)
+	)
+	
+	format "</platforms>\n" to:file
+	-- Para cerrar el fichero de tipo carácter stream
+	close file
+	
+	--ExportStaticMeshManager geometry FilePath realPath true true
+)
+
+function ExportRenderablePlatform Obj Core File=
+(
+	local YawAngle=DegToRad (GetYaw Obj.transform)
+	local PitchAngle=DegToRad (GetPitch Obj.transform)
+	local RollAngle=DegToRad (GetRoll Obj.transform)
+	local Translation=Obj.transform.translation
+	local ObjScale=Obj.scale
+	local tranX = formattedPrint Translation.x format:"f"
+	local tranY = formattedPrint Translation.y format:"f"
+	local tranZ = formattedPrint Translation.z format:"f"
+	
+	format "\t<platform name=\"%\" core=\"%\" type=\"%\"" Obj.name Core   (getUserProp Obj "platform_type") to:File
+	if (getUserProp Obj "platform_type") != "moving" then
+	(
+		if (getUserProp Obj "platform_type") == "breakable" then
+		(
+			format "trigger_name=\"%\" " (getUserProp Obj "trigger_name") to:File
+		)else if(getUserProp Obj "platform_type") == "pinchos" then
+		(
+			format " from_x=\"%\" from_z=\"%\" " (getUserProp Obj "from_x")(getUserProp Obj "from_z") to:File
+			format "back_position=\"% % %\" " (getUserProp Obj "back_position_x")(getUserProp Obj "back_position_y")(getUserProp Obj "back_position_z") to:File
+			format "forth_position =\"% % %\" " (getUserProp Obj "forth_position_x")(getUserProp Obj "forth_position_y")(getUserProp Obj "forth_position_z") to:File
+		)else if(getUserProp Obj "platform_type") == "poly" then
+		(
+			format " redim_axis= \"%\" redim_scale=\"%\" "  (getUserProp Obj "redim_axis")(getUserProp Obj "redim_scale") to:File
+			format "activation_distance= \"%\" initial_collision=\"%\" "  (getUserProp Obj "activation_distance")(getUserProp Obj "initial_collision") to:File
+		)
+		
+		format " pos=\"% % %\" yaw=\"%\" "  tranX tranZ tranY YawAngle to:File
+		format " pitch=\"%\" roll=\"%\" scale=\"% % %\" />\n" PitchAngle RollAngle ObjScale.x ObjScale.z ObjScale.y to:File
+	)else
+	(
+		format " speed= \"%\" " (getUserProp Obj "speed") to:File
+		format " pos=\"% % %\" yaw=\"%\" "  tranX tranZ tranY YawAngle to:File
+		format " pitch=\"%\" roll=\"%\" scale=\"% % %\" >\n" PitchAngle RollAngle ObjScale.x ObjScale.z ObjScale.y to:File
+		if(getUserProp Obj "wp1_x" != "") and ( getUserProp Obj "wp1_x" != undefined)  then
+		(
+			format "\t\t<wp pos=\"% % %\" />\n" (getUserProp Obj "wp1_x")(getUserProp Obj "wp1_y")(getUserProp Obj "wp1_z") to:File
+		)
+		if(getUserProp Obj "wp2_x" != "") and ( getUserProp Obj "wp2_x" != undefined) then
+		(
+			format "\t\t<wp pos=\"% % %\" />\n" (getUserProp Obj "wp2_x")(getUserProp Obj "wp2_y")(getUserProp Obj "wp2_z") to:File
+		)
+		if(getUserProp Obj "wp3_x" != "") and ( getUserProp Obj "wp3_x" != undefined) then
+		(
+			format "\t\t<wp pos=\"% % %\" />\n" (getUserProp Obj "wp3_x")(getUserProp Obj "wp3_y")(getUserProp Obj "wp3_z") to:File
+		)
+		if(getUserProp Obj "wp4_x" != "") and ( getUserProp Obj "wp4_x" != undefined) then
+		(
+			format "\t\t<wp pos=\"% % %\" />\n" (getUserProp Obj "wp4_x")(getUserProp Obj "wp4_y")(getUserProp Obj "wp4_z") to:File
+		)
+		
+		format "\t</platform>\n" to:File
+		
+	)
+)	
 
 function GetObjectCore cores obj = 
 (

@@ -10,7 +10,7 @@ fileIn "Common.ms"
 
 global realPath
 
-utility UABUtility "UAB Utility" width:152 height:404
+utility UABUtility "UAB Utility" width:152 height:439
 (
 	local debug = true
 	-- Contenido de la utility
@@ -26,7 +26,7 @@ utility UABUtility "UAB Utility" width:152 height:404
 	button ExportStaticMeshManagerButton "Static Mesh Manager" pos:[16,268] width:120 height:16
 	button ExportCinematicButton "Cinematic" pos:[16,316] width:120 height:16
 	checkbox DebugValue "Debug" pos:[80,244] width:56 height:16
-	groupBox grp2 "Tools" pos:[8,348] width:136 height:48
+	GroupBox grp2 "Tools" pos:[8,348] width:136 height:48
 	button btnSetProperties "Set Properties" pos:[16,372] width:120 height:16
 	dropdownList LevelList "" pos:[8,172] width:136 height:21
 	
@@ -35,6 +35,46 @@ utility UABUtility "UAB Utility" width:152 height:404
 	--Esta función se llama al pulsarse sobre el btón ExportMeshButton
 	
 	
+	
+	
+	
+	
+	
+	
+	button PlatformTestButton "PlatformsTest" pos:[26,405] width:89 height:21
+
+		/*on ExportAnimatedMeshManagerButton pressed do
+	(
+		local pathToCopy = realPath + "\\Data\\" + LevelList.items[LevelList.selection] + "\\"
+		local arrayObjs = #()
+		
+		if $ != undefined then (
+			if (classof $) == ObjectSet then (
+				for i = 1 to $.count do	(
+					if (getUserProp $[i] "export_type") != "animated_mesh" then (
+						format "L'objecte % no és de tipus Animated Mesh \n" i
+					) else (
+						append arrayObjs $[i]
+					)
+				)
+				format "pathToCopy %\n" pathToCopy
+				ExportAnimMeshManager arrayObjs pathToCopy realPath CopyTexturesCheck.checked ExportMeshCheck.checked
+				format "Animated Mesh Manager Exportado \n"
+			) else (
+				if (getUserProp $ "export_type") == "animated_mesh" then (
+					append arrayObjs $
+					format "pathToCopy %\n" pathToCopy
+					ExportAnimMeshManager arrayObjs pathToCopy realPath CopyTexturesCheck.checked ExportMeshCheck.checked
+					format "Animated Mesh Manager Exportado \n"
+				) else (
+					messageBox "La selecció no és de tipus Animated Mesh." title:"WRONG TYPE"
+				)
+			)
+		) else (
+			messageBox "No hi ha res seleccionat, no es pot exportar." title:"NO SELECTION"
+		)
+	)*/
+
 	on UABUtility open do
 	(
 		
@@ -45,11 +85,6 @@ utility UABUtility "UAB Utility" width:152 height:404
 		DebugValue.checked = true
 		--debug = DebugValue.checked
 	)
-	
-	on DebugValue changed newValue do (
-		debug = DebugValue.checked
-	)
-	
 	on btnSetPath pressed do
 	(
 		-- TODO, si el filtered[idx].count > 22 peta
@@ -84,9 +119,17 @@ utility UABUtility "UAB Utility" width:152 height:404
 			format "==============================\n"
 		)
 	)
+	on ExportLightsButton pressed do
+	(
+		local pathToCopy = realPath + "\\Data\\" + LevelList.items[LevelList.selection] + "\\"
+		exportLights pathToCopy realPath $
+		format "==============================\n"
+		format "ligths exported correctly\n"
+		format "==============================\n"
+	)
 	on ExportMeshButton pressed do
 	(
-
+	
 		local pathToCopy = realPath + "\\Data\\" + LevelList.items[LevelList.selection] + "\\"
 		if $ != undefined then (
 			if debug then
@@ -98,7 +141,15 @@ utility UABUtility "UAB Utility" width:152 height:404
 		) else (
 			messageBox "No hi ha res seleccionat, no es pot exportar." title:"NO SELECTION"
 		)
-
+	
+	)
+	on ExportCameraButton pressed do
+	(
+		local pathToCopy = realPath + "\\Data\\" + LevelList.items[LevelList.selection] + "\\"
+		exportCameras pathToCopy realPath $
+		format "==============================\n"
+		format "camera exported correctly\n"
+		format "==============================\n"
 	)
 	on ExportSceneButton pressed do
 	(
@@ -120,30 +171,6 @@ utility UABUtility "UAB Utility" width:152 height:404
 		format "Static meshes exported correctly\n"
 		format "==============================\n"
 	)
-	
-	on ExportCameraButton pressed do
-	(
-		local pathToCopy = realPath + "\\Data\\" + LevelList.items[LevelList.selection] + "\\"
-		exportCameras pathToCopy realPath $
-		format "==============================\n"
-		format "camera exported correctly\n"
-		format "==============================\n"
-	)
-	
-	on ExportLightsButton pressed do
-	(
-		local pathToCopy = realPath + "\\Data\\" + LevelList.items[LevelList.selection] + "\\"
-		exportLights pathToCopy realPath $
-		format "==============================\n"
-		format "ligths exported correctly\n"
-		format "==============================\n"
-	)
-	
-	on btnSetProperties pressed do
-	(
-		createDialog UABSetProperties
-	)
-	
 	on ExportCinematicButton pressed do
 	(
 		local _name = filterString maxFileName ".max"
@@ -159,36 +186,18 @@ utility UABUtility "UAB Utility" width:152 height:404
 			format "==============================\n"
 		)
 	)
-
-		/*on ExportAnimatedMeshManagerButton pressed do
+	on DebugValue changed newValue do
+	(
+			debug = DebugValue.checked
+		)
+	on btnSetProperties pressed do
+	(
+		createDialog UABSetProperties
+	)
+	on PlatformTestButton pressed  do
 	(
 		local pathToCopy = realPath + "\\Data\\" + LevelList.items[LevelList.selection] + "\\"
-		local arrayObjs = #()
-		
-		if $ != undefined then (
-			if (classof $) == ObjectSet then (
-				for i = 1 to $.count do	(
-					if (getUserProp $[i] "export_type") != "animated_mesh" then (
-						format "L'objecte % no és de tipus Animated Mesh \n" i
-					) else (
-						append arrayObjs $[i]
-					)
-				)
-				format "pathToCopy %\n" pathToCopy
-				ExportAnimMeshManager arrayObjs pathToCopy realPath CopyTexturesCheck.checked ExportMeshCheck.checked
-				format "Animated Mesh Manager Exportado \n"
-			) else (
-				if (getUserProp $ "export_type") == "animated_mesh" then (
-					append arrayObjs $
-					format "pathToCopy %\n" pathToCopy
-					ExportAnimMeshManager arrayObjs pathToCopy realPath CopyTexturesCheck.checked ExportMeshCheck.checked
-					format "Animated Mesh Manager Exportado \n"
-				) else (
-					messageBox "La selecció no és de tipus Animated Mesh." title:"WRONG TYPE"
-				)
-			)
-		) else (
-			messageBox "No hi ha res seleccionat, no es pot exportar." title:"NO SELECTION"
-		)
-	)*/
+		ExportPlatformMesh pathToCopy realPath
+	)
 )
+
