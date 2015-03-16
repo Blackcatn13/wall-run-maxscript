@@ -203,7 +203,7 @@ function ExportRenderablePlatform Obj Core File=
 	(
 		if (getUserProp Obj "platform_type") == "breakable" then
 		(
-			format "trigger_name=\"%\" " (getUserProp Obj "trigger_name") to:File
+			format " trigger_name=\"%\" " (getUserProp Obj "trigger_name") to:File
 		)else if(getUserProp Obj "platform_type") == "pinchos" then
 		(
 			format " from_x=\"%\" from_z=\"%\" " (getUserProp Obj "from_x")(getUserProp Obj "from_z") to:File
