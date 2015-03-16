@@ -62,6 +62,8 @@ global PhysicsType = #("triangle_mesh", "convex_shape", "box_shape", "plane_shap
 global PhysicsLayer = #("logic")
 global logicGenerate = #("box_event", "sphere_event")
 global EventList = #("event1")
+global RenderPlatform=#("static","breakable","moving","pinchos","poly")
+global RedimAxis=#("x","y","z")
 
 -- Vertex declaration
 global VERTEX_XYZ 		= 0x1

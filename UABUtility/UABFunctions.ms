@@ -251,6 +251,7 @@ function GetObjectCore cores obj =
 		return (obj.name)
 	) else (
 		InstanceMgr.GetInstances obj &instances
+		format "MyInstances % are %\n" obj.name instances
 		for i = 1 to instances.count do (
 			pos = findItem cores instances[i]
 			if pos != 0	then (
@@ -258,6 +259,7 @@ function GetObjectCore cores obj =
 			)
 		)
 	)
+	return ""
 )
 
 function GetObjectCores Objs = 
