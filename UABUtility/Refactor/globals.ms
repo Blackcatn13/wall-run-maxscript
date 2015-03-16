@@ -10,6 +10,7 @@ global staticMeshFileName = "static_meshes.xml"
 global renderableObjectsFileName = "renderable_objects.xml"
 global CamerasFileName = "cameras.xml"
 global AnimatedCamerasPath = "cameras\\"
+global LightsFileName = "lights.xml"
 global CopyTextures = true
 global ExportMeshes = false
 global Override = true
@@ -38,6 +39,14 @@ global XMLTime			= " time="
 global XMLOnce 			= " once="
 global XMLCycle 		= " cycle="
 global XMLReverse		= " reverse="
+global XMLType			= " type="
+global XMLDir 			= " dir="
+global XMLColor 		= " color="
+global XMLIntensity 	= " intensity="
+global XMLAttStartRange	= " att_start_range="
+global XMLAttEndRange	= " att_end_range="
+global XMLAngle			= " angle="
+global XMLFallOff		= " fall_off="
 global XML1Value      	= "\"%\""
 global XML3Value		= "\"% % %\""
 

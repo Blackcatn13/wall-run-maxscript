@@ -33,6 +33,8 @@ utility UABUtility "UAB export Utility" width:152 height:404
 
 	Include "ExportCameras.ms"
 
+	Include "ExportLigths.ms"
+
 	on LevelList selected lvl do
 	(
 		PathToCopy = realPath + DataDirectory + LevelList.items[LevelList.selection] + "\\"
@@ -130,6 +132,9 @@ utility UABUtility "UAB export Utility" width:152 height:404
 		if debug then
 			format "Exporting Camera(s)\n"
 		exportCameras undefined
+		if debug then
+			format "Exporting light(s)\n"
+		exportLights undefined
 		format "==============================\n"
 		format "Full scene exported correctly\n"
 		format "==============================\n"
@@ -145,5 +150,14 @@ utility UABUtility "UAB export Utility" width:152 height:404
 		format "==============================\n"
 	)
 
+	on ExportLightsButton pressed do
+	(
+		if debug then
+			format "Exporting light(s)\n"
+		exportLights $
+		format "==============================\n"
+		format "ligths exported correctly\n"
+		format "==============================\n"
+	)
 
 )
