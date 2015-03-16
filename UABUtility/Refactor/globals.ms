@@ -11,6 +11,7 @@ global renderableObjectsFileName = "renderable_objects.xml"
 global CamerasFileName = "cameras.xml"
 global AnimatedCamerasPath = "cameras\\"
 global LightsFileName = "lights.xml"
+global CinematicFileName = "cinematic.xml"
 global CopyTextures = true
 global ExportMeshes = false
 global Override = true
@@ -47,6 +48,9 @@ global XMLAttStartRange	= " att_start_range="
 global XMLAttEndRange	= " att_end_range="
 global XMLAngle			= " angle="
 global XMLFallOff		= " fall_off="
+global XMLResource		= " resource="
+global XMLRendManager	= " renderable_objects_manager="
+global XMLDuration		= " duration="
 global XML1Value      	= "\"%\""
 global XML3Value		= "\"% % %\""
 

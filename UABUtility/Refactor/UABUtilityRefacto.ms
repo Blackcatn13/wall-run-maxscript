@@ -160,4 +160,19 @@ utility UABUtility "UAB export Utility" width:152 height:404
 		format "==============================\n"
 	)
 
+	on ExportCinematicButton pressed do
+	(
+		local _name = filterString maxFileName ".max"
+		local dialog = dotNetObject "MaxCustomControls.RenameInstanceDialog" _name[1]
+		dialog.text = "What's the cinematic name?"
+		local dialogResult = dialog.Showmodal()
+		if dotnet.compareenums dialog.DialogResult ((dotnetclass "System.Windows.Forms.DialogResult").OK) then (
+			local cinematicName = dialog.InstanceName
+			ExportCinematics cinematicName
+			format "==============================\n"
+			format "cinematic exported correctly\n"
+			format "==============================\n"
+		)
+	)
+
 )
