@@ -12,6 +12,7 @@ global CamerasFileName = "cameras.xml"
 global AnimatedCamerasPath = "cameras\\"
 global LightsFileName = "lights.xml"
 global CinematicFileName = "cinematic.xml"
+global TriggerFileName = "triggers.xml"
 global CopyTextures = true
 global ExportMeshes = false
 global Override = true
@@ -70,14 +71,15 @@ global XMLMaxTime 		= " max_time="
 global XMLTypeEvent 	= " type_event="
 global XMLScriptFunc	= " script_function="
 global XMLParam1		= " param1="
-
+global XMLSize			= " size="
+global XMLUpdateFun     = " update_function="
 global XML1Value      	= "\"%\""
 global XML3Value		= "\"% % %\""
 
 
 -- Properties values
 global RenderLayers = #("solid", "skybox", "alpha_objects", "alpha_blend_objects", "particles")
-global MeshType = #("mesh_instance", "animated_model", "platform_mesh")
+global MeshType = #("mesh_instance", "animated_model", "platform_mesh", "trigger")
 global PhysicsType = #("triangle_mesh", "convex_shape", "box_shape", "plane_shape", "capsule_shape")
 global PhysicsLayer = #("logic")
 global logicGenerate = #("box_event", "sphere_event")

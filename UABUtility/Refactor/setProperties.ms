@@ -238,6 +238,7 @@ rollout UABSetProperties "UAB Set Properties" width:843 height:691
 		GetUserProperty obj WP4XText "wp4_x"
 		GetUserProperty obj WP4YText "wp4_y"
 		GetUserProperty obj WP4ZText "wp4_z"
+		
 		GetUserProperty obj TriggerName "triggerName"
 		GetUserProperty obj ShapeDL "trigger_shape"
 		GetUserProperty obj GroupDL "trigger_group"

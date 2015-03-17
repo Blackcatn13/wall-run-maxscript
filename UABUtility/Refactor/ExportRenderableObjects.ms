@@ -5,8 +5,12 @@ global ro_animated			= "\t<animated_model"
 global ro_platform			= "\t<platform"
 global ro_platform_close	= "\t</platform>\n"
 global platform_wp			= "\t\t<wp"
+global trigger_open_file_tag 	= "<triggers>\n"
+global trigger_close_file_tag 	= "</triggers>\n"
+global trigger_tag 				= "<trigger"
 
 global ro_file
+global trigg_file
 
 function ExportRenderableObjects =
 (
@@ -14,9 +18,13 @@ function ExportRenderableObjects =
 	CreatePath PathToCopy
 
 	ro_file = createfile (PathToCopy + renderableObjectsFileName)
+	trigg_file = createfile (PathToCopy + renderableObjectsFileName)
 
 	format (XMLVersion) to:ro_file
 	format (ro_open_file_tag) to:ro_file
+
+	format (XMLVersion) to:trigg_file
+	format (trigger_open_file_tag) to:trigg_file
 
 	for i = 1 to scene_geometry_toExport.count do
 	(
@@ -26,7 +34,7 @@ function ExportRenderableObjects =
 			local yawAng = DegToRad (GetYaw objaux.transform)
 			local pitchAng = DegToRad (GetPitch objaux.transform)
 			local rollAng = DegToRad (GetRoll objaux.transform)
-			local Translation = objaux.transform.translation
+			local Translation = RHTranslationToLH(objaux.transform.translation)
 			local ObjScale = (GetScale objaux.scale)
 			local tranX = formattedPrint Translation.x format:"f"
 			local tranY = formattedPrint Translation.y format:"f"
@@ -76,10 +84,27 @@ function ExportRenderableObjects =
 					)
 					format (ro_platform_close) to:ro_file
 				)
-
+			)
+			if (GetUserProp objaxu "export_type" == "trigger") then (
+				local bb = nodeLocalBoundingBox objaux
+				local sizebb = RHTranslationToLH(bb[2] - bb[1])
+				format (trigger_tag + XMLName + XML1Value + XMLPlatfName + XML1Value) (getUserProp objaux "triggerName") "" to:trigg_file
+				format (XMLPos + XML3Value + XMLShape + XML1Value) tranX tranY tranZ (getUserProp objaux "trigger_shape") to:trigg_file
+				format (XMLSize + XML3Value + XMLTypeEvent + XML1Value) sizebb.x sizebb.y sizebb.z (getUserProp objaux "trigger_type_event") to:trigg_file
+				format (XMLScriptFunc + XML1Value + XMLParam1 + XML1Value) (getUserProp objaux "trigger_script") (getUserProp objaux "trigger_param1") to:trigg_file
+				format (XMLGroup + XML1Value + XMLPaint + XML1Value + XMLColor + XML3Value) (getUserProp objaux "trigger_group") (getUserProp objaux "trigger_paint") objaux.wirecolor.r objaux.wirecolor.g objaux.wirecolor.b to:trigg_file
+				if ((getUserProp objaux "trigger_group") != "") and ((getUserProp objaux "trigger_group") != undefined) then (
+					format (XMLMaxTime + XML1Value) (getUserProp objaux "trigger_duration") to:trigg_file
+				)
+				if ((getUserProp objaux "trigger_group") != "") and ((getUserProp objaux "trigger_group") != undefined) then (
+					format (XMLUpdateFun + XML1Value) "" to:trigg_file
+				)
+				format (XMLCloseTag) to:trigg_file
 			)
 		)
 	)
 	format (ro_close_file_tag) to:ro_file
 	close ro_file
+	format (trigger_close_file_tag) to:trigg_file
+	close trigg_file
 )
