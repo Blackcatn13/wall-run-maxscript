@@ -218,9 +218,9 @@ function ExportMesh Obj filename=
 			(
 				WriteFloat g_file BBox[BBindex]
 			)
-			for BBIndex = 1 to BSphere.count do
+			for BSIndex = 1 to BSphere.count do
 			(
-				WriteFloat g_file BSphere[BBindex]
+				WriteFloat g_file BSphere[BSindex]
 			)
 			-- Export footer
 			WriteShort g_file 0xFF55 #unsigned

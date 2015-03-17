@@ -18,7 +18,7 @@ function ExportRenderableObjects =
 	CreatePath PathToCopy
 
 	ro_file = createfile (PathToCopy + renderableObjectsFileName)
-	trigg_file = createfile (PathToCopy + renderableObjectsFileName)
+	trigg_file = createfile (PathToCopy + TriggerFileName)
 
 	format (XMLVersion) to:ro_file
 	format (ro_open_file_tag) to:ro_file
@@ -85,7 +85,7 @@ function ExportRenderableObjects =
 					format (ro_platform_close) to:ro_file
 				)
 			)
-			if (GetUserProp objaxu "export_type" == "trigger") then (
+			if (GetUserProp objaux "export_type" == "trigger") then (
 				local bb = nodeLocalBoundingBox objaux
 				local sizebb = RHTranslationToLH(bb[2] - bb[1])
 				format (trigger_tag + XMLName + XML1Value + XMLPlatfName + XML1Value) (getUserProp objaux "triggerName") "" to:trigg_file

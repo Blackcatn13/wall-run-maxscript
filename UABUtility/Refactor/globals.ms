@@ -3,7 +3,7 @@ global debug = true
 global levels=#("","level1","level2", "level3","level4", "level5", "main menu", "select player")
 global realPath
 global FileExtension = ".mesh"
-global DataDirectory = "\\Data\\"
+global DataDirectory = "Data\\"
 global MeshDirectory = "meshes\\"
 global TextureDirectory = "textures\\"
 global staticMeshFileName = "static_meshes.xml"
