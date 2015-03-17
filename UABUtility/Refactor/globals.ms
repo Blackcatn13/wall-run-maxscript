@@ -22,6 +22,7 @@ global RelativePathToCopy
 
 global XMLVersion		= "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n"
 global XMLCloseTag		= "/>\n"
+global XMLEndTag		= ">\n"
 global XMLName			= " name="
 global XMLFilename		= " filename="
 global XMLCore			= " core="
@@ -51,13 +52,23 @@ global XMLFallOff		= " fall_off="
 global XMLResource		= " resource="
 global XMLRendManager	= " renderable_objects_manager="
 global XMLDuration		= " duration="
+global XMLTriggerName   = " trigger_name="
+global XMLFromX			= " from_x="
+global XMLFromZ			= " from_z="
+global XMLBackPos		= " back_position="
+global XMLForthPos		= " forth_position="
+global XMLRedAxis		= " redim_axis="
+global XMLRedScale		= " redim_scale="
+global XMLActDist		= " activation_distance="
+global XMLInitCol 		= " initial_collision="
+global XMLSpeed			= " speed="
 global XML1Value      	= "\"%\""
 global XML3Value		= "\"% % %\""
 
 
 -- Properties values
 global RenderLayers = #("solid", "skybox", "alpha_objects", "alpha_blend_objects", "particles")
-global MeshType = #("mesh_instance", "animated_model")
+global MeshType = #("mesh_instance", "animated_model", "platform_mesh")
 global PhysicsType = #("triangle_mesh", "convex_shape", "box_shape", "plane_shape", "capsule_shape")
 global PhysicsLayer = #("logic")
 global logicGenerate = #("box_event", "sphere_event")

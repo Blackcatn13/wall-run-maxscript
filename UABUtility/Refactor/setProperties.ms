@@ -37,45 +37,44 @@ fn SetUserProperty Obj StrProperty StrValue =
 	setUserProp Obj StrProperty StrValue
 )
 
-rollout UABSetProperties "UAB Set Properties" width:544 height:456
+rollout UABSetProperties "UAB Set Properties" width:843 height:691
 (
-	groupBox RenderGp "Render" pos:[8,8] width:528 height:200
-	groupBox PhysicsGp "Physics" pos:[8,216] width:256 height:88
-	groupBox EventsGp "Events" pos:[272,216] width:264 height:56
-	checkBox RenderExportCheckBox "Export" pos:[16,32] width:56 height:16
-	checkBox RenderVisibleCheckBox "Visible" pos:[16,64] width:56 height:16
-	checkBox LayerCheckBox "Layer" pos:[16,96] width:56 height:16
-	dropDownList RenderExportList "" pos:[88,32] width:168 height:21
-	dropDownList RenderLayerList "" pos:[88,96] width:168 height:21
+	GroupBox PhysicsGp "Physics" pos:[7,454] width:255 height:91
+	GroupBox EventsGp "Events" pos:[271,452] width:264 height:56
+	checkbox RenderExportCheckBox "Export" pos:[16,32] width:56 height:16
+	checkbox RenderVisibleCheckBox "Visible" pos:[16,64] width:56 height:16
+	checkbox LayerCheckBox "Layer" pos:[16,96] width:56 height:16
+	dropdownList RenderExportList "" pos:[88,32] width:168 height:21
+	dropdownList RenderLayerList "" pos:[88,96] width:168 height:21
 	label AnimModelLabel "Anim. model" pos:[16,128] width:64 height:16
-	editText AnimModelText "" pos:[88,128] width:168 height:16
+	edittext AnimModelText "" pos:[88,128] width:168 height:16
 	label TechniqueLabel "Technique" pos:[16,160] width:64 height:16
-	editText TechniqueText "" pos:[88,160] width:168 height:16
-	checkBox PhysicsGenerateCheckBox "Generate" pos:[16,240] width:64 height:16
-	dropDownList PhysicsGenerateList "" pos:[88,240] width:168 height:21
-	checkBox PhysicsLayerCheckBox "Layer" pos:[16,272] width:56 height:16
-	dropDownList PhysicsLayerList "" pos:[88,272] width:168 height:21
-	groupBox LogicGp "Logic" pos:[8,312] width:256 height:88
-	checkBox LogicGenerateCheckBox "Generate" pos:[16,336] width:64 height:16
-	dropDownList LogicGenerateList "" pos:[88,336] width:168 height:21
-	checkBox ShowNormal "Show normal" pos:[96,368] width:88 height:16
-	checkBox CameraVisibility "Don't test camera visibility" pos:[264,32] width:216 height:16
-	checkBox WorldTransform "Don't export world transform" pos:[264,64] width:216 height:16
-	editText LinkedBoneText "" pos:[368,96] width:152 height:16
-	checkBox LinkedBoneCheck "Linked to bone" pos:[264,96] width:96 height:16
-	checkBox Cinematics "Export to cinematics" pos:[264,128] width:216 height:16
-	checkBox EventGenerateCheck "Generate" pos:[280,240] width:64 height:16
-	dropDownList EventGenerateList "" pos:[352,240] width:176 height:21
-	groupBox TracksGp "Tracks" pos:[272,280] width:128 height:56
-	checkBox GenerateTracks "Generate" pos:[304,304] width:64 height:16
-	groupBox CamerasGp "Cameras" pos:[272,344] width:264 height:56
-	checkBox CycleCam "Cycle" pos:[280,368] width:56 height:16
-	groupBox LightsGp "Lights" pos:[408,280] width:128 height:56
-	checkBox GenerateLights "Generate" pos:[440,304] width:64 height:16
-	checkBox ReverseCam "Reverse" pos:[368,368] width:64 height:16
-	checkBox OnceCam "Once" pos:[456,368] width:56 height:16
-	button GetButton "Get" pos:[160,416] width:104 height:32
-	button SetButton "Set" pos:[272,416] width:104 height:32
+	edittext TechniqueText "" pos:[88,160] width:168 height:16
+	checkbox PhysicsGenerateCheckBox "Generate" pos:[15,476] width:64 height:16
+	dropdownList PhysicsGenerateList "" pos:[87,476] width:168 height:21
+	checkbox PhysicsLayerCheckBox "Layer" pos:[15,508] width:56 height:16
+	dropdownList PhysicsLayerList "" pos:[87,508] width:168 height:21
+	GroupBox LogicGp "Logic" pos:[7,548] width:256 height:88
+	checkbox LogicGenerateCheckBox "Generate" pos:[15,572] width:64 height:16
+	dropdownList LogicGenerateList "" pos:[87,572] width:168 height:21
+	checkbox showNormal "Show normal" pos:[95,604] width:88 height:16
+	checkbox CameraVisibility "Don't test camera visibility" pos:[264,32] width:216 height:16
+	checkbox WorldTransform "Don't export world transform" pos:[264,64] width:216 height:16
+	edittext LinkedBoneText "" pos:[368,96] width:152 height:16
+	checkbox LinkedBoneCheck "Linked to bone" pos:[264,96] width:96 height:16
+	checkbox Cinematics "Export to cinematics" pos:[264,128] width:216 height:16
+	checkbox EventGenerateCheck "Generate" pos:[279,476] width:64 height:16
+	dropdownList EventGenerateList "" pos:[351,476] width:176 height:21
+	GroupBox TracksGp "Tracks" pos:[271,516] width:128 height:56
+	checkbox GenerateTracks "Generate" pos:[303,540] width:64 height:16
+	GroupBox CamerasGp "Cameras" pos:[271,580] width:264 height:56
+	checkbox CycleCam "Cycle" pos:[279,604] width:56 height:16
+	GroupBox LightsGp "Lights" pos:[407,516] width:128 height:56
+	checkbox GenerateLights "Generate" pos:[439,540] width:64 height:16
+	checkbox ReverseCam "Reverse" pos:[367,604] width:64 height:16
+	checkbox OnceCam "Once" pos:[455,604] width:56 height:16
+	button GetButton "Get" pos:[293,645] width:104 height:32
+	button SetButton "Set" pos:[405,645] width:104 height:32
 
 	label lbl3 "Platform Type" pos:[17,190] width:72 height:14
 	dropdownList RenderPlatformList "" pos:[88,184] width:168 height:21
