@@ -8,6 +8,7 @@ global platform_wp			= "\t\t<wp"
 global trigger_open_file_tag 	= "<triggers>\n"
 global trigger_close_file_tag 	= "</triggers>\n"
 global trigger_tag 				= "<trigger"
+global layer_tag				= "\t<layer"
 
 global ro_file
 global trigg_file
@@ -25,6 +26,18 @@ function ExportRenderableObjects =
 
 	format (XMLVersion) to:trigg_file
 	format (trigger_open_file_tag) to:trigg_file
+
+	local _default = true;
+	for i = 1 to RenderLayers.count do (
+		format (layer_tag + XMLName + XML1Value) RenderLayers[i] to:ro_file	
+		if _default == true then (
+			 format (XMLDefault + XML1Value) true to:ro_file
+			_default = false
+		)
+		format (XMLCloseTag) to:ro_file
+	)
+	
+	<layer name="solid" default="true"/>
 
 	for i = 1 to scene_geometry_toExport.count do
 	(
@@ -44,18 +57,29 @@ function ExportRenderableObjects =
 			if (GetUserProp objaux "export_type" == "mesh_instance") then (
 				format (ro_mesh + XMLName + XML1Value + XMLCore + XML1Value) ObjName (GetObjectCore objaux) to:ro_file
 				format (XMLPos + XML3Value + XMLYaw + XML1Value) tranX tranY tranZ yawAng to:ro_file
-				format (XMLPitch + XML1Value + XMLRoll + XML1Value + XMLScale + XML3Value + XMLVisible + XML1Value + XMLCloseTag) pitchAng rollAnf ObjScale.x ObjScale.y ObjScale.z visible to:ro_file
+				format (XMLPitch + XML1Value + XMLRoll + XML1Value + XMLScale + XML3Value + XMLVisible + XML1Value) pitchAng rollAnf ObjScale.x ObjScale.y ObjScale.z visible to:ro_file
+				if (GetUserProp objaxu "render_to_layer" == true) then (
+					format (XMLLayer + XML1Value) (GetUserProp objaxu "render_layer") to:ro_file
+				)
+				format (XMLCloseTag) to:ro_file
 			)
 			if (GetUserProp objaux "export_type" == "animated_model") then (
 				format (ro_animated + XMLName + XML1Value + XMLCore + XML1Value) ObjName (GetUserProp objaux "anim_model") to:ro_file
 				format (XMLPos + XML3Value + XMLYaw + XML1Value) tranX tranY tranZ yawAng to:ro_file
-				format (XMLPitch + XML1Value + XMLRoll + XML1Value + XMLScale + XML3Value + XMLVisible + XML1Value + XMLCloseTag) pitchAng rollAnf ObjScale.x ObjScale.y ObjScale.z visible to:ro_file
+				format (XMLPitch + XML1Value + XMLRoll + XML1Value + XMLScale + XML3Value + XMLVisible + XML1Value) pitchAng rollAnf ObjScale.x ObjScale.y ObjScale.z visible to:ro_file
+				if (GetUserProp objaxu "render_to_layer" == true) then (
+					format (XMLLayer + XML1Value) (GetUserProp objaxu "render_layer") to:ro_file
+				)
+				format (XMLCloseTag) to:ro_file
 			)
 			if (GetUserProp objaux "export_type" == "platform_mesh") then (
 				local platfType = getUserProp objaux "platform_type"
 				format (ro_platform + XMLName + XML1Value + XMLCore + XML1Value + XMLType + XML1Value) ObjName (GetObjectCore objaux) platfType to:ro_file
 				format (XMLPos + XML3Value + XMLYaw + XML1Value) tranX tranY tranZ yawAng to:ro_file
 				format (XMLPitch + XML1Value + XMLRoll + XML1Value + XMLScale + XML3Value + XMLVisible + XML1Value) pitchAng rollAnf ObjScale.x ObjScale.y ObjScale.z visible to:ro_file
+				if (GetUserProp objaxu "render_to_layer" == true) then (
+					format (XMLLayer + XML1Value) (GetUserProp objaxu "render_layer") to:ro_file
+				)
 				if platfType == "breakable" then (
 					format (XMLTriggerName + XML1Value + XMLCloseTag) (getUserProp objaux "trigger_name") to:ro_file
 				)

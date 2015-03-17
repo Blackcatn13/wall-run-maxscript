@@ -73,6 +73,8 @@ global XMLScriptFunc	= " script_function="
 global XMLParam1		= " param1="
 global XMLSize			= " size="
 global XMLUpdateFun     = " update_function="
+global XMLLayer			= " layer="
+global XMLDefault 		= " default="
 global XML1Value      	= "\"%\""
 global XML3Value		= "\"% % %\""
 
