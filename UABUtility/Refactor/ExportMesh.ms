@@ -227,6 +227,6 @@ function ExportMesh Obj filename=
 			fflush g_file
 			fclose g_file
 		)
-		--DeleteClonedObjects ClonedObj_A
+		DeleteClonedObjects ClonedObj_A
 	)
 )

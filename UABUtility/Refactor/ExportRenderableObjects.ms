@@ -20,7 +20,7 @@ function ExportRenderableObjects =
 
 	for i = 1 to scene_geometry_toExport.count do
 	(
-		local objaux = objaux
+		local objaux = scene_geometry_toExport[i]
 		if (GetUserProp objaux "export" == true) then (
 			local ObjName = objaux.name
 			local yawAng = DegToRad (GetYaw objaux.transform)
