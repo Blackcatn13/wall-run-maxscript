@@ -141,6 +141,23 @@ rollout UABSetProperties "UAB Set Properties" width:843 height:691
 	edittext WP4ZText "" pos:[715,387] width:40 height:16
 	label WP4XLabel "X" pos:[593,391] width:9 height:12
 	edittext WP4XText "" pos:[602,388] width:40 height:15
+
+	groupBox grp28 "Triggers" pos:[16,328] width:520 height:100
+	label lbl67 "Trigger Name" pos:[32,352] width:72 height:16
+	editText TriggerName "" pos:[96,352] width:144 height:16
+	dropDownList ShapeDL "" pos:[96,376] width:72 height:21
+	label lbl68 "Shape" pos:[32,376] width:56 height:16
+	label lbl69 "Group" pos:[32,400] width:56 height:16
+	dropDownList GroupDL "" pos:[96,400] width:72 height:21
+	label lbl70 "Event Type" pos:[272,352] width:72 height:16
+	dropDownList EventType "" pos:[336,352] width:88 height:21
+	checkbox PaintIt "Paint It" pos:[440,352] width:80 height:16
+	label lbl71 "Parameter 1" pos:[264,376] width:72 height:16
+	label lbl72 "Script Function" pos:[264,400] width:72 height:16
+	editText Param1 "" pos:[344,376] width:168 height:16
+	editText ScriptFunction "" pos:[344,400] width:168 height:16
+	label lbl301 "Duration" pos:[191,379] width:51 height:14
+	editText DurationTime "" pos:[191,397] width:50 height:18
 	
 	on UABSetProperties open do
 	(	
@@ -152,6 +169,9 @@ rollout UABSetProperties "UAB Set Properties" width:843 height:691
 		EventGenerateList.items = EventList
 		RenderPlatformList.items = RenderPlatform
 		RedimAxisList.items = RedimAxis
+		ShapeDL.items = TriggerShapeL
+		GroupDL.items = GroupsList
+		EventType.items = EventTypeL
 	)
 	
 	on GetButton pressed  do
@@ -218,6 +238,14 @@ rollout UABSetProperties "UAB Set Properties" width:843 height:691
 		GetUserProperty obj WP4XText "wp4_x"
 		GetUserProperty obj WP4YText "wp4_y"
 		GetUserProperty obj WP4ZText "wp4_z"
+		GetUserProperty obj TriggerName "triggerName"
+		GetUserProperty obj ShapeDL "trigger_shape"
+		GetUserProperty obj GroupDL "trigger_group"
+		GetUserProperty obj EventType "trigger_type_event"
+		GetUserProperty obj PaintIt "trigger_paint"
+		GetUserProperty obj Param1 "trigger_param1"
+		GetUserProperty obj ScriptFunction "trigger_script"
+		GetUserProperty obj DurationTime "trigger_duration"
 	)
 	
 	on SetButton pressed  do
@@ -322,6 +350,15 @@ rollout UABSetProperties "UAB Set Properties" width:843 height:691
 					--)
 					--End Moving Platform---
 				)
+
+				SetUserProperty $[i] "triggerName" TriggerName.text 	
+				SetUserProperty $[i] "trigger_shape" ShapeDL.items[ShapeDL.selection]
+				SetUserProperty $[i] "trigger_group" GroupDL.items[GroupDL.selection]		
+				SetUserProperty $[i] "trigger_type_event" EventType.items[EventType.selection] 		
+				SetUserProperty $[i] "trigger_paint" PaintIt.checked		
+				SetUserProperty $[i] "trigger_param1" Param1.test		
+				SetUserProperty $[i] "trigger_script" ScriptFunction.text 
+				SetUserProperty $[i] "trigger_duration" DurationTime.text
 			)
 		)
 		else
@@ -421,11 +458,19 @@ rollout UABSetProperties "UAB Set Properties" width:843 height:691
 				--)
 				--End Moving Platform---
 			)
+			SetUserProperty $ "triggerName" TriggerName.text 	
+			SetUserProperty $ "trigger_shape" ShapeDL.items[ShapeDL.selection]
+			SetUserProperty $ "trigger_group" GroupDL.items[GroupDL.selection]		
+			SetUserProperty $ "trigger_type_event" EventType.items[EventType.selection] 		
+			SetUserProperty $ "trigger_paint" PaintIt.checked		
+			SetUserProperty $ "trigger_param1" Param1.text		
+			SetUserProperty $ "trigger_script" ScriptFunction.text 
+			SetUserProperty $ "trigger_duration" DurationTime.text
 		)
 	)
 	
 	on AnimModelText entered key do (
-			AnimModelText.bold = false
+		AnimModelText.bold = false
 	)
 		
 	on TechniqueText entered key do (
@@ -437,86 +482,98 @@ rollout UABSetProperties "UAB Set Properties" width:843 height:691
 	)
 
 	on BackPositionXText entered key do (
-			BackPositionXText.bold = false
+		BackPositionXText.bold = false
 	)
 
 	on BackPositionYText entered key do (
-			BackPositionYText.bold = false
+		BackPositionYText.bold = false
 	)
 
 	on BackPositionZText entered key do (
-			BackPositionZText.bold = false
+		BackPositionZText.bold = false
 	)
 
 	on ForthPositionXText entered key do (
-			ForthPositionXText.bold = false
+		ForthPositionXText.bold = false
 	)
 
 	on ForthPositionYText entered key do (
-			ForthPositionYText.bold = false
+		ForthPositionYText.bold = false
 	)
 
 	on ForthPositionZText entered key do (
-			ForthPositionZText.bold = false
+		ForthPositionZText.bold = false
 	)
 
 	on ActivationDistanceText entered key do (
-			ActivationDistanceText.bold = false
+		ActivationDistanceText.bold = false
 	)
 
 	on SpeedText entered key do (
-			SpeedText.bold = false
+		SpeedText.bold = false
 	)
 
-		
 	on WP1XText entered key do (
-			WP1XText.bold = false
+		WP1XText.bold = false
 	)
 
 	on WP1YText entered key do (
-			WP1YText.bold = false
+		WP1YText.bold = false
 	)
 
 	on WP1ZText entered key do (
-			WP1ZText.bold = false
+		WP1ZText.bold = false
 	)
 
 	on WP2XText entered key do (
-			WP2XText.bold = false
+		WP2XText.bold = false
 	)
 
 	on WP2YText entered key do (
-			WP2YText.bold = false
+		WP2YText.bold = false
 	)
 
 	on WP2ZText entered key do (
-			WP2ZText.bold = false
+		WP2ZText.bold = false
 	)
 
 	on WP3XText entered key do (
-			WP3XText.bold = false
+		WP3XText.bold = false
 	)
 
 	on WP3YText entered key do (
-			WP3YText.bold = false
+		WP3YText.bold = false
 	)
 
 	on WP3ZText entered key do (
-			WP3ZText.bold = false
+		WP3ZText.bold = false
 	)
 
 	on WP4XText entered key do (
-			WP4XText.bold = false
+		WP4XText.bold = false
 	)
 
 	on WP4YText entered key do (
-			WP4YText.bold = false
+		WP4YText.bold = false
 	)
 
 	on WP4ZText entered key do (
-			WP4ZText.bold = false
+		WP4ZText.bold = false
 	)
 
+	on Param1 entered key do (
+		Param1.bold = false
+	)
 
+	on ScriptFunction entered key do (
+		ScriptFunction.bold = false
+	)
 
+	on TriggerName entered key do (
+		TriggerName.bold = false
+	)
+
+	on DurationTime entered key do (
+		DurationTime.bold = false
+	)
 )

@@ -62,6 +62,15 @@ global XMLRedScale		= " redim_scale="
 global XMLActDist		= " activation_distance="
 global XMLInitCol 		= " initial_collision="
 global XMLSpeed			= " speed="
+global XMLGroup			= " group="
+global XMLShape			= " shape="
+global XMLPlatfName		= " platform_name="
+global XMLPaint			= " paint="
+global XMLMaxTime 		= " max_time="
+global XMLTypeEvent 	= " type_event="
+global XMLScriptFunc	= " script_function="
+global XMLParam1		= " param1="
+
 global XML1Value      	= "\"%\""
 global XML3Value		= "\"% % %\""
 
@@ -75,6 +84,9 @@ global logicGenerate = #("box_event", "sphere_event")
 global EventList = #("event1")
 global RenderPlatform=#("static","breakable","moving","pinchos","poly")
 global RedimAxis=#("x","y","z")
+global EventTypeL = #("enter", "stay", "leave")
+global GroupsList = #("1", "2", "3")
+global TriggerShapeL = #("box", "sphere")
 
 -- Vertex declaration
 global VERTEX_XYZ 		= 0x1
