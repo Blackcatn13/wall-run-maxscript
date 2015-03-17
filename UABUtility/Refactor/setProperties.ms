@@ -357,7 +357,7 @@ rollout UABSetProperties "UAB Set Properties" width:843 height:691
 				SetUserProperty $[i] "trigger_group" GroupDL.items[GroupDL.selection]		
 				SetUserProperty $[i] "trigger_type_event" EventType.items[EventType.selection] 		
 				SetUserProperty $[i] "trigger_paint" PaintIt.checked		
-				SetUserProperty $[i] "trigger_param1" Param1.test		
+				SetUserProperty $[i] "trigger_param1" Param1.text		
 				SetUserProperty $[i] "trigger_script" ScriptFunction.text 
 				SetUserProperty $[i] "trigger_duration" DurationTime.text
 			)
