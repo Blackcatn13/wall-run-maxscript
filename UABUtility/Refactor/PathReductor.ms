@@ -1,7 +1,7 @@
 local data_path = getSavePath caption:"Exe path" initialDir:"C:\\" 
 if data_path != undefined then (
 	PathLabel.text = data_path
-	realPath = data_path
+	realPath = data_path + "\\"
 	local filtered = filterString data_path "\\"
 	local idx = 1
 	local auxstring = ""
