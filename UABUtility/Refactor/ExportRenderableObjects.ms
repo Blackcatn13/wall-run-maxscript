@@ -55,7 +55,7 @@ function ExportRenderableObjects =
 			if (GetUserProp objaux "export_type" == "mesh_instance") then (
 				format (ro_mesh + XMLName + XML1Value + XMLCore + XML1Value) ObjName (GetObjectCore objaux) to:ro_file
 				format (XMLPos + XML3Value + XMLYaw + XML1Value) tranX tranY tranZ yawAng to:ro_file
-				format (XMLPitch + XML1Value + XMLRoll + XML1Value + XMLScale + XML3Value + XMLVisible + XML1Value) pitchAng rollAnf ObjScale.x ObjScale.y ObjScale.z visible to:ro_file
+				format (XMLPitch + XML1Value + XMLRoll + XML1Value + XMLScale + XML3Value + XMLVisible + XML1Value) pitchAng rollAng ObjScale.x ObjScale.y ObjScale.z visible to:ro_file
 				if (GetUserProp objaux "render_to_layer" == true) then (
 					format (XMLLayer + XML1Value) (GetUserProp objaux "render_layer") to:ro_file
 				)
@@ -64,7 +64,7 @@ function ExportRenderableObjects =
 			if (GetUserProp objaux "export_type" == "animated_model") then (
 				format (ro_animated + XMLName + XML1Value + XMLCore + XML1Value) ObjName (GetUserProp objaux "anim_model") to:ro_file
 				format (XMLPos + XML3Value + XMLYaw + XML1Value) tranX tranY tranZ yawAng to:ro_file
-				format (XMLPitch + XML1Value + XMLRoll + XML1Value + XMLScale + XML3Value + XMLVisible + XML1Value) pitchAng rollAnf ObjScale.x ObjScale.y ObjScale.z visible to:ro_file
+				format (XMLPitch + XML1Value + XMLRoll + XML1Value + XMLScale + XML3Value + XMLVisible + XML1Value) pitchAng rollAng ObjScale.x ObjScale.y ObjScale.z visible to:ro_file
 				if (GetUserProp objaux "render_to_layer" == true) then (
 					format (XMLLayer + XML1Value) (GetUserProp objaux "render_layer") to:ro_file
 				)
@@ -74,7 +74,7 @@ function ExportRenderableObjects =
 				local platfType = getUserProp objaux "platform_type"
 				format (ro_platform + XMLName + XML1Value + XMLCore + XML1Value + XMLType + XML1Value) ObjName (GetObjectCore objaux) platfType to:ro_file
 				format (XMLPos + XML3Value + XMLYaw + XML1Value) tranX tranY tranZ yawAng to:ro_file
-				format (XMLPitch + XML1Value + XMLRoll + XML1Value + XMLScale + XML3Value + XMLVisible + XML1Value) pitchAng rollAnf ObjScale.x ObjScale.y ObjScale.z visible to:ro_file
+				format (XMLPitch + XML1Value + XMLRoll + XML1Value + XMLScale + XML3Value + XMLVisible + XML1Value) pitchAng rollAng ObjScale.x ObjScale.y ObjScale.z visible to:ro_file
 				if (GetUserProp objaux "render_to_layer" == true) then (
 					format (XMLLayer + XML1Value) (GetUserProp objaux "render_layer") to:ro_file
 				)
@@ -115,11 +115,14 @@ function ExportRenderableObjects =
 				format (XMLSize + XML3Value + XMLTypeEvent + XML1Value) sizebb.x sizebb.y sizebb.z (getUserProp objaux "trigger_type_event") to:trigg_file
 				format (XMLScriptFunc + XML1Value + XMLParam1 + XML1Value) (getUserProp objaux "trigger_script") (getUserProp objaux "trigger_param1") to:trigg_file
 				format (XMLGroup + XML1Value + XMLPaint + XML1Value + XMLColor + XML3Value) (getUserProp objaux "trigger_group") (getUserProp objaux "trigger_paint") objaux.wirecolor.r objaux.wirecolor.g objaux.wirecolor.b to:trigg_file
-				if ((getUserProp objaux "trigger_group") != "") and ((getUserProp objaux "trigger_group") != undefined) then (
+				if ((getUserProp objaux "trigger_duration") != "") and ((getUserProp objaux "trigger_duration") != undefined) then (
 					format (XMLMaxTime + XML1Value) (getUserProp objaux "trigger_duration") to:trigg_file
 				)
-				if ((getUserProp objaux "trigger_group") != "") and ((getUserProp objaux "trigger_group") != undefined) then (
-					format (XMLUpdateFun + XML1Value) "" to:trigg_file
+				if ((getUserProp objaux "trigger_update") != "") and ((getUserProp objaux "trigger_update") != undefined) then (
+					format (XMLUpdateFun + XML1Value) (getUserProp objaux "trigger_update") to:trigg_file
+				)
+				if ((getUserProp objaux "trigger_platform_name") != "") and ((getUserProp objaux "trigger_platform_name") != undefined) then (
+					format (XMLUpdateFun + XML1Value) (getUserProp objaux "trigger_platform_name") to:trigg_file
 				)
 				format (XMLCloseTag) to:trigg_file
 			)

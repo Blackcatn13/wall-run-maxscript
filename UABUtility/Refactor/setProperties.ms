@@ -142,22 +142,26 @@ rollout UABSetProperties "UAB Set Properties" width:843 height:691
 	label WP4XLabel "X" pos:[593,391] width:9 height:12
 	edittext WP4XText "" pos:[602,388] width:40 height:15
 
-	groupBox grp28 "Triggers" pos:[16,328] width:520 height:100
-	label lbl67 "Trigger Name" pos:[32,352] width:72 height:16
-	editText TriggerName "" pos:[96,352] width:144 height:16
-	dropDownList ShapeDL "" pos:[96,376] width:72 height:21
-	label lbl68 "Shape" pos:[32,376] width:56 height:16
-	label lbl69 "Group" pos:[32,400] width:56 height:16
-	dropDownList GroupDL "" pos:[96,400] width:72 height:21
-	label lbl70 "Event Type" pos:[272,352] width:72 height:16
-	dropDownList EventType "" pos:[336,352] width:88 height:21
-	checkbox PaintIt "Paint It" pos:[440,352] width:80 height:16
-	label lbl71 "Parameter 1" pos:[264,376] width:72 height:16
-	label lbl72 "Script Function" pos:[264,400] width:72 height:16
-	editText Param1 "" pos:[344,376] width:168 height:16
-	editText ScriptFunction "" pos:[344,400] width:168 height:16
-	label lbl301 "Duration" pos:[191,379] width:51 height:14
-	editText DurationTime "" pos:[191,397] width:50 height:18
+	GroupBox grp28 "Triggers" pos:[16,288] width:520 height:140
+	label lbl67 "Trigger Name" pos:[32,312] width:72 height:16
+	edittext TriggerName "" pos:[96,312] width:144 height:16
+	dropdownList ShapeDL "" pos:[96,336] width:72 height:21
+	label lbl68 "Shape" pos:[32,336] width:56 height:16
+	label lbl69 "Group" pos:[32,360] width:56 height:16
+	dropdownList GroupDL "" pos:[96,360] width:72 height:21
+	label lbl70 "Event Type" pos:[256,312] width:80 height:16
+	dropdownList eventType "" pos:[344,312] width:88 height:21
+	checkbox PaintIt "Paint It" pos:[456,312] width:72 height:16
+	label lbl71 "Parameter 1" pos:[256,336] width:80 height:16
+	label lbl72 "Script Function" pos:[256,360] width:80 height:16
+	edittext Param1 "" pos:[344,336] width:168 height:16
+	edittext ScriptFunction "" pos:[344,360] width:168 height:16
+	label lbl301 "Duration" pos:[40,400] width:51 height:14
+	edittext DurationTime "" pos:[88,400] width:50 height:16
+	edittext UpdateFunction "" pos:[344,384] width:168 height:16
+	label lbl157 "Update Function" pos:[256,384] width:80 height:16
+	edittext PlatfName "" pos:[344,408] width:168 height:16
+	label lbl198 "Platform Name" pos:[256,408] width:80 height:16
 	
 	on UABSetProperties open do
 	(	
@@ -247,6 +251,8 @@ rollout UABSetProperties "UAB Set Properties" width:843 height:691
 		GetUserProperty obj Param1 "trigger_param1"
 		GetUserProperty obj ScriptFunction "trigger_script"
 		GetUserProperty obj DurationTime "trigger_duration"
+		GetUserProperty obj UpdateFunction "trigger_update"
+		GetUserProperty obj PlatfName "trigger_platform_name"
 	)
 	
 	on SetButton pressed  do
@@ -360,6 +366,8 @@ rollout UABSetProperties "UAB Set Properties" width:843 height:691
 				SetUserProperty $[i] "trigger_param1" Param1.text		
 				SetUserProperty $[i] "trigger_script" ScriptFunction.text 
 				SetUserProperty $[i] "trigger_duration" DurationTime.text
+				SetUserProperty $[i] "trigger_update" UpdateFunction.text 
+				SetUserProperty $[i] "trigger_platform_name" PlatfName.text
 			)
 		)
 		else
@@ -467,6 +475,8 @@ rollout UABSetProperties "UAB Set Properties" width:843 height:691
 			SetUserProperty $ "trigger_param1" Param1.text		
 			SetUserProperty $ "trigger_script" ScriptFunction.text 
 			SetUserProperty $ "trigger_duration" DurationTime.text
+			SetUserProperty $ "trigger_update" UpdateFunction.text 
+			SetUserProperty $ "trigger_platform_name" PlatfName.text
 		)
 	)
 	
@@ -576,5 +586,13 @@ rollout UABSetProperties "UAB Set Properties" width:843 height:691
 
 	on DurationTime entered key do (
 		DurationTime.bold = false
+	)
+
+	on UpdateFunction entered key do (
+		UpdateFunction.bold = false
+	)
+
+	on PlatfName entered key do (
+		PlatfName.bold = false
 	)
 )
