@@ -36,8 +36,6 @@ function ExportRenderableObjects =
 		)
 		format (XMLCloseTag) to:ro_file
 	)
-	
-	<layer name="solid" default="true"/>
 
 	for i = 1 to scene_geometry_toExport.count do
 	(
@@ -58,8 +56,8 @@ function ExportRenderableObjects =
 				format (ro_mesh + XMLName + XML1Value + XMLCore + XML1Value) ObjName (GetObjectCore objaux) to:ro_file
 				format (XMLPos + XML3Value + XMLYaw + XML1Value) tranX tranY tranZ yawAng to:ro_file
 				format (XMLPitch + XML1Value + XMLRoll + XML1Value + XMLScale + XML3Value + XMLVisible + XML1Value) pitchAng rollAnf ObjScale.x ObjScale.y ObjScale.z visible to:ro_file
-				if (GetUserProp objaxu "render_to_layer" == true) then (
-					format (XMLLayer + XML1Value) (GetUserProp objaxu "render_layer") to:ro_file
+				if (GetUserProp objaux "render_to_layer" == true) then (
+					format (XMLLayer + XML1Value) (GetUserProp objaux "render_layer") to:ro_file
 				)
 				format (XMLCloseTag) to:ro_file
 			)
@@ -67,8 +65,8 @@ function ExportRenderableObjects =
 				format (ro_animated + XMLName + XML1Value + XMLCore + XML1Value) ObjName (GetUserProp objaux "anim_model") to:ro_file
 				format (XMLPos + XML3Value + XMLYaw + XML1Value) tranX tranY tranZ yawAng to:ro_file
 				format (XMLPitch + XML1Value + XMLRoll + XML1Value + XMLScale + XML3Value + XMLVisible + XML1Value) pitchAng rollAnf ObjScale.x ObjScale.y ObjScale.z visible to:ro_file
-				if (GetUserProp objaxu "render_to_layer" == true) then (
-					format (XMLLayer + XML1Value) (GetUserProp objaxu "render_layer") to:ro_file
+				if (GetUserProp objaux "render_to_layer" == true) then (
+					format (XMLLayer + XML1Value) (GetUserProp objaux "render_layer") to:ro_file
 				)
 				format (XMLCloseTag) to:ro_file
 			)
@@ -77,8 +75,8 @@ function ExportRenderableObjects =
 				format (ro_platform + XMLName + XML1Value + XMLCore + XML1Value + XMLType + XML1Value) ObjName (GetObjectCore objaux) platfType to:ro_file
 				format (XMLPos + XML3Value + XMLYaw + XML1Value) tranX tranY tranZ yawAng to:ro_file
 				format (XMLPitch + XML1Value + XMLRoll + XML1Value + XMLScale + XML3Value + XMLVisible + XML1Value) pitchAng rollAnf ObjScale.x ObjScale.y ObjScale.z visible to:ro_file
-				if (GetUserProp objaxu "render_to_layer" == true) then (
-					format (XMLLayer + XML1Value) (GetUserProp objaxu "render_layer") to:ro_file
+				if (GetUserProp objaux "render_to_layer" == true) then (
+					format (XMLLayer + XML1Value) (GetUserProp objaux "render_layer") to:ro_file
 				)
 				if platfType == "breakable" then (
 					format (XMLTriggerName + XML1Value + XMLCloseTag) (getUserProp objaux "trigger_name") to:ro_file
