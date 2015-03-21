@@ -204,15 +204,11 @@ function ExportRenderablePlatform Obj Core File=
 		if (getUserProp Obj "platform_type") == "breakable" then
 		(
 			format " trigger_name=\"%\" " (getUserProp Obj "trigger_name") to:File
-		)else if(getUserProp Obj "platform_type") == "pinchos" then
-		(
-			format " from_x=\"%\" from_z=\"%\" " (getUserProp Obj "from_x")(getUserProp Obj "from_z") to:File
-			format "back_position=\"% % %\" " (getUserProp Obj "back_position_x")(getUserProp Obj "back_position_y")(getUserProp Obj "back_position_z") to:File
-			format "forth_position =\"% % %\" " (getUserProp Obj "forth_position_x")(getUserProp Obj "forth_position_y")(getUserProp Obj "forth_position_z") to:File
 		)else if(getUserProp Obj "platform_type") == "poly" then
 		(
-			format " redim_axis= \"%\" redim_scale=\"%\" "  (getUserProp Obj "redim_axis")(getUserProp Obj "redim_scale") to:File
-			format "activation_distance= \"%\" initial_collision=\"%\" "  (getUserProp Obj "activation_distance")(getUserProp Obj "initial_collision") to:File
+			format " final_position= \"% % %\" "  (getUserProp Obj "poly_final_pos_x")(getUserProp Obj "poly_final_pos_y")(getUserProp Obj "poly_final_pos_z") to:File
+			format " direction= \"% % %\" "  (getUserProp Obj "poly_direction_x")(getUserProp Obj "poly_direction_y")(getUserProp Obj "poly_direction_z") to:File
+			format "activation_distance= \"%\" "  (getUserProp Obj "activation_distance") to:File
 		)
 		
 		format " pos=\"% % %\" yaw=\"%\" "  tranX tranZ tranY YawAngle to:File
@@ -222,27 +218,29 @@ function ExportRenderablePlatform Obj Core File=
 		format " speed= \"%\" " (getUserProp Obj "speed") to:File
 		format " pos=\"% % %\" yaw=\"%\" "  tranX tranZ tranY YawAngle to:File
 		format " pitch=\"%\" roll=\"%\" scale=\"% % %\" >\n" PitchAngle RollAngle ObjScale.x ObjScale.z ObjScale.y to:File
-		if(getUserProp Obj "wp1_x" != "") and ( getUserProp Obj "wp1_x" != undefined)  then
-		(
-			format "\t\t<wp pos=\"% % %\" />\n" (getUserProp Obj "wp1_x")(getUserProp Obj "wp1_y")(getUserProp Obj "wp1_z") to:File
-		)
-		if(getUserProp Obj "wp2_x" != "") and ( getUserProp Obj "wp2_x" != undefined) then
-		(
-			format "\t\t<wp pos=\"% % %\" />\n" (getUserProp Obj "wp2_x")(getUserProp Obj "wp2_y")(getUserProp Obj "wp2_z") to:File
-		)
-		if(getUserProp Obj "wp3_x" != "") and ( getUserProp Obj "wp3_x" != undefined) then
-		(
-			format "\t\t<wp pos=\"% % %\" />\n" (getUserProp Obj "wp3_x")(getUserProp Obj "wp3_y")(getUserProp Obj "wp3_z") to:File
-		)
-		if(getUserProp Obj "wp4_x" != "") and ( getUserProp Obj "wp4_x" != undefined) then
-		(
-			format "\t\t<wp pos=\"% % %\" />\n" (getUserProp Obj "wp4_x")(getUserProp Obj "wp4_y")(getUserProp Obj "wp4_z") to:File
-		)
+			
+		WriteWayPoints Obj File "wp" 4
 		
 		format "\t</platform>\n" to:File
 		
 	)
 )	
+
+function WriteWayPoints Obj File wpName NumWPs =
+(
+	for i = 1 to NumWPs do
+	(	
+		local strNum = i as string
+		local WpX = wpName+strNum+"_x"
+		local WpY = wpName+strNum+"_y"
+		local WpZ = wpName+strNum+"_z"
+	
+		if(getUserProp Obj WpX != "") and ( getUserProp Obj WpX != undefined)  then
+		(
+			format "\t\t<wp pos=\"% % %\" />\n" (getUserProp Obj WpX)(getUserProp Obj WpY)(getUserProp Obj WpZ) to:File
+		)
+	)
+)
 
 function GetObjectCore cores obj = 
 (
