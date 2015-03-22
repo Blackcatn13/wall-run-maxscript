@@ -37,10 +37,10 @@ fn SetUserProperty Obj StrProperty StrValue =
 	setUserProp Obj StrProperty StrValue
 )
 
-rollout UABSetProperties "UAB Set Properties" width:843 height:691
+rollout UABSetProperties "UAB Set Properties" width:552 height:807
 (
-	GroupBox PhysicsGp "Physics" pos:[7,454] width:255 height:91
-	GroupBox EventsGp "Events" pos:[271,452] width:264 height:56
+	GroupBox PhysicsGp "Physics" pos:[7,561] width:255 height:91
+	GroupBox EventsGp "Events" pos:[271,559] width:272 height:56
 	checkbox RenderExportCheckBox "Export" pos:[16,32] width:56 height:16
 	checkbox RenderVisibleCheckBox "Visible" pos:[16,64] width:56 height:16
 	checkbox LayerCheckBox "Layer" pos:[16,96] width:56 height:16
@@ -50,119 +50,144 @@ rollout UABSetProperties "UAB Set Properties" width:843 height:691
 	edittext AnimModelText "" pos:[88,128] width:168 height:16
 	label TechniqueLabel "Technique" pos:[16,160] width:64 height:16
 	edittext TechniqueText "" pos:[88,160] width:168 height:16
-	checkbox PhysicsGenerateCheckBox "Generate" pos:[15,476] width:64 height:16
-	dropdownList PhysicsGenerateList "" pos:[87,476] width:168 height:21
-	checkbox PhysicsLayerCheckBox "Layer" pos:[15,508] width:56 height:16
-	dropdownList PhysicsLayerList "" pos:[87,508] width:168 height:21
-	GroupBox LogicGp "Logic" pos:[7,548] width:256 height:88
-	checkbox LogicGenerateCheckBox "Generate" pos:[15,572] width:64 height:16
-	dropdownList LogicGenerateList "" pos:[87,572] width:168 height:21
-	checkbox showNormal "Show normal" pos:[95,604] width:88 height:16
+	checkbox PhysicsGenerateCheckBox "Generate" pos:[15,583] width:64 height:16
+	dropdownList PhysicsGenerateList "" pos:[87,583] width:168 height:21
+	checkbox PhysicsLayerCheckBox "Layer" pos:[15,615] width:56 height:16
+	dropdownList PhysicsLayerList "" pos:[87,615] width:168 height:21
+	GroupBox LogicGp "Logic" pos:[7,655] width:256 height:88
+	checkbox LogicGenerateCheckBox "Generate" pos:[15,679] width:64 height:16
+	dropdownList LogicGenerateList "" pos:[87,679] width:168 height:21
+	checkbox showNormal "Show normal" pos:[95,711] width:88 height:16
 	checkbox CameraVisibility "Don't test camera visibility" pos:[264,32] width:216 height:16
 	checkbox WorldTransform "Don't export world transform" pos:[264,64] width:216 height:16
 	edittext LinkedBoneText "" pos:[368,96] width:152 height:16
 	checkbox LinkedBoneCheck "Linked to bone" pos:[264,96] width:96 height:16
 	checkbox Cinematics "Export to cinematics" pos:[264,128] width:216 height:16
-	checkbox EventGenerateCheck "Generate" pos:[279,476] width:64 height:16
-	dropdownList EventGenerateList "" pos:[351,476] width:176 height:21
-	GroupBox TracksGp "Tracks" pos:[271,516] width:128 height:56
-	checkbox GenerateTracks "Generate" pos:[303,540] width:64 height:16
-	GroupBox CamerasGp "Cameras" pos:[271,580] width:264 height:56
-	checkbox CycleCam "Cycle" pos:[279,604] width:56 height:16
-	GroupBox LightsGp "Lights" pos:[407,516] width:128 height:56
-	checkbox GenerateLights "Generate" pos:[439,540] width:64 height:16
-	checkbox ReverseCam "Reverse" pos:[367,604] width:64 height:16
-	checkbox OnceCam "Once" pos:[455,604] width:56 height:16
-	button GetButton "Get" pos:[293,645] width:104 height:32
-	button SetButton "Set" pos:[405,645] width:104 height:32
+	checkbox EventGenerateCheck "Generate" pos:[279,583] width:64 height:16
+	dropdownList EventGenerateList "" pos:[351,583] width:176 height:21
+	GroupBox TracksGp "Tracks" pos:[271,623] width:134 height:56
+	checkbox GenerateTracks "Generate" pos:[303,647] width:64 height:16
+	GroupBox CamerasGp "Cameras" pos:[271,687] width:272 height:56
+	checkbox CycleCam "Cycle" pos:[279,711] width:56 height:16
+	GroupBox LightsGp "Lights" pos:[412,623] width:131 height:56
+	checkbox GenerateLights "Generate" pos:[439,647] width:64 height:16
+	checkbox ReverseCam "Reverse" pos:[367,711] width:64 height:16
+	checkbox OnceCam "Once" pos:[455,711] width:56 height:16
+	button GetButton "Get" pos:[159,757] width:104 height:32
+	button SetButton "Set" pos:[271,757] width:104 height:32
 
 	label lbl3 "Platform Type" pos:[17,190] width:72 height:14
 	dropdownList RenderPlatformList "" pos:[88,184] width:168 height:21
-	GroupBox PlatformProperties "Platforms Properties" pos:[549,20] width:282 height:416
-	label TriggerNameLabel "Trigger Name" pos:[567,54] width:65 height:17
-	edittext TriggerNameText "" pos:[642,54] width:149 height:17
 	
-	GroupBox grp25 "Render" pos:[7,9] width:828 height:436
-	GroupBox grp27 "Breakable Platform" pos:[556,38] width:266 height:47
-	GroupBox SpikePlatformGroup "Spike Platform" pos:[556,91] width:266 height:89
-	checkbox FromXCheckBox "From X" pos:[567,111] width:58 height:14
-	checkbox FromZCheckBox "From Z" pos:[634,111] width:58 height:14
-	label BackPositionLabel "Back Position" pos:[567,135] width:68 height:12
-	label RedimScaleLabel "Redim. Scale" pos:[686,205] width:65 height:12
-	edittext RedimScaleText "" pos:[748,203] width:29 height:15
-	label BackPositionYLabel "Y" pos:[698,135] width:9 height:12
-	edittext BackPositionYText "" pos:[707,132] width:40 height:16
-	label BackPositionZLabel "Z" pos:[759,135] width:9 height:12
-	edittext BackPositionZText "" pos:[768,132] width:40 height:16
-	label ForthPositionLabel "Forth Position" pos:[567,156] width:68 height:12
-	label ForthPositionXLabel "X" pos:[639,156] width:9 height:12
-	edittext ForthPositionXText "" pos:[648,153] width:40 height:15
-	label ForthPositionYLabel "Y" pos:[697,156] width:9 height:12
-	edittext ForthPositionYText "" pos:[707,153] width:40 height:16
-	label ForthPositionZLabel "Z" pos:[760,156] width:9 height:12
-	edittext ForthPositionZText "" pos:[769,153] width:40 height:16
-	GroupBox PolyPlatformGroup "Poly Platform" pos:[557,187] width:266 height:73
-	label RedimAxisLabel "Redim. Axis" pos:[567,204] width:62 height:14
-	dropdownList RedimAxisList "" pos:[636,204] width:37 height:21
-	label ActivationDistanceLabel "Act. Distance" pos:[567,236] width:71 height:16
-	edittext ActivationDistanceText "" pos:[639,236] width:40 height:15
-	checkbox InitialCollisionCheckBox "Initial Collision" pos:[715,236] width:96 height:14
-	GroupBox MovingPlatformGroup "Moving Platform" pos:[557,266] width:266 height:161
-	label BackPositionXLabel "X" pos:[639,136] width:9 height:12
-	edittext BackPositionXText "" pos:[648,133] width:40 height:15
-	label SpeedLabel "Speed" pos:[567,283] width:38 height:16
-	edittext SpeedText "" pos:[608,283] width:40 height:15
-	GroupBox grp32 "Way Points" pos:[564,306] width:251 height:113
-	label WP1Label "1" pos:[578,328] width:9 height:16
-	label WP1YLabel "Y" pos:[648,327] width:9 height:12
-	edittext WP1YText "" pos:[656,324] width:40 height:16
-	label WP1ZLabel "Z" pos:[706,327] width:9 height:12
-	edittext WP1ZText "" pos:[715,324] width:40 height:16
-	label WP1XLabel "X" pos:[593,328] width:9 height:12
-	edittext WP1XText "" pos:[602,325] width:40 height:15
-	label WP2Label "2" pos:[578,350] width:11 height:16
-	label WP2YLabel "Y" pos:[648,349] width:9 height:12
-	edittext WP2YText "" pos:[656,346] width:40 height:16
-	label WP2ZLabel "Z" pos:[706,349] width:9 height:12
-	edittext WP2ZText "" pos:[715,346] width:40 height:16
-	label WP2XLabel "X" pos:[593,350] width:9 height:12
-	edittext WP2XText "" pos:[602,347] width:40 height:15
-	label WP3Label "3" pos:[578,371] width:10 height:16
-	label WP3YLabel "Y" pos:[648,370] width:9 height:12
-	edittext WP3YText "" pos:[656,367] width:40 height:16
-	label lbl46 "Z" pos:[706,370] width:9 height:12
-	edittext WP3ZText "" pos:[715,367] width:40 height:16
-	label WP3XLabel "X" pos:[593,371] width:9 height:12
-	edittext WP3XText "" pos:[601,368] width:40 height:15
-	label WP4Label "4" pos:[578,391] width:10 height:16
-	label WP4YLabel "Y" pos:[648,390] width:9 height:12
-	edittext WP4YText "" pos:[656,387] width:40 height:16
-	label lbl50 "Z" pos:[706,390] width:9 height:12
-	edittext WP4ZText "" pos:[715,387] width:40 height:16
-	label WP4XLabel "X" pos:[593,391] width:9 height:12
-	edittext WP4XText "" pos:[602,388] width:40 height:15
+	GroupBox grp25 "Render" pos:[7,9] width:536 height:541
+	
+	
+	GroupBox grp27 "Breakable Platform" pos:[10,221] width:266 height:56
+	label TriggerNameLabel "Trigger Name" pos:[21,247] width:65 height:17
+	edittext TriggerNameText "" pos:[96,237] width:149 height:17
+	GroupBox PolyPlatformGroup "Poly Platform" pos:[10,283] width:266 height:107
+	label ActivationDistanceLabel "Act. Distance" pos:[25,367] width:71 height:16
+	edittext ActivationDistanceText "" pos:[105,364] width:40 height:16
+	GroupBox MovingPlatformGroup "Moving Platform" pos:[288,221] width:247 height:170
+	label SpeedLabel "Speed" pos:[298,238] width:38 height:16
+	edittext SpeedText "" pos:[339,238] width:40 height:15
+	GroupBox grp32 "Way Points" pos:[295,271] width:233 height:113
+	label WP1Label "1" pos:[309,295] width:9 height:16
+	label WP1YLabel "Y" pos:[379,294] width:9 height:12
+	edittext WP1YText "" pos:[387,291] width:40 height:16
+	label WP1ZLabel "Z" pos:[437,294] width:9 height:12
+	edittext WP1ZText "" pos:[446,291] width:40 height:16
+	label WP1XLabel "X" pos:[324,295] width:9 height:12
+	edittext WP1XText "" pos:[333,292] width:40 height:15
+	label WP2Label "2" pos:[309,315] width:11 height:16
+	label WP2YLabel "Y" pos:[379,314] width:9 height:12
+	edittext WP2YText "" pos:[387,311] width:40 height:16
+	label WP2ZLabel "Z" pos:[437,314] width:9 height:12
+	edittext WP2ZText "" pos:[446,311] width:40 height:16
+	label WP2XLabel "X" pos:[324,315] width:9 height:12
+	edittext WP2XText "" pos:[333,312] width:40 height:15
+	label WP3Label "3" pos:[309,336] width:10 height:16
+	label WP3YLabel "Y" pos:[379,335] width:9 height:12
+	edittext WP3YText "" pos:[387,332] width:40 height:16
+	label lbl46 "Z" pos:[437,335] width:9 height:12
+	edittext WP3ZText "" pos:[446,332] width:40 height:16
+	label WP3XLabel "X" pos:[324,336] width:9 height:12
+	edittext WP3XText "" pos:[333,333] width:40 height:15
+	label WP4Label "4" pos:[309,356] width:10 height:16
+	label WP4YLabel "Y" pos:[379,355] width:9 height:12
+	edittext WP4YText "" pos:[387,352] width:40 height:16
+	label lbl50 "Z" pos:[437,355] width:9 height:12
+	edittext WP4ZText "" pos:[446,352] width:40 height:16
+	label WP4XLabel "X" pos:[324,356] width:9 height:12
+	edittext WP4XText "" pos:[333,353] width:40 height:15
+		
+	label FinalPositionLabel "Final Position" pos:[23,305] width:68 height:16
+	label PolyDirectionLabel "Direction" pos:[25,336] width:62 height:16
+	label PolyFinalPosLabelY "Y" pos:[152,306] width:9 height:12
+	label PolyFinalPosLabelZ "Z" pos:[210,305] width:9 height:12
+	label PolyFinalPosLabelX "X" pos:[97,307] width:9 height:12
+	label PolyDirectionLabelY "Y" pos:[152,337] width:9 height:12
+	label PolyDirectionLabelZ "Z" pos:[210,337] width:9 height:12
+	label PolyDirectionLabelX "X" pos:[97,338] width:9 height:12
+	edittext PolyFinalPosXText "" pos:[107,303] width:37 height:16
+	edittext PolyFinalPosYText "" pos:[161,303] width:37 height:16
+	edittext PolyFinalPosZText "" pos:[219,304] width:37 height:16
+	edittext PolyDirectionXText "" pos:[107,334] width:37 height:16
+	edittext PolyDirectionYText "" pos:[161,334] width:37 height:16
+	edittext PolyDirectionZText "" pos:[219,334] width:37 height:16
+	
+	GroupBox grp28 "Triggers" pos:[15,401] width:520 height:140
+	label lbl67 "Trigger Name" pos:[31,425] width:72 height:16
+	edittext TriggerName "" pos:[95,425] width:144 height:16
+	dropdownList ShapeDL "" pos:[95,449] width:72 height:21
+	label lbl68 "Shape" pos:[31,449] width:56 height:16
+	label lbl69 "Group" pos:[31,473] width:56 height:16
+	dropdownList GroupDL "" pos:[95,473] width:72 height:21
+	label lbl70 "Event Type" pos:[255,425] width:80 height:16
+	dropdownList eventType "" pos:[343,425] width:88 height:21
+	checkbox PaintIt "Paint It" pos:[455,425] width:72 height:16
+	label lbl71 "Parameter 1" pos:[255,449] width:80 height:16
+	label lbl72 "Script Function" pos:[255,473] width:80 height:16
+	edittext Param1 "" pos:[343,449] width:168 height:16
+	edittext ScriptFunction "" pos:[343,473] width:168 height:16
+	label lbl301 "Duration" pos:[39,513] width:51 height:14
+	edittext DurationTime "" pos:[87,513] width:50 height:16
+	edittext UpdateFunction "" pos:[343,497] width:168 height:16
+	label lbl157 "Update Function" pos:[255,497] width:80 height:16
+	edittext PlatfName "" pos:[343,521] width:168 height:16
+	label lbl198 "Platform Name" pos:[255,521] width:80 height:16
+	
+	
+	
+	
+		
+	
 
-	GroupBox grp28 "Triggers" pos:[16,288] width:520 height:140
-	label lbl67 "Trigger Name" pos:[32,312] width:72 height:16
-	edittext TriggerName "" pos:[96,312] width:144 height:16
-	dropdownList ShapeDL "" pos:[96,336] width:72 height:21
-	label lbl68 "Shape" pos:[32,336] width:56 height:16
-	label lbl69 "Group" pos:[32,360] width:56 height:16
-	dropdownList GroupDL "" pos:[96,360] width:72 height:21
-	label lbl70 "Event Type" pos:[256,312] width:80 height:16
-	dropdownList eventType "" pos:[344,312] width:88 height:21
-	checkbox PaintIt "Paint It" pos:[456,312] width:72 height:16
-	label lbl71 "Parameter 1" pos:[256,336] width:80 height:16
-	label lbl72 "Script Function" pos:[256,360] width:80 height:16
-	edittext Param1 "" pos:[344,336] width:168 height:16
-	edittext ScriptFunction "" pos:[344,360] width:168 height:16
-	label lbl301 "Duration" pos:[40,400] width:51 height:14
-	edittext DurationTime "" pos:[88,400] width:50 height:16
-	edittext UpdateFunction "" pos:[344,384] width:168 height:16
-	label lbl157 "Update Function" pos:[256,384] width:80 height:16
-	edittext PlatfName "" pos:[344,408] width:168 height:16
-	label lbl198 "Platform Name" pos:[256,408] width:80 height:16
-	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	on UABSetProperties open do
 	(	
 		RenderExportList.items = MeshType
@@ -172,13 +197,23 @@ rollout UABSetProperties "UAB Set Properties" width:843 height:691
 		LogicGenerateList.items = logicGenerate
 		EventGenerateList.items = EventList
 		RenderPlatformList.items = RenderPlatform
-		RedimAxisList.items = RedimAxis
 		ShapeDL.items = TriggerShapeL
 		GroupDL.items = GroupsList
 		EventType.items = EventTypeL
 	)
-	
-	on GetButton pressed  do
+	on AnimModelText entered key do
+	(
+			AnimModelText.bold = false
+		)
+	on TechniqueText entered key do
+	(
+			TechniqueText.bold = false
+		)
+	on LinkedBoneText entered key do
+	(
+			LinkedBoneText.bold = false
+		)
+	on GetButton pressed do
 	(
 		local obj
 		if ((classof $) == ObjectSet) then (
@@ -213,22 +248,20 @@ rollout UABSetProperties "UAB Set Properties" width:843 height:691
 		GetUserProperty obj ReverseCam "cam_reverse"
 		GetUserProperty obj OnceCam "cam_once"
 		GetUserProperty obj GenerateLights "lights"
-
+	
 		--- Platform Properties----
 		GetUserProperty obj RenderPlatformList "platform_type"
 		GetUserProperty obj TriggerNameText "trigger_name"
-		GetUserProperty obj FromXCheckBox "from_x"
-		GetUserProperty obj FromZCheckBox "from_z"
-		GetUserProperty obj BackPositionXText "back_position_x"
-		GetUserProperty obj BackPositionYText "back_position_y"
-		GetUserProperty obj BackPositionZText "back_position_z"
-		GetUserProperty obj ForthPositionXText "forth_position_x"
-		GetUserProperty obj ForthPositionYText "forth_position_y"
-		GetUserProperty obj ForthPositionZText "forth_position_z"
-		GetUserProperty obj RedimAxisList "redim_axis"
-		GetUserProperty obj RedimScaleText "redim_scale"
+		GetUserProperty obj PolyFinalPosXText "poly_final_pos_x"
+		GetUserProperty obj PolyFinalPosYText "poly_final_pos_y"
+		GetUserProperty obj PolyFinalPosZText "poly_final_pos_z"
+		GetUserProperty obj PolyDirectionXText "poly_direction_x"
+		GetUserProperty obj PolyDirectionYText "poly_direction_y"
+		GetUserProperty obj PolyDirectionZText "poly_direction_z"
+		
+		
 		GetUserProperty obj ActivationDistanceText "activation_distance"
-		GetUserProperty obj InitialCollisionCheckBox "initial_collision"
+	
 		GetUserProperty obj SpeedText "speed"
 		GetUserProperty obj WP1XText "wp1_x"
 		GetUserProperty obj WP1YText "wp1_y"
@@ -242,20 +275,8 @@ rollout UABSetProperties "UAB Set Properties" width:843 height:691
 		GetUserProperty obj WP4XText "wp4_x"
 		GetUserProperty obj WP4YText "wp4_y"
 		GetUserProperty obj WP4ZText "wp4_z"
-		
-		GetUserProperty obj TriggerName "triggerName"
-		GetUserProperty obj ShapeDL "trigger_shape"
-		GetUserProperty obj GroupDL "trigger_group"
-		GetUserProperty obj EventType "trigger_type_event"
-		GetUserProperty obj PaintIt "trigger_paint"
-		GetUserProperty obj Param1 "trigger_param1"
-		GetUserProperty obj ScriptFunction "trigger_script"
-		GetUserProperty obj DurationTime "trigger_duration"
-		GetUserProperty obj UpdateFunction "trigger_update"
-		GetUserProperty obj PlatfName "trigger_platform_name"
 	)
-	
-	on SetButton pressed  do
+	on SetButton pressed do
 	(
 		if ((classof $) == ObjectSet) then
 		(
@@ -310,54 +331,49 @@ rollout UABSetProperties "UAB Set Properties" width:843 height:691
 				SetUserProperty $[i] "cam_reverse" ReverseCam.checked
 				SetUserProperty $[i] "cam_once" OnceCam.checked
 				SetUserProperty $[i] "lights" GenerateLights.checked
-
+	
 				---Platform properties
 				if RenderExportList.items[RenderExportList.selection] == "platform_mesh" then (
 					SetUserProperty $[i] "platform_type" RenderPlatformList.items[RenderPlatformList.selection]
 					-------Breakable-----  
-				--	if RenderPlatformList.selection == "breakable"  then (
-					SetUserProperty $[i] "trigger_name" TriggerNameText.text
+					--if RenderPlatformList.selection == "breakable"  then (
+						SetUserProperty $[i] "trigger_name" TriggerNameText.text
 					--)
 					------End Breakable---
 					------Spikes---------
 					--if RenderPlatformList.selection == "spikes"  then (
-					SetUserProperty $[i] "from_x" FromXCheckBox.checked
-					SetUserProperty $[i] "from_z" FromZCheckBox.checked
-					SetUserProperty $[i] "back_position_x" BackPositionXText.text
-					SetUserProperty $[i] "back_position_y" BackPositionYText.text
-					SetUserProperty $[i] "back_position_z" BackPositionZText.text
-					SetUserProperty $[i] "forth_position_x" ForthPositionXText.text
-					SetUserProperty $[i] "forth_position_y" ForthPositionYText.text
-					SetUserProperty $[i] "forth_position_z" ForthPositionZText.text
 					--)
 					----End Spikes----
 					----Poly----------
 					--if RenderPlatformList.selection == "poly"  then (
-					SetUserProperty $[i] "redim_axis" RedimAxisList.items[RedimAxisList.selection]
-					SetUserProperty $[i] "redim_scale" RedimScaleText.text
-					SetUserProperty $[i] "activation_distance" ActivationDistanceText.text
-					SetUserProperty $[i] "initial_collision" InitialCollisionCheckBox.checked
+						SetUserProperty $[i] "poly_final_pos_x" PolyFinalPosXText.text
+						SetUserProperty $[i] "poly_final_pos_y" PolyFinalPosYText.text
+						SetUserProperty $[i] "poly_final_pos_z" PolyFinalPosZText.text
+						SetUserProperty $[i] "poly_direction_x" PolyDirectionXText.text
+						SetUserProperty $[i] "poly_direction_y" PolyDirectionYText.text
+						SetUserProperty $[i] "poly_direction_z" PolyDirectionZText.text
+						SetUserProperty $[i] "activation_distance" ActivationDistanceText.text
 					--)
 					---End Poly-----
 					--Moving Platform----
 					--if RenderPlatformList.selection == "moving"  then (
-					SetUserProperty $[i] "speed" SpeedText.text
-					SetUserProperty $[i] "wp1_x" WP1XText.text
-					SetUserProperty $[i] "wp1_y" WP1YText.text
-					SetUserProperty $[i] "wp1_z" WP1ZText.text
-					SetUserProperty $[i] "wp2_x" WP2XText.text
-					SetUserProperty $[i] "wp2_y" WP2YText.text
-					SetUserProperty $[i] "wp2_z" WP2ZText.text
-					SetUserProperty $[i] "wp3_x" WP3XText.text
-					SetUserProperty $[i] "wp3_y" WP3YText.text
-					SetUserProperty $[i] "wp3_z" WP3ZText.text
-					SetUserProperty $[i] "wp4_x" WP4XText.text
-					SetUserProperty $[i] "wp4_y" WP4YText.text
-					SetUserProperty $[i] "wp4_z" WP4ZText.text
+						SetUserProperty $[i] "speed" SpeedText.text
+						SetUserProperty $[i] "wp1_x" WP1XText.text
+						SetUserProperty $[i] "wp1_y" WP1YText.text
+						SetUserProperty $[i] "wp1_z" WP1ZText.text
+						SetUserProperty $[i] "wp2_x" WP2XText.text
+						SetUserProperty $[i] "wp2_y" WP2YText.text
+						SetUserProperty $[i] "wp2_z" WP2ZText.text
+						SetUserProperty $[i] "wp3_x" WP3XText.text
+						SetUserProperty $[i] "wp3_y" WP3YText.text
+						SetUserProperty $[i] "wp3_z" WP3ZText.text
+						SetUserProperty $[i] "wp4_x" WP4XText.text
+						SetUserProperty $[i] "wp4_y" WP4YText.text
+						SetUserProperty $[i] "wp4_z" WP4ZText.text
 					--)
 					--End Moving Platform---
 				)
-
+	
 				SetUserProperty $[i] "triggerName" TriggerName.text 	
 				SetUserProperty $[i] "trigger_shape" ShapeDL.items[ShapeDL.selection]
 				SetUserProperty $[i] "trigger_group" GroupDL.items[GroupDL.selection]		
@@ -426,46 +442,46 @@ rollout UABSetProperties "UAB Set Properties" width:843 height:691
 				SetUserProperty $ "platform_type" RenderPlatformList.items[RenderPlatformList.selection]
 				-------Breakable-----
 			--	if RenderPlatformList.selection == "breakable"  then (
-				SetUserProperty $ "trigger_name" TriggerNameText.text
-				--)
+					SetUserProperty $ "trigger_name" TriggerNameText.text
+		--		)
 				------End Breakable---
 				------Spikes---------
+			
+				
+				------Spikes---------
 				--if RenderPlatformList.selection == "spikes"  then (
-				SetUserProperty $ "from_x" FromXCheckBox.checked
-				SetUserProperty $ "from_z" FromZCheckBox.checked
-				SetUserProperty $ "back_position_x" BackPositionXText.text
-				SetUserProperty $ "back_position_y" BackPositionYText.text
-				SetUserProperty $ "back_position_z" BackPositionZText.text
-				SetUserProperty $ "forth_position_x" ForthPositionXText.text
-				SetUserProperty $ "forth_position_y" ForthPositionYText.text
-				SetUserProperty $ "forth_position_z" ForthPositionZText.text
 				--)
 				----End Spikes----
 				----Poly----------
 				--if RenderPlatformList.selection == "poly"  then (
-				SetUserProperty $ "redim_axis" RedimAxisList.items[RedimAxisList.selection]
-				SetUserProperty $ "redim_scale" RedimScaleText.text
-				SetUserProperty $ "activation_distance" ActivationDistanceText.text
-				SetUserProperty $ "initial_collision" InitialCollisionCheckBox.checked
-				--)
-				---End Poly-----
-				--Moving Platform----
-				--if RenderPlatformList.selection == "moving"  then (
-				SetUserProperty $ "speed" SpeedText.text
-				SetUserProperty $ "wp1_x" WP1XText.text
-				SetUserProperty $ "wp1_y" WP1YText.text
-				SetUserProperty $ "wp1_z" WP1ZText.text
-				SetUserProperty $ "wp2_x" WP2XText.text
-				SetUserProperty $ "wp2_y" WP2YText.text
-				SetUserProperty $ "wp2_z" WP2ZText.text
-				SetUserProperty $ "wp3_x" WP3XText.text
-				SetUserProperty $ "wp3_y" WP3YText.text
-				SetUserProperty $ "wp3_z" WP3ZText.text
-				SetUserProperty $ "wp4_x" WP4XText.text
-				SetUserProperty $ "wp4_y" WP4YText.text
-				SetUserProperty $ "wp4_z" WP4ZText.text
-				--)
-				--End Moving Platform---
+					SetUserProperty $ "poly_final_pos_x" PolyFinalPosXText.text
+					SetUserProperty $ "poly_final_pos_y" PolyFinalPosYText.text
+					SetUserProperty $ "poly_final_pos_z" PolyFinalPosZText.text
+					SetUserProperty $ "poly_direction_x" PolyDirectionXText.text
+					SetUserProperty $ "poly_direction_y" PolyDirectionYText.text
+					SetUserProperty $ "poly_direction_z" PolyDirectionZText.text
+					SetUserProperty $ "activation_distance" ActivationDistanceText.text
+					
+			--	)
+					---End Poly-----
+					--Moving Platform----
+			--	if RenderPlatformList.selection == "moving"  then (
+					SetUserProperty $ "speed" SpeedText.text
+					SetUserProperty $ "wp1_x" WP1XText.text
+					SetUserProperty $ "wp1_y" WP1YText.text
+					SetUserProperty $ "wp1_z" WP1ZText.text
+					SetUserProperty $ "wp2_x" WP2XText.text
+					SetUserProperty $ "wp2_y" WP2YText.text
+					SetUserProperty $ "wp2_z" WP2ZText.text
+					SetUserProperty $ "wp3_x" WP3XText.text
+					SetUserProperty $ "wp3_y" WP3YText.text
+					SetUserProperty $ "wp3_z" WP3ZText.text
+					SetUserProperty $ "wp4_x" WP4XText.text
+					SetUserProperty $ "wp4_y" WP4YText.text
+					SetUserProperty $ "wp4_z" WP4ZText.text
+			--	)
+					--End Moving Platform---
+				
 			)
 			SetUserProperty $ "triggerName" TriggerName.text 	
 			SetUserProperty $ "trigger_shape" ShapeDL.items[ShapeDL.selection]
@@ -479,120 +495,28 @@ rollout UABSetProperties "UAB Set Properties" width:843 height:691
 			SetUserProperty $ "trigger_platform_name" PlatfName.text
 		)
 	)
-	
-	on AnimModelText entered key do (
-		AnimModelText.bold = false
-	)
-		
-	on TechniqueText entered key do (
-		TechniqueText.bold = false
-	)
-	
-	on LinkedBoneText entered key do (
-		LinkedBoneText.bold = false
-	)
-
-	on BackPositionXText entered key do (
-		BackPositionXText.bold = false
-	)
-
-	on BackPositionYText entered key do (
-		BackPositionYText.bold = false
-	)
-
-	on BackPositionZText entered key do (
-		BackPositionZText.bold = false
-	)
-
-	on ForthPositionXText entered key do (
-		ForthPositionXText.bold = false
-	)
-
-	on ForthPositionYText entered key do (
-		ForthPositionYText.bold = false
-	)
-
-	on ForthPositionZText entered key do (
-		ForthPositionZText.bold = false
-	)
-
-	on ActivationDistanceText entered key do (
-		ActivationDistanceText.bold = false
-	)
-
-	on SpeedText entered key do (
-		SpeedText.bold = false
-	)
-
-	on WP1XText entered key do (
-		WP1XText.bold = false
-	)
-
-	on WP1YText entered key do (
-		WP1YText.bold = false
-	)
-
-	on WP1ZText entered key do (
-		WP1ZText.bold = false
-	)
-
-	on WP2XText entered key do (
-		WP2XText.bold = false
-	)
-
-	on WP2YText entered key do (
-		WP2YText.bold = false
-	)
-
-	on WP2ZText entered key do (
-		WP2ZText.bold = false
-	)
-
-	on WP3XText entered key do (
-		WP3XText.bold = false
-	)
-
-	on WP3YText entered key do (
-		WP3YText.bold = false
-	)
-
-	on WP3ZText entered key do (
-		WP3ZText.bold = false
-	)
-
-	on WP4XText entered key do (
-		WP4XText.bold = false
-	)
-
-	on WP4YText entered key do (
-		WP4YText.bold = false
-	)
-
-	on WP4ZText entered key do (
-		WP4ZText.bold = false
-	)
-
-	on Param1 entered key do (
-		Param1.bold = false
-	)
-
-	on ScriptFunction entered key do (
-		ScriptFunction.bold = false
-	)
-
-	on TriggerName entered key do (
-		TriggerName.bold = false
-	)
-
-	on DurationTime entered key do (
-		DurationTime.bold = false
-	)
-
-	on UpdateFunction entered key do (
-		UpdateFunction.bold = false
-	)
-
-	on PlatfName entered key do (
-		PlatfName.bold = false
-	)
+	on TriggerName entered key do
+	(
+			TriggerName.bold = false
+		)
+	on Param1 entered key do
+	(
+			Param1.bold = false
+		)
+	on ScriptFunction entered key do
+	(
+			ScriptFunction.bold = false
+		)
+	on DurationTime entered key do
+	(
+			DurationTime.bold = false
+		)
+	on UpdateFunction entered key do
+	(
+			UpdateFunction.bold = false
+		)
+	on PlatfName entered key do
+	(
+			PlatfName.bold = false
+		)
 )

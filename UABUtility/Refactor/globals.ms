@@ -75,6 +75,8 @@ global XMLSize			= " size="
 global XMLUpdateFun     = " update_function="
 global XMLLayer			= " layer="
 global XMLDefault 		= " default="
+global XMLFinalPos		= " final_position="
+global XMLDirection		= " direction="
 global XML1Value      	= "\"%\""
 global XML3Value		= "\"% % %\""
 

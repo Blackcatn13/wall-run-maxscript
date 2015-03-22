@@ -9,6 +9,7 @@ global trigger_open_file_tag 	= "<triggers>\n"
 global trigger_close_file_tag 	= "</triggers>\n"
 global trigger_tag 				= "<trigger"
 global layer_tag				= "\t<layer"
+global wp							="wp"
 
 global ro_file
 global trigg_file
@@ -81,29 +82,34 @@ function ExportRenderableObjects =
 				if platfType == "breakable" then (
 					format (XMLTriggerName + XML1Value + XMLCloseTag) (getUserProp objaux "trigger_name") to:ro_file
 				)
-				if platfType == "pinchos" then (
-					format (XMLFromX + XML1Value + XMLFromZ + XML1Value) (getUserProp objaux "from_x") (getUserProp objaux "from_z") to:ro_file
-					format (XMLBackPos + XML3Value) (getUserProp objaux "back_position_x") (getUserProp objaux "back_position_y") (getUserProp objaux "back_position_z") to:ro_file
-					format (XMLForthPos + XML3Value + XMLCloseTag) (getUserProp objaux "forth_position_x") (getUserProp objaux "forth_position_y") (getUserProp objaux "forth_position_z") to:ro_file
+				if platfType == "pinchos" or platfType == "static" then (--remove
+				--	format (XMLFromX + XML1Value + XMLFromZ + XML1Value) (getUserProp objaux "from_x") (getUserProp objaux "from_z") to:ro_file
+				--	format (XMLBackPos + XML3Value) (getUserProp objaux "back_position_x") (getUserProp objaux "back_position_y") (getUserProp objaux "back_position_z") to:ro_file
+				--	format (XMLForthPos + XML3Value + XMLCloseTag) (getUserProp objaux "forth_position_x") (getUserProp objaux "forth_position_y") (getUserProp objaux "forth_position_z") to:ro_file
+					format (XMLCloseTag) to:ro_file
 				)
 				if platfType == "poly" then (
-					format (XMLRedAxis + XML1Value + XMLRedScale + XML1Value) (getUserProp objaux "redim_axis") (getUserProp objaux "redim_scale") to:ro_file
-					format (XMLActDist + XML1Value + XMLInitCol + XML1Value + XMLCloseTag) (getUserProp objaux "activation_distance") (getUserProp objaux "initial_collision") to:ro_file
+					format (XMLFinalPos + XML3Value) (getUserProp objaux "poly_final_pos_x") (getUserProp objaux "poly_final_pos_y") (getUserProp objaux "poly_final_pos_z") to:ro_file
+					format (XMLDirection + XML3Value) (getUserProp objaux "poly_direction_x") (getUserProp objaux "poly_direction_y") (getUserProp objaux "poly_direction_z") to:ro_file
+					format (XMLActDist + XML1Value + XMLCloseTag) (getUserProp objaux "activation_distance") to:ro_file
 				)
 				if platfType == "moving" then (
 					format (XMLSpeed + XML1Value + XMLEndTag) (getUserProp objaux "speed") to:ro_file
-					if (getUserProp objaux "wp1_x" != "") and (getUserProp objaux "xp1_x" != undefined) then (
-						format (platform_wp + XMLPos + XML3Value + XMLCloseTag) (getUserProp objaux "wp1_x") (getUserProp objaux "wp1_y") (getUserProp objaux "wp1_z") to:ro_file
-					)
-					if (getUserProp objaux "wp2_x" != "") and (getUserProp objaux "xp2_x" != undefined) then (
-						format (platform_wp + XMLPos + XML3Value + XMLCloseTag) (getUserProp objaux "wp2_x") (getUserProp objaux "wp2_y") (getUserProp objaux "wp2_z") to:ro_file
-					)
-					if (getUserProp objaux "wp3_x" != "") and (getUserProp objaux "xp3_x" != undefined) then (
-						format (platform_wp + XMLPos + XML3Value + XMLCloseTag) (getUserProp objaux "wp3_x") (getUserProp objaux "wp3_y") (getUserProp objaux "wp3_z") to:ro_file
-					)
-					if (getUserProp objaux "wp4_x" != "") and (getUserProp objaux "xp4_x" != undefined) then (
-						format (platform_wp + XMLPos + XML3Value + XMLCloseTag) (getUserProp objaux "wp4_x") (getUserProp objaux "wp4_y") (getUserProp objaux "wp4_z") to:ro_file
-					)
+					
+					WriteWayPoints objaux ro_file wp 4
+					
+				--	if (getUserProp objaux "wp1_x" != "") and (getUserProp objaux "xp1_x" != undefined) then (
+				--		format (platform_wp + XMLPos + XML3Value + XMLCloseTag) (getUserProp objaux "wp1_x") (getUserProp objaux "wp1_y") (getUserProp objaux "wp1_z") to:ro_file
+				--	)
+				--	if (getUserProp objaux "wp2_x" != "") and (getUserProp objaux "xp2_x" != undefined) then (
+				--		format (platform_wp + XMLPos + XML3Value + XMLCloseTag) (getUserProp objaux "wp2_x") (getUserProp objaux "wp2_y") (getUserProp objaux "wp2_z") to:ro_file
+				--	)
+				--	if (getUserProp objaux "wp3_x" != "") and (getUserProp objaux "xp3_x" != undefined) then (
+				--		format (platform_wp + XMLPos + XML3Value + XMLCloseTag) (getUserProp objaux "wp3_x") (getUserProp objaux "wp3_y") (getUserProp objaux "wp3_z") to:ro_file
+				--	)
+				--	if (getUserProp objaux "wp4_x" != "") and (getUserProp objaux "xp4_x" != undefined) then (
+				--		format (platform_wp + XMLPos + XML3Value + XMLCloseTag) (getUserProp objaux "wp4_x") (getUserProp objaux "wp4_y") (getUserProp objaux "wp4_z") to:ro_file
+				--	)
 					format (ro_platform_close) to:ro_file
 				)
 			)
@@ -132,4 +138,21 @@ function ExportRenderableObjects =
 	close ro_file
 	format (trigger_close_file_tag) to:trigg_file
 	close trigg_file
+)
+
+function WriteWayPoints Obj File wpName NumWPs =
+(
+	for i = 1 to NumWPs do
+	(	
+		local strNum = i as string
+		local WpX = wpName+strNum+"_x"
+		local WpY = wpName+strNum+"_y"
+		local WpZ = wpName+strNum+"_z"
+	
+		if(getUserProp Obj WpX != "") and ( getUserProp Obj WpX != undefined)  then
+		(
+			format (platform_wp+ XMLPos+XML3Value+XMLCloseTag) (getUserProp Obj WpX)(getUserProp Obj WpY)(getUserProp Obj WpZ) to:File
+		)
+
+	)
 )
