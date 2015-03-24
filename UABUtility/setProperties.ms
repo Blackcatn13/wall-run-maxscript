@@ -1,7 +1,46 @@
-rollout UABSetProperties "UAB Set Properties" width:555 height:691
+fn GetUserProperty Obj GUIObj StrProperty = 
 (
-	GroupBox PhysicsGp "Physics" pos:[7,454] width:255 height:91
-	GroupBox EventsGp "Events" pos:[271,452] width:264 height:56
+	--local message = (classof GUIObj)
+	--messagebox message
+	if (getUserProp $ StrProperty)!=undefined then
+	(
+		--format "gui element type % and gui name %\n" (classof GUIObj) GUIObj.name
+		--Aquí uno por cada tipo de elemento de GUI
+		if (classof GUIObj) == ComboBoxControl then (
+			local items = GUIObj.items
+			local position = findItem items (getUserProp Obj StrProperty)
+			GUIObj.selection = position
+		)
+		
+		if (classof GUIObj) == CheckBoxControl then (
+			if (getUserProp Obj StrProperty) == true then
+				GUIObj.checked = true
+			else
+				GUIObj.checked = false
+		)
+		
+		if (classof GUIObj) == EditTextControl then (
+			GUIObj.text = (getUserProp Obj StrProperty as string)
+			GUIObj.bold = true
+		)
+		
+	)
+	else
+	(
+		--messageBox ("Undefined property: \"" + StrProperty +"\".") title:"Undefined Property"
+		false
+	)
+)
+
+fn SetUserProperty Obj StrProperty StrValue =
+(
+	setUserProp Obj StrProperty StrValue
+)
+
+rollout UABSetProperties "UAB Set Properties" width:552 height:807
+(
+	GroupBox PhysicsGp "Physics" pos:[7,561] width:255 height:91
+	GroupBox EventsGp "Events" pos:[271,559] width:272 height:56
 	checkbox RenderExportCheckBox "Export" pos:[16,32] width:56 height:16
 	checkbox RenderVisibleCheckBox "Visible" pos:[16,64] width:56 height:16
 	checkbox LayerCheckBox "Layer" pos:[16,96] width:56 height:16
@@ -11,60 +50,55 @@ rollout UABSetProperties "UAB Set Properties" width:555 height:691
 	edittext AnimModelText "" pos:[88,128] width:168 height:16
 	label TechniqueLabel "Technique" pos:[16,160] width:64 height:16
 	edittext TechniqueText "" pos:[88,160] width:168 height:16
-	checkbox PhysicsGenerateCheckBox "Generate" pos:[15,476] width:64 height:16
-	dropdownList PhysicsGenerateList "" pos:[87,476] width:168 height:21
-	checkbox PhysicsLayerCheckBox "Layer" pos:[15,508] width:56 height:16
-	dropdownList PhysicsLayerList "" pos:[87,508] width:168 height:21
-	GroupBox LogicGp "Logic" pos:[7,548] width:256 height:88
-	checkbox LogicGenerateCheckBox "Generate" pos:[15,572] width:64 height:16
-	dropdownList LogicGenerateList "" pos:[87,572] width:168 height:21
-	checkbox showNormal "Show normal" pos:[95,604] width:88 height:16
+	checkbox PhysicsGenerateCheckBox "Generate" pos:[15,583] width:64 height:16
+	dropdownList PhysicsGenerateList "" pos:[87,583] width:168 height:21
+	checkbox PhysicsLayerCheckBox "Layer" pos:[15,615] width:56 height:16
+	dropdownList PhysicsLayerList "" pos:[87,615] width:168 height:21
+	GroupBox LogicGp "Logic" pos:[7,655] width:256 height:88
+	checkbox LogicGenerateCheckBox "Generate" pos:[15,679] width:64 height:16
+	dropdownList LogicGenerateList "" pos:[87,679] width:168 height:21
+	checkbox showNormal "Show normal" pos:[95,711] width:88 height:16
 	checkbox CameraVisibility "Don't test camera visibility" pos:[264,32] width:216 height:16
 	checkbox WorldTransform "Don't export world transform" pos:[264,64] width:216 height:16
 	edittext LinkedBoneText "" pos:[368,96] width:152 height:16
 	checkbox LinkedBoneCheck "Linked to bone" pos:[264,96] width:96 height:16
 	checkbox Cinematics "Export to cinematics" pos:[264,128] width:216 height:16
-	checkbox EventGenerateCheck "Generate" pos:[279,476] width:64 height:16
-	dropdownList EventGenerateList "" pos:[351,476] width:176 height:21
-	GroupBox TracksGp "Tracks" pos:[271,516] width:128 height:56
-	checkbox GenerateTracks "Generate" pos:[303,540] width:64 height:16
-	GroupBox CamerasGp "Cameras" pos:[271,580] width:264 height:56
-	checkbox CycleCam "Cycle" pos:[279,604] width:56 height:16
-	GroupBox LightsGp "Lights" pos:[407,516] width:128 height:56
-	checkbox GenerateLights "Generate" pos:[439,540] width:64 height:16
-	checkbox ReverseCam "Reverse" pos:[367,604] width:64 height:16
-	checkbox OnceCam "Once" pos:[455,604] width:56 height:16
-	button GetButton "Get" pos:[158,645] width:104 height:32
-	button SetButton "Set" pos:[270,645] width:104 height:32
-	
-	--Eventos 
-	local RenderLayers = #("solid", "skybox", "alpha_objects","alpha_blend_objects", "particles")
-	
-	
-	
-	
-	
-		
+	checkbox EventGenerateCheck "Generate" pos:[279,583] width:64 height:16
+	dropdownList EventGenerateList "" pos:[351,583] width:176 height:21
+	GroupBox TracksGp "Tracks" pos:[271,623] width:134 height:56
+	checkbox GenerateTracks "Generate" pos:[303,647] width:64 height:16
+	GroupBox CamerasGp "Cameras" pos:[271,687] width:272 height:56
+	checkbox CycleCam "Cycle" pos:[279,711] width:56 height:16
+	GroupBox LightsGp "Lights" pos:[412,623] width:131 height:56
+	checkbox GenerateLights "Generate" pos:[439,647] width:64 height:16
+	checkbox ReverseCam "Reverse" pos:[367,711] width:64 height:16
+	checkbox OnceCam "Once" pos:[455,711] width:56 height:16
+	button GetButton "Get" pos:[159,757] width:104 height:32
+	button SetButton "Set" pos:[271,757] width:104 height:32
+
 	label lbl3 "Platform Type" pos:[17,190] width:72 height:14
 	dropdownList RenderPlatformList "" pos:[88,184] width:168 height:21
-	label TriggerNameLabel "Trigger Name" pos:[21,247] width:65 height:17
-	edittext TriggerNameText "" pos:[96,247] width:149 height:17
 	
-	GroupBox grp27 "Breakable Platform" pos:[10,231] width:266 height:47
-	GroupBox PolyPlatformGroup "Poly Platform" pos:[10,284] width:266 height:107
+	GroupBox grp25 "Render" pos:[7,9] width:536 height:541
+	
+	
+	GroupBox grp27 "Breakable Platform" pos:[10,221] width:266 height:56
+	label TriggerNameLabel "Trigger Name" pos:[21,247] width:65 height:17
+	edittext TriggerNameText "" pos:[96,237] width:149 height:17
+	GroupBox PolyPlatformGroup "Poly Platform" pos:[10,283] width:266 height:107
 	label ActivationDistanceLabel "Act. Distance" pos:[25,367] width:71 height:16
 	edittext ActivationDistanceText "" pos:[105,364] width:40 height:16
-	GroupBox MovingPlatformGroup "Moving Platform" pos:[288,231] width:247 height:161
-	label SpeedLabel "Speed" pos:[298,248] width:38 height:16
-	edittext SpeedText "" pos:[339,248] width:40 height:15
+	GroupBox MovingPlatformGroup "Moving Platform" pos:[288,221] width:247 height:170
+	label SpeedLabel "Speed" pos:[298,238] width:38 height:16
+	edittext SpeedText "" pos:[339,238] width:40 height:15
 	GroupBox grp32 "Way Points" pos:[295,271] width:233 height:113
-	label WP1Label "1" pos:[309,293] width:9 height:16
-	label WP1YLabel "Y" pos:[379,292] width:9 height:12
-	edittext WP1YText "" pos:[387,289] width:40 height:16
-	label WP1ZLabel "Z" pos:[437,292] width:9 height:12
-	edittext WP1ZText "" pos:[446,289] width:40 height:16
-	label WP1XLabel "X" pos:[324,293] width:9 height:12
-	edittext WP1XText "" pos:[333,290] width:40 height:15
+	label WP1Label "1" pos:[309,295] width:9 height:16
+	label WP1YLabel "Y" pos:[379,294] width:9 height:12
+	edittext WP1YText "" pos:[387,291] width:40 height:16
+	label WP1ZLabel "Z" pos:[437,294] width:9 height:12
+	edittext WP1ZText "" pos:[446,291] width:40 height:16
+	label WP1XLabel "X" pos:[324,295] width:9 height:12
+	edittext WP1XText "" pos:[333,292] width:40 height:15
 	label WP2Label "2" pos:[309,315] width:11 height:16
 	label WP2YLabel "Y" pos:[379,314] width:9 height:12
 	edittext WP2YText "" pos:[387,311] width:40 height:16
@@ -87,54 +121,66 @@ rollout UABSetProperties "UAB Set Properties" width:555 height:691
 	label WP4XLabel "X" pos:[324,356] width:9 height:12
 	edittext WP4XText "" pos:[333,353] width:40 height:15
 		
-		
-		
-		
-		
-	
 	label FinalPositionLabel "Final Position" pos:[23,305] width:68 height:16
 	label PolyDirectionLabel "Direction" pos:[25,336] width:62 height:16
 	label PolyFinalPosLabelY "Y" pos:[152,306] width:9 height:12
-	label PolyFinalPosLabelZ "Z" pos:[210,306] width:9 height:12
+	label PolyFinalPosLabelZ "Z" pos:[210,305] width:9 height:12
 	label PolyFinalPosLabelX "X" pos:[97,307] width:9 height:12
 	label PolyDirectionLabelY "Y" pos:[152,337] width:9 height:12
 	label PolyDirectionLabelZ "Z" pos:[210,337] width:9 height:12
 	label PolyDirectionLabelX "X" pos:[97,338] width:9 height:12
 	edittext PolyFinalPosXText "" pos:[107,303] width:37 height:16
 	edittext PolyFinalPosYText "" pos:[161,303] width:37 height:16
-	edittext PolyFinalPosZText "" pos:[223,303] width:37 height:16
+	edittext PolyFinalPosZText "" pos:[219,304] width:37 height:16
 	edittext PolyDirectionXText "" pos:[107,334] width:37 height:16
 	edittext PolyDirectionYText "" pos:[161,334] width:37 height:16
-	edittext PolyDirectionZText "" pos:[223,334] width:37 height:16
+	edittext PolyDirectionZText "" pos:[219,334] width:37 height:16
+	
+	GroupBox grp28 "Triggers" pos:[15,401] width:520 height:140
+	label lbl67 "Trigger Name" pos:[31,425] width:72 height:16
+	edittext TriggerName "" pos:[95,425] width:144 height:16
+	dropdownList ShapeDL "" pos:[95,449] width:72 height:21
+	label lbl68 "Shape" pos:[31,449] width:56 height:16
+	label lbl69 "Group" pos:[31,473] width:56 height:16
+	dropdownList GroupDL "" pos:[95,473] width:72 height:21
+	label lbl70 "Event Type" pos:[255,425] width:80 height:16
+	dropdownList eventType "" pos:[343,425] width:88 height:21
+	checkbox PaintIt "Paint It" pos:[455,425] width:72 height:16
+	label lbl71 "Parameter 1" pos:[255,449] width:80 height:16
+	label lbl72 "Script Function" pos:[255,473] width:80 height:16
+	edittext Param1 "" pos:[343,449] width:168 height:16
+	edittext ScriptFunction "" pos:[343,473] width:168 height:16
+	label lbl301 "Duration" pos:[39,513] width:51 height:14
+	edittext DurationTime "" pos:[87,513] width:50 height:16
+	edittext UpdateFunction "" pos:[343,497] width:168 height:16
+	label lbl157 "Update Function" pos:[255,497] width:80 height:16
+	edittext PlatfName "" pos:[343,521] width:168 height:16
+	label lbl198 "Platform Name" pos:[255,521] width:80 height:16
+	
 	on UABSetProperties open do
-	(
-		-- malla estática, malla animada
-		local ExportMeshes=#("instance_mesh", "animated_mesh", "platform_mesh")
-		
-		--malla triangular, forma convexa, forma caja, forma esfera, forma plano, forma cápsula
-		local PhysicsGenerate=#("triangle_mesh", "convex_shape","box_shape", "plane_shape","capsule_shape")
-		local PhysicsLayer=#("logic")
-		--cajas de eventos, esferas de eventos, escaleras, filos agarrables, filos dónde dejarse caer
-		local LogicGenerate=#("box_event", "sphere_event","stairs", "holding_edges","falling_edges")
-		local EventGenerate=#("event1")
-		RenderExportList.items = ExportMeshes
+	(	
+		RenderExportList.items = MeshType
 		RenderLayerList.items = RenderLayers
-		PhysicsGenerateList.items = PhysicsGenerate
+		PhysicsGenerateList.items = PhysicsType
 		PhysicsLayerList.items=PhysicsLayer
-		LogicGenerateList.items = LogicGenerate
-		EventGenerateList.items = EventGenerate
-		--Plataformas
-		local RenderPlatform=#("static","breakable","moving","pinchos","poly")
+		LogicGenerateList.items = logicGenerate
+		EventGenerateList.items = EventList
 		RenderPlatformList.items = RenderPlatform
-		
+		ShapeDL.items = TriggerShapeL
+		GroupDL.items = GroupsList
+		EventType.items = EventTypeL
 	)
 	on AnimModelText entered key do
 	(
-				AnimModelText.bold = false
+			AnimModelText.bold = false
 		)
 	on TechniqueText entered key do
 	(
 			TechniqueText.bold = false
+		)
+	on LinkedBoneText entered key do
+	(
+			LinkedBoneText.bold = false
 		)
 	on GetButton pressed do
 	(
@@ -171,6 +217,7 @@ rollout UABSetProperties "UAB Set Properties" width:555 height:691
 		GetUserProperty obj ReverseCam "cam_reverse"
 		GetUserProperty obj OnceCam "cam_once"
 		GetUserProperty obj GenerateLights "lights"
+	
 		--- Platform Properties----
 		GetUserProperty obj RenderPlatformList "platform_type"
 		GetUserProperty obj TriggerNameText "trigger_name"
@@ -197,7 +244,6 @@ rollout UABSetProperties "UAB Set Properties" width:555 height:691
 		GetUserProperty obj WP4XText "wp4_x"
 		GetUserProperty obj WP4YText "wp4_y"
 		GetUserProperty obj WP4ZText "wp4_z"
-		
 	)
 	on SetButton pressed do
 	(
@@ -254,7 +300,7 @@ rollout UABSetProperties "UAB Set Properties" width:555 height:691
 				SetUserProperty $[i] "cam_reverse" ReverseCam.checked
 				SetUserProperty $[i] "cam_once" OnceCam.checked
 				SetUserProperty $[i] "lights" GenerateLights.checked
-				
+	
 				---Platform properties
 				if RenderExportList.items[RenderExportList.selection] == "platform_mesh" then (
 					SetUserProperty $[i] "platform_type" RenderPlatformList.items[RenderPlatformList.selection]
@@ -296,7 +342,17 @@ rollout UABSetProperties "UAB Set Properties" width:555 height:691
 					--)
 					--End Moving Platform---
 				)
-				
+	
+				SetUserProperty $[i] "triggerName" TriggerName.text 	
+				SetUserProperty $[i] "trigger_shape" ShapeDL.items[ShapeDL.selection]
+				SetUserProperty $[i] "trigger_group" GroupDL.items[GroupDL.selection]		
+				SetUserProperty $[i] "trigger_type_event" EventType.items[EventType.selection] 		
+				SetUserProperty $[i] "trigger_paint" PaintIt.checked		
+				SetUserProperty $[i] "trigger_param1" Param1.text		
+				SetUserProperty $[i] "trigger_script" ScriptFunction.text 
+				SetUserProperty $[i] "trigger_duration" DurationTime.text
+				SetUserProperty $[i] "trigger_update" UpdateFunction.text 
+				SetUserProperty $[i] "trigger_platform_name" PlatfName.text
 			)
 		)
 		else
@@ -396,101 +452,40 @@ rollout UABSetProperties "UAB Set Properties" width:555 height:691
 					--End Moving Platform---
 				
 			)
+			SetUserProperty $ "triggerName" TriggerName.text 	
+			SetUserProperty $ "trigger_shape" ShapeDL.items[ShapeDL.selection]
+			SetUserProperty $ "trigger_group" GroupDL.items[GroupDL.selection]		
+			SetUserProperty $ "trigger_type_event" EventType.items[EventType.selection] 		
+			SetUserProperty $ "trigger_paint" PaintIt.checked		
+			SetUserProperty $ "trigger_param1" Param1.text		
+			SetUserProperty $ "trigger_script" ScriptFunction.text 
+			SetUserProperty $ "trigger_duration" DurationTime.text
+			SetUserProperty $ "trigger_update" UpdateFunction.text 
+			SetUserProperty $ "trigger_platform_name" PlatfName.text
 		)
 	)
-	on ActivationDistanceText entered key do
+	on TriggerName entered key do
 	(
-			ActivationDistanceText.bold = false
+			TriggerName.bold = false
 		)
-	on SpeedText entered key do
+	on Param1 entered key do
 	(
-			SpeedText.bold = false
+			Param1.bold = false
 		)
-	on WP1YText entered key do
+	on ScriptFunction entered key do
 	(
-			WP1YText.bold = false
+			ScriptFunction.bold = false
 		)
-	on WP1ZText entered key do
+	on DurationTime entered key do
 	(
-			WP1ZText.bold = false
+			DurationTime.bold = false
 		)
-	on WP1XText entered key do
+	on UpdateFunction entered key do
 	(
-			WP1XText.bold = false
+			UpdateFunction.bold = false
 		)
-	on WP2YText entered key do
+	on PlatfName entered key do
 	(
-			WP2YText.bold = false
+			PlatfName.bold = false
 		)
-	on WP2ZText entered key do
-	(
-			WP2ZText.bold = false
-		)
-	on WP2XText entered key do
-	(
-			WP2XText.bold = false
-		)
-	on WP3YText entered key do
-	(
-			WP3YText.bold = false
-		)
-	on WP3ZText entered key do
-	(
-			WP3ZText.bold = false
-		)
-	on WP3XText entered key do
-	(
-			WP3XText.bold = false
-		)
-	on WP4YText entered key do
-	(
-			WP4YText.bold = false
-		)
-	on WP4ZText entered key do
-	(
-			WP4ZText.bold = false
-		)
-	on WP4XText entered key do
-	(
-			WP4XText.bold = false
-		)
-)
-
-fn GetUserProperty Obj GUIObj StrProperty = 
-(
-	--local message = (classof GUIObj)
-	--messagebox message
-	if (getUserProp $ StrProperty)!=undefined then
-	(
-		--format "gui element type % and gui name %\n" (classof GUIObj) GUIObj.name
-		--Aquí uno por cada tipo de elemento de GUI
-		if (classof GUIObj) == ComboBoxControl then (
-			local items = GUIObj.items
-			local position = findItem items (getUserProp Obj StrProperty)
-			GUIObj.selection = position
-		)
-				
-		if (classof GUIObj) == CheckBoxControl then (
-			if (getUserProp Obj StrProperty) == true then
-				GUIObj.checked = true
-			else
-				GUIObj.checked = false
-		)
-		
-		if (classof GUIObj) == EditTextControl then (
-			GUIObj.text = (getUserProp Obj StrProperty as string)
-			GUIObj.bold = true
-		)
-		
-	)
-	else
-	(
-		--messageBox ("Undefined property: \"" + StrProperty +"\".") title:"Undefined Property"
-		false
-	)
-)
-
-fn SetUserProperty Obj StrProperty StrValue =
-(
-	setUserProp Obj StrProperty StrValue
 )
