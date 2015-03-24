@@ -3,6 +3,7 @@ global debug = true
 global levels=#("","level1","level2", "level3","level4", "level5", "main menu", "select player")
 global realPath
 global FileExtension = ".mesh"
+global PhysXExtension = ".phsx"
 global DataDirectory = "Data\\"
 global MeshDirectory = "meshes\\"
 global TextureDirectory = "textures\\"
@@ -13,6 +14,7 @@ global AnimatedCamerasPath = "cameras\\"
 global LightsFileName = "lights.xml"
 global CinematicFileName = "cinematic.xml"
 global TriggerFileName = "triggers.xml"
+global PhysXFileName = "LevelCooking.xml"
 global CopyTextures = true
 global ExportMeshes = false
 global Override = true

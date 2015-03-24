@@ -20,7 +20,8 @@ function ExportStaticMesh =
 		(
 			meshFileAux = RelativeMeshPath + scene_cores[i].name + FileExtension
 			format (sm_init_tag + XMLName + XML1Value + XMLFilename + XML1Value + XMLCloseTag) scene_cores[i].name meshFileAux to:sm_file
-			ExportMesh scene_cores[i] (scene_cores[i].name + FileExtension)
+			local physxProp = GetUserProp scene_cores[i] "physics"
+			ExportMesh scene_cores[i] (scene_cores[i].name + FileExtension) false
 		)
 	)
 	format (sm_close_file_tag) to:sm_file

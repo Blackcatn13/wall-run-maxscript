@@ -4,22 +4,23 @@ Include "globals.ms"
 
 utility UABUtility "UAB export Utility" width:152 height:404
 (
-	button btnSetPath "Set Path" tooltip:"Set path to export objects" pos:[8,8] width:136 height:28
+	button btnSetPath "Set Path" pos:[8,8] width:136 height:28 toolTip:"Set path to export objects"
 	label PathLabel "" pos:[8,40] width:136 height:76 readOnly:true
-	checkbox ExportMeshCheck "Export Mesh" tooltip:"Export mesh"pos:[8,124] width:136 height:16
-	checkbox CopyTexturesCheck "Copy Textures" tooltip:"Copy textures to destination" pos:[8,148] width:136 height:16
-	GroupBox grp1 "Export" pos:[8,196] width:136 height:144
-	button ExportLightsButton "Lights" tooltip:"Export only lights" pos:[16,220] width:56 height:16
-	button ExportMeshButton "Mesh" tooltip:"Export only selected mesh" pos:[80,220] width:56 height:16
-	button ExportCameraButton "Camera" tooltip:"Export cameras" pos:[16,244] width:56 height:16
-	button ExportSceneButton "Scene" tooltip:"Export all the scene" pos:[16,292] width:120 height:16
-	button ExportStaticMeshButton "Static Meshes" tooltip:"Export only static meshes" pos:[16,268] width:120 height:16
-	button ExportCinematicButton "Cinematic" tooltip:"Export cinematics" pos:[16,316] width:120 height:16
-	checkbox DebugValue "D" tooltip:"Debug value" pos:[80,244] width:30 height:16
-	checkbox OverrideValue "O" tooltip:"Override Always" pos:[110,244] width:30 height:16
-	groupBox grp2 "Tools" pos:[8,348] width:136 height:48
-	button btnSetProperties "Set Properties" tooltip:"Open Property menu" pos:[16,372] width:120 height:16
-	dropdownList LevelList "" tooltip:"Level on save the files" pos:[8,172] width:136 height:21
+	checkbox ExportMeshCheck "Export Mesh" pos:[8,124] width:136 height:16 toolTip:"Export mesh"
+	checkbox CopyTexturesCheck "Copy Textures" pos:[8,148] width:136 height:16 toolTip:"Copy textures to destination"
+	GroupBox grp1 "Export" pos:[8,196] width:136 height:220
+	button ExportLightsButton "Lights" pos:[16,220] width:56 height:16 toolTip:"Export only lights"
+	button ExportMeshButton "Mesh" pos:[80,220] width:56 height:16 toolTip:"Export only selected mesh"
+	button ExportCameraButton "Camera" pos:[16,244] width:56 height:16 toolTip:"Export cameras"
+	button ExportSceneButton "Scene" pos:[16,368] width:120 height:16 toolTip:"Export all the scene"
+	button ExportStaticMeshButton "Static Meshes" pos:[16,344] width:120 height:16 toolTip:"Export only static meshes"
+	button ExportCinematicButton "Cinematic" pos:[16,392] width:120 height:16 toolTip:"Export cinematics"
+	checkbox DebugValue "Debug Messages" pos:[24,272] width:104 height:16 toolTip:"Debug value"
+	checkbox OverrideValue "Always Override" pos:[24,296] width:104 height:16 toolTip:"Override Always"
+	GroupBox grp2 "Tools" pos:[8,424] width:136 height:48
+	button btnSetProperties "Set Properties" pos:[16,448] width:120 height:16 toolTip:"Open Property menu"
+	dropdownList LevelList "" pos:[8,172] width:136 height:21 toolTip:"Level on save the files"
+	button PhysxMeshCheck "ExportPhysXMesh" pos:[16,320] width:120 height:16 toolTip:"Export Only PhysX"
 
 	Include "setProperties.ms"
 
@@ -34,6 +35,8 @@ utility UABUtility "UAB export Utility" width:152 height:404
 	Include "ExportCameras.ms"
 
 	Include "ExportLigths.ms"
+
+	Include "ExportPhysXMesh.ms"
 
 	on LevelList selected lvl do
 	(
@@ -137,6 +140,16 @@ utility UABUtility "UAB export Utility" width:152 height:404
 		exportLights undefined
 		format "==============================\n"
 		format "Full scene exported correctly\n"
+		format "==============================\n"
+	)
+
+	on PhysxMeshCheck pressed do
+	(
+		if debug then
+			format "Exporting Physx meshes\n"
+		ExportPhysXMesh()
+		format "==============================\n"
+		format "PhysX exported correctly\n"
 		format "==============================\n"
 	)
 

@@ -157,37 +157,6 @@ rollout UABSetProperties "UAB Set Properties" width:552 height:807
 	edittext PlatfName "" pos:[343,521] width:168 height:16
 	label lbl198 "Platform Name" pos:[255,521] width:80 height:16
 	
-	
-	
-	
-		
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	on UABSetProperties open do
 	(	
 		RenderExportList.items = MeshType
