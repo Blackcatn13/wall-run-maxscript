@@ -37,7 +37,7 @@ fn SetUserProperty Obj StrProperty StrValue =
 	setUserProp Obj StrProperty StrValue
 )
 
-rollout UABSetProperties "UAB Set Properties" width:552 height:807
+rollout UABSetProperties "UAB Set Properties" width:552 height:750
 (
 	GroupBox PhysicsGp "Physics" pos:[7,561] width:255 height:91
 	GroupBox EventsGp "Events" pos:[271,559] width:272 height:56
@@ -73,8 +73,8 @@ rollout UABSetProperties "UAB Set Properties" width:552 height:807
 	checkbox GenerateLights "Generate" pos:[439,647] width:64 height:16
 	checkbox ReverseCam "Reverse" pos:[367,711] width:64 height:16
 	checkbox OnceCam "Once" pos:[455,711] width:56 height:16
-	button GetButton "Get" pos:[159,757] width:104 height:32
-	button SetButton "Set" pos:[271,757] width:104 height:32
+	button GetButton "Get" pos:[304,160] width:104 height:32
+	button SetButton "Set" pos:[416,160] width:104 height:32
 
 	label lbl3 "Platform Type" pos:[17,190] width:72 height:14
 	dropdownList RenderPlatformList "" pos:[88,184] width:168 height:21
