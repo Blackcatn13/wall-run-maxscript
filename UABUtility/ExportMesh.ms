@@ -199,6 +199,13 @@ function ExportMesh Obj filename PhysxVersion=
 				--g_NumMaterials = 1
 			)
 		)
+		if PhysxVersion then (
+			-- Leave only one material, to get all the vertex and indexs in an only array
+			for i = 1 to getNumFaces(ClonedObj) do (
+				setFaceMatID ClonedObj i 1
+			)
+		)
+
 		-- We get the real materials applied to the object
 		g_MaterialArray = CreateMaterialArray ClonedObj
 		g_NumMaterials = g_MaterialArray.count
