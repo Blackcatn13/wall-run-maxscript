@@ -237,8 +237,8 @@ function ExportMesh Obj filename PhysxVersion=
 					format "[ExportMesh] l_NumMaterials %\n" g_NumMaterials
 					format "[ExportMesh] %\n" g_Vtxs
 				)
-				local numVertex = g_Vtxs[g_idxAccesArray[idMaterial]].count
-				local numIndexes = g_Idxs[g_idxAccesArray[idMaterial]].count
+				local numVertex = g_Vtxs[idMaterial].count
+				local numIndexes = g_Idxs[idMaterial].count
 				if debug then (
 					format "[ExportMesh] num vertex = %\n" numVertex
 					format "[ExportMesh] num index = %\n" numIndexes
@@ -250,9 +250,9 @@ function ExportMesh Obj filename PhysxVersion=
 				)
 				local vtxmaskpos = findItem g_MaterialArray g_MaterialArray[idMaterial]
 				WriteShort g_file numVertex #unsigned
-				ExportVertexs g_idxAccesArray[idMaterial] g_VertexMsks[vtxmaskpos] g_file false --Estos arrays en realiad son tridimensionales [][][]
+				ExportVertexs idMaterial g_VertexMsks[vtxmaskpos] g_file false --Estos arrays en realiad son tridimensionales [][][]
 				WriteShort g_file numIndexes #unsigned
-				ExportIndexs g_idxAccesArray[idMaterial] g_file
+				ExportIndexs idMaterial g_file
 				
 			)
 			-- Calculate BB and BS

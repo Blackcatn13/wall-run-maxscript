@@ -208,7 +208,8 @@ function GenerateVertexs Obj =
 				format "[GenerateVertexs] not found material % in the materialArray %\n" idMaterial g_idxAccesArray
 			maskpos = 1
 		)
-		local realpos = g_MaterialArray[maskpos]
+		--local realpos = g_MaterialArray[maskpos]
+		local realpos = maskpos;
 		local Col
 		if debug then (
 			format "[GenerateVertexs] class of material %\n" (classof(Obj.material))
@@ -239,13 +240,13 @@ function GenerateVertexs Obj =
 		local totalVertex2 = CreateFullVertex vtx2 Normal2 TUVMap2 TUV2Map2 Col 0 0 g_VertexMsks[realpos]
 		local totalVertex3 = CreateFullVertex vtx3 Normal3 TUVMap3 TUV2Map3 Col 0 0 g_VertexMsks[realpos]
 		
-		local index1=dotNetAddVertex totalVertex1 g_Vtxs idMaterial l_vtxMap
-		local index2=dotNetAddVertex totalVertex2 g_Vtxs idMaterial l_vtxMap
-		local index3=dotNetAddVertex totalVertex3 g_Vtxs idMaterial l_vtxMap
+		local index1=dotNetAddVertex totalVertex1 g_Vtxs realpos l_vtxMap
+		local index2=dotNetAddVertex totalVertex2 g_Vtxs realpos l_vtxMap
+		local index3=dotNetAddVertex totalVertex3 g_Vtxs realpos l_vtxMap
 	
-		AddIndex index3 g_Idxs idMaterial
-		AddIndex index2 g_Idxs idMaterial
-		AddIndex index1 g_Idxs idMaterial
+		AddIndex index3 g_Idxs realpos
+		AddIndex index2 g_Idxs realpos
+		AddIndex index1 g_Idxs realpos
 	
 	)
 )

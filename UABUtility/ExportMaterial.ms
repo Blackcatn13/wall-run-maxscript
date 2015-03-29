@@ -37,6 +37,7 @@ function getMask mat numText=
 	if numText == 0  or mat.diffuseMapEnable == false then 
 	(
 		VtxMask = bit.or VtxMask VERTEX_DIFFUSE
+		VtxMask = bit.or VtxMask VERTEX_NORMAL
 	)
 	if numText >= 1 then
 	(
@@ -91,6 +92,7 @@ function ExportMaterial _Material=
 		format "[ExportMaterial] number of textures in material = %\n" textNum
 		format "[ExportMaterial] getting vertex mask\n"
 	)
+	g_texturesName = #()
 	local vtxmask = getMask _Material textNum
 	local vtxmaskToWrite = (formattedprint vtxmask format:"x") as integer
 	if debug then
