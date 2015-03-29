@@ -229,7 +229,7 @@ function GenerateVertexs Obj =
 				if maskpos > Obj.material.count then (
 					Col = Obj.wirecolor
 				) else (
-					Col = Obj.material[maskpos].diffuse
+					Col = Obj.material[idMaterial].diffuse
 				)
 			)
 		)
