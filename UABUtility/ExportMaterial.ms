@@ -53,7 +53,11 @@ function getMask mat numText=
 			VtxMask = bit.or VtxMask VERTEX_TEXTURE1
 			VtxMask = bit.or VtxMask VERTEX_TANGENT
 			VtxMask = bit.or VtxMask VERTEX_BINORMAL
-			append g_texturesName (openBitMap mat.bumpMap.bitmap.filename).fileName 
+			if classOf(mat.bumpMap) == Normal_Bump then (
+				append g_texturesName (openBitMap mat.bumpMap.normal_map.bitmap.filename).fileName 
+			) else (
+				append g_texturesName (openBitMap mat.bumpMap.bitmap.filename).fileName 
+			)
 		)
 		if mat.selfIllumMapEnable then 
 		(
