@@ -69,8 +69,14 @@ utility UABUtility "UAB export Utility" width:152 height:404
 
 	on CopyTexturesCheck changed newValue do
 	(
-		CopyTextures = newValue
+		CopyTextures = CopyTexturesCheck.checked
 	)
+
+	on OverrideValue changed newValue do
+	(
+		Override = OverrideValue.checked
+	)
+	
 
 	on btnSetPath pressed do
 	(

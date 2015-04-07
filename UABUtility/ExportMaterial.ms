@@ -45,7 +45,9 @@ function getMask mat numText=
 		(
 			VtxMask = bit.or VtxMask VERTEX_NORMAL
 			VtxMask = bit.or VtxMask VERTEX_TEXTURE1
-			append g_texturesName (openBitMap mat.diffuseMap.bitmap.filename).fileName
+			auxname = (openBitMap mat.diffuseMap.bitmap.filename).fileName
+			auxname = substituteString auxname "\\" "/"
+			append g_texturesName auxname
 		)
 		if mat.bumpMapEnable then
 		(
@@ -54,9 +56,13 @@ function getMask mat numText=
 			VtxMask = bit.or VtxMask VERTEX_TANGENT
 			VtxMask = bit.or VtxMask VERTEX_BINORMAL
 			if classOf(mat.bumpMap) == Normal_Bump then (
-				append g_texturesName (openBitMap mat.bumpMap.normal_map.bitmap.filename).fileName 
+				auxname = (openBitMap mat.bumpMap.normal_map.bitmap.filename).fileName
+				auxname = substituteString auxname "\\" "/"
+				append g_texturesName auxname
 			) else (
-				append g_texturesName (openBitMap mat.bumpMap.bitmap.filename).fileName 
+				auxname = (openBitMap mat.bumpMap.normal_map.bitmap.filename).fileName
+				auxname = substituteString auxname "\\" "/"
+				append g_texturesName auxname
 			)
 		)
 		if mat.selfIllumMapEnable then 
@@ -66,13 +72,21 @@ function getMask mat numText=
 				VtxMask = bit.or VtxMask VERTEX_NORMAL
 				VtxMask = bit.or VtxMask VERTEX_TEXTURE2
 				VtxMask = bit.or VtxMask VERTEX_RNM
-				append g_texturesName (openBitMap mat.selfIllumMap.id_0_color_shader.bitmap.filename).fileName
-				append g_texturesName (openBitMap mat.selfIllumMap.id_1_color_shader.bitmap.filename).fileName
-				append g_texturesName (openBitMap mat.selfIllumMap.id_2_color_shader.bitmap.filename).fileName
+				auxname = (openBitMap mat.selfIllumMap.id_0_color_shader.bitmap.filename).fileName
+				auxname = substituteString auxname "\\" "/"
+				append g_texturesName auxname
+				auxname = (openBitMap mat.selfIllumMap.id_1_color_shader.bitmap.filename).fileName
+				auxname = substituteString auxname "\\" "/"
+				append g_texturesName auxname
+				auxname = (openBitMap mat.selfIllumMap.id_2_color_shader.bitmap.filename).fileName
+				auxname = substituteString auxname "\\" "/"
+				append g_texturesName auxname
 			) else (
 				VtxMask = bit.or VtxMask VERTEX_NORMAL
 				VtxMask = bit.or VtxMask VERTEX_TEXTURE2
-				append g_texturesName (openBitMap mat.selfIllumMap.bitmap.filename).fileName
+				auxname = (openBitMap mat.selfIllumMap.bitmap.filename).fileName
+				auxname = substituteString auxname "\\" "/"
+				append g_texturesName auxname
 			)
 		)
 		if mat.reflectionMapEnable then 
@@ -80,7 +94,9 @@ function getMask mat numText=
 			VtxMask = bit.or VtxMask VERTEX_NORMAL
 			VtxMask = bit.or VtxMask VERTEX_TEXTURE1
 			VtxMask = bit.or VtxMask VERTEX_CUBEMAP
-			append g_texturesName (openBitMap mat.reflectionMap.bitmap.filename).fileName
+			auxname = (openBitMap mat.reflectionMap.bitmap.filename).fileName
+			auxname = substituteString auxname "\\" "/"
+			append g_texturesName auxname
 		)
 	)
 
@@ -118,31 +134,29 @@ function ExportMaterial _Material=
 			)
 			FileName = filenameFromPath g_texturesName[i]
 			FilePathName = RelativeTexturePath + FileName
+			FileCopyPath = TexturePath + FileName
+			FileCopyPath = substituteString FileCopyPath "\\" "/"
 			if debug then
-				format "[ExportMaterial] Copy file Name: \"%\" \n" FilePathName
-			if doesFileExist FilePathName and false then
+				format "[ExportMaterial] Copy file Name: \"%\" \n" FileCopyPath
+			if doesFileExist FileCopyPath then
 			(
 				if (Override == false) then
 				(
 					if (queryBox "File already exists in destination folder. Override?" title: "[ExportMaterial] File alreay exists" true) == true then (
-						deleteFile FilePathName
-						copyFile g_texturesName[i] FilePathName
+						deleteFile FileCopyPath
+						copyFile (g_texturesName[i] as string) FileCopyPath
 					)
-					else
-					(
-						copyFile g_texturesName[i] FilePathName
-					)
+				) else (
+					copyFile (g_texturesName[i] as string) FileCopyPath
 				)
-				else
-				(
-					deleteFile FilePathName
-					copyFile g_texturesName[i] FilePathName
-				)
+			) else (
+				deleteFile FileCopyPath
+				copyFile (g_texturesName[i] as string) FileCopyPath
 			)
 		)
 		if debug then (
-			format "[ExportMaterial] path %\n" g_texturesName[i]
-			format "[ExportMaterial] path to cut %\n" realPath
+			format "[ExportMaterial] path\"%\"\n" g_texturesName[i]
+			format "[ExportMaterial] path to cut \"%\"\n" realPath
 		)
 		local relPath = FilePathName
 		--if CopyTextures then (
