@@ -18,6 +18,7 @@ global PhysXFileName = "LevelCooking.xml"
 global CopyTextures = true
 global ExportMeshes = false
 global Override = true
+global PhysxExport = false
 global PathToCopy
 global RelativePathToCopy
 

@@ -47,7 +47,7 @@ function CreateMaterialArray Obj =
 	return array
 )
 
-function ExportVertexs idMaterial vtxmask _file PhysxExport=
+function ExportVertexs idMaterial vtxmask _file=
 (
 	if debug then
 		format "[ExportVertexs] Exporting vertex with idMaterial %\n" idMaterial
@@ -152,9 +152,9 @@ function ExportIndexs idMaterial _file=
 	)
 )
 
-function ExportMesh Obj filename PhysxVersion=
+function ExportMesh Obj filename=
 (
-	if ExportMeshes or CopyTextures or PhysxVersion then 
+	if ExportMeshes or CopyTextures or PhysxExport then 
 	(
 		if debug then
 			format "[ExportMesh] exporting %\n" filename
@@ -171,7 +171,7 @@ function ExportMesh Obj filename PhysxVersion=
 		g_Idxs = #()
 		if ExportMeshes then
 			g_file = fopen (MeshPath + filename) "wb"
-		if PhysxVersion then
+		if PhysxExport then
 			local phxs_file = fopen (MeshPath + filename) "wb"
 		--g_MaterialArray = #()
 
@@ -179,7 +179,7 @@ function ExportMesh Obj filename PhysxVersion=
 		-- First write header of file 0x55FF
 		if ExportMeshes then
 			WriteShort g_file 0x55FF #unsigned
-		if PhysxVersion then
+		if PhysxExport then
 			WriteShort phxs_file 0x55FF #unsigned
 
 		-- Check if material assigned is Multimaterial
@@ -199,7 +199,7 @@ function ExportMesh Obj filename PhysxVersion=
 				--g_NumMaterials = 1
 			)
 		)
-		if PhysxVersion then (
+		if PhysxExport then (
 			-- Leave only one material, to get all the vertex and indexs in an only array
 			for i = 1 to getNumFaces(ClonedObj) do (
 				setFaceMatID ClonedObj i 1
@@ -213,7 +213,7 @@ function ExportMesh Obj filename PhysxVersion=
 		-- Write to the file the number of Materials
 		if ExportMeshes then 
 			WriteShort g_file g_NumMaterials #unsigned
-		if PhysxVersion then
+		if PhysxExport then
 			WriteShort phxs_file g_NumMaterials #unsigned
 
 		if debug then
@@ -272,7 +272,7 @@ function ExportMesh Obj filename PhysxVersion=
 			fflush g_file
 			fclose g_file
 		)
-		if PhysxVersion then (
+		if PhysxExport then (
 			GenerateVertexs ClonedObj
 			for idMaterial = 1 to g_NumMaterials do
 			(
@@ -285,7 +285,7 @@ function ExportMesh Obj filename PhysxVersion=
 				)
 				local vtxmaskpos = findItem g_MaterialArray g_MaterialArray[idMaterial]
 				WriteShort phxs_file numVertex #unsigned
-				ExportVertexs g_idxAccesArray[idMaterial] g_VertexMsks[vtxmaskpos] phxs_file true
+				ExportVertexs g_idxAccesArray[idMaterial] g_VertexMsks[vtxmaskpos] phxs_file
 				WriteShort phxs_file numIndexes #unsigned
 				ExportIndexs g_idxAccesArray[idMaterial] phxs_file
 			)

@@ -104,7 +104,7 @@ utility UABUtility "UAB export Utility" width:152 height:404
 				ExportMeshes = true
 				if debug then
 					format "name is %\n" (MeshPath + $.name + FileExtension)
-				ExportMesh $ ($.name + FileExtension) false
+				ExportMesh $ ($.name + FileExtension)
 				ExportMeshes = false
 				format "==============================\n"
 				format "Mesh exported correctly\n"

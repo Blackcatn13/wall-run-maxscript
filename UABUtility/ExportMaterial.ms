@@ -60,7 +60,7 @@ function getMask mat numText=
 				auxname = substituteString auxname "\\" "/"
 				append g_texturesName auxname
 			) else (
-				auxname = (openBitMap mat.bumpMap.normal_map.bitmap.filename).fileName
+				auxname = (openBitMap mat.bumpMap.bitmap.filename).fileName
 				auxname = substituteString auxname "\\" "/"
 				append g_texturesName auxname
 			)

@@ -164,9 +164,15 @@ function GenerateVertexs Obj =
 	(
 		--format "Processing face number %\n" face
 		local aFace=getFace Obj face
-		local vtx1=(getVert Obj aFace.x) * inverse Obj.transform
-		local vtx2=(getVert Obj aFace.y) * inverse Obj.transform
-		local vtx3=(getVert Obj aFace.z) * inverse Obj.transform
+		if (not PhysxExport) then (
+			local vtx1=(getVert Obj aFace.x) * inverse Obj.transform
+			local vtx2=(getVert Obj aFace.y) * inverse Obj.transform
+			local vtx3=(getVert Obj aFace.z) * inverse Obj.transform
+		) else (
+			local vtx1=(getVert Obj aFace.x)
+			local vtx2=(getVert Obj aFace.y)
+			local vtx3=(getVert Obj aFace.z)
+		)	
 		
 		local sm =getFaceSmoothGroup Obj face
 		--UABGetVertexNormal obj IdVertex SmoothValue FaceNormal 
