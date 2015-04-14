@@ -192,6 +192,7 @@ function ExportMesh Obj filename=
 		)
 		else
 		(
+			g_IsMultimaterial = false
 			if classOf (ClonedObj.material) != UndefinedClass then
 			(
 				if debug then
@@ -250,7 +251,7 @@ function ExportMesh Obj filename=
 				)
 				local vtxmaskpos = findItem g_MaterialArray g_MaterialArray[idMaterial]
 				WriteShort g_file numVertex #unsigned
-				ExportVertexs idMaterial g_VertexMsks[vtxmaskpos] g_file false --Estos arrays en realiad son tridimensionales [][][]
+				ExportVertexs idMaterial g_VertexMsks[vtxmaskpos] g_file --Estos arrays en realiad son tridimensionales [][][]
 				WriteShort g_file numIndexes #unsigned
 				ExportIndexs idMaterial g_file
 				
