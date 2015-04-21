@@ -15,6 +15,7 @@ global LightsFileName = "lights.xml"
 global CinematicFileName = "cinematic.xml"
 global TriggerFileName = "triggers.xml"
 global PhysXFileName = "LevelCooking.xml"
+global CameraPathFileName = "camera_path.xml"
 global CopyTextures = true
 global ExportMeshes = false
 global Override = true
@@ -83,6 +84,7 @@ global XMLDirection		= " direction="
 global XMLRegister		= " register="
 global XMLEvent			= " event="
 global XMLGameObject	= " GameObject="
+global XMLID 			= " id="
 global XML1Value      	= "\"%\""
 global XML3Value		= "\"% % %\""
 
