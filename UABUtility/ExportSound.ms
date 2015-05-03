@@ -5,3 +5,10 @@ global ww_go_2D				= "\t<GameObject2D"
 global ww_go_3D				= "\t<GameObject3D"
 global ww_init_tag			= "\t<InitEvent"
 
+global s_file
+
+function exportSound =
+(
+	
+
+)

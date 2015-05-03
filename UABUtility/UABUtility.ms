@@ -38,6 +38,10 @@ utility UABUtility "UAB export Utility" width:152 height:404
 
 	Include "ExportPhysXMesh.ms"
 
+	Include "ExportCameraPath.ms"
+
+	Include "ExportSound.ms"
+
 	on LevelList selected lvl do
 	(
 		PathToCopy = realPath + DataDirectory + LevelList.items[LevelList.selection] + "\\"
