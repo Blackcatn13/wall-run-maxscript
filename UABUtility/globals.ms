@@ -16,6 +16,7 @@ global CinematicFileName = "cinematic.xml"
 global TriggerFileName = "triggers.xml"
 global PhysXFileName = "LevelCooking.xml"
 global CameraPathFileName = "camera_path.xml"
+global SoundFileName = "WWSounds.xml"
 global CopyTextures = true
 global ExportMeshes = false
 global Override = true

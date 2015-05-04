@@ -13,7 +13,7 @@ function ExportCameraPath =
 
 	cp_file = createfile (PathToCopy + CameraPathFileName)
 
-	format (XMLVersion) to:pm_file
+	format (XMLVersion) to:cp_file
 	format (cp_open_file_tag) to:cp_file
 	for spl = 1 to scene_shapes.count do
 	(
