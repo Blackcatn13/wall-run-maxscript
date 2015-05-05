@@ -11,6 +11,7 @@ utility UABUtility "UAB export Utility" width:152 height:404
 	GroupBox grp1 "Export" pos:[8,196] width:136 height:220
 	button ExportLightsButton "Lights" pos:[16,220] width:56 height:16 toolTip:"Export only lights"
 	button ExportMeshButton "Mesh" pos:[80,220] width:56 height:16 toolTip:"Export only selected mesh"
+	button ExportCameraPathButton "Cam Path" pos:[80,244] width:56 height:16 toolTip:"Export camera path"
 	button ExportCameraButton "Camera" pos:[16,244] width:56 height:16 toolTip:"Export cameras"
 	button ExportSceneButton "Scene" pos:[16,368] width:120 height:16 toolTip:"Export all the scene"
 	button ExportStaticMeshButton "Static Meshes" pos:[16,344] width:120 height:16 toolTip:"Export only static meshes"
@@ -148,6 +149,9 @@ utility UABUtility "UAB export Utility" width:152 height:404
 		if debug then
 			format "Exporting light(s)\n"
 		exportLights undefined
+		if debug then 
+			format "Exporting camera path(s)\n"
+		ExportCameraPath()
 		format "==============================\n"
 		format "Full scene exported correctly\n"
 		format "==============================\n"
@@ -196,6 +200,17 @@ utility UABUtility "UAB export Utility" width:152 height:404
 			format "cinematic exported correctly\n"
 			format "==============================\n"
 		)
+	)
+
+	on ExportCameraPathButton pressed do 
+	(
+		if debug then 
+			format "Exporting camera path(s)\n"
+		ExportCameraPath()
+		format "==============================\n"
+		format "camera path(s) exported correctly\n"
+		format "==============================\n"
+
 	)
 
 )
