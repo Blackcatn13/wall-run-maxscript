@@ -11,6 +11,7 @@ global trigger_tag 				= "<trigger"
 global layer_tag				= "\t<layer"
 global wp							="wp"
 
+
 global ro_file
 global trigg_file
 
@@ -52,7 +53,8 @@ function ExportRenderableObjects =
 			local tranY = formattedPrint Translation.y format:"f"
 			local tranZ = formattedPrint Translation.z format:"f"
 			local visible = GetUserProp objaux "visible"
-
+			
+			
 			if (GetUserProp objaux "export_type" == "mesh_instance") then (
 				format (ro_mesh + XMLName + XML1Value + XMLCore + XML1Value) ObjName (GetObjectCore objaux) to:ro_file
 				format (XMLPos + XML3Value + XMLYaw + XML1Value) tranX tranY tranZ yawAng to:ro_file
@@ -76,6 +78,10 @@ function ExportRenderableObjects =
 				format (ro_platform + XMLName + XML1Value + XMLCore + XML1Value + XMLType + XML1Value) ObjName (GetObjectCore objaux) platfType to:ro_file
 				format (XMLPos + XML3Value + XMLYaw + XML1Value) tranX tranY tranZ yawAng to:ro_file
 				format (XMLPitch + XML1Value + XMLRoll + XML1Value + XMLScale + XML3Value + XMLVisible + XML1Value) pitchAng rollAng ObjScale.x ObjScale.y ObjScale.z visible to:ro_file
+				
+				if(CheckNotNullProperty objaux "phisics_size_x" == true and CheckNotNullProperty objaux "phisics_size_y" == true and CheckNotNullProperty objaux "phisics_size_z" == true) then(
+					format (XMLPhisicSize + XML3Value) (GetUserProp objaux "phisics_size_x")  (GetUserProp objaux "phisics_size_y") (GetUserProp objaux "phisics_size_z")  to:ro_file
+				)	
 				if (GetUserProp objaux "render_to_layer" == true) then (
 					format (XMLLayer + XML1Value) (GetUserProp objaux "render_layer") to:ro_file
 				)
@@ -89,8 +95,11 @@ function ExportRenderableObjects =
 					format (XMLCloseTag) to:ro_file
 				)
 				if platfType == "poly" then (
-					format (XMLFinalPos + XML3Value) (getUserProp objaux "poly_final_pos_x") (getUserProp objaux "poly_final_pos_y") (getUserProp objaux "poly_final_pos_z") to:ro_file
-					format (XMLDirection + XML3Value) (getUserProp objaux "poly_direction_x") (getUserProp objaux "poly_direction_y") (getUserProp objaux "poly_direction_z") to:ro_file
+					format (XMLFinalPos + XML3Value + XMLCarryRet) (getUserProp objaux "poly_final_pos_x") (getUserProp objaux "poly_final_pos_y") (getUserProp objaux "poly_final_pos_z") to:ro_file
+					format (XML2Tab+XMLDirection + XML3Value) (getUserProp objaux "poly_direction_x") (getUserProp objaux "poly_direction_y") (getUserProp objaux "poly_direction_z") to:ro_file
+					format (XMLTimeOut + XML1Value) (getUserProp objaux "time_out") to:ro_file
+					format (XMLSpeed + XML1Value) (getUserProp objaux "speed_poly") to:ro_file
+					format (XMLLightName + XML1Value) (getUserProp objaux "light_name") to:ro_file
 					format (XMLActDist + XML1Value + XMLCloseTag) (getUserProp objaux "activation_distance") to:ro_file
 				)
 				if platfType == "moving" then (
@@ -138,6 +147,14 @@ function ExportRenderableObjects =
 	close ro_file
 	format (trigger_close_file_tag) to:trigg_file
 	close trigg_file
+)
+
+function CheckNotNullProperty Obj propName = 
+(
+	if(GetUserProp Obj propName != undefined and GetUserProp Obj propName != "") then (
+		return true
+	)		
+	return false
 )
 
 function WriteWayPoints Obj File wpName NumWPs =

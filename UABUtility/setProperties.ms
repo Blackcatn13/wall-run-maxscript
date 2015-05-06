@@ -37,10 +37,10 @@ fn SetUserProperty Obj StrProperty StrValue =
 	setUserProp Obj StrProperty StrValue
 )
 
-rollout UABSetProperties "UAB Set Properties" width:552 height:750
+rollout UABSetProperties "UAB Set Properties" width:552 height:786
 (
-	GroupBox PhysicsGp "Physics" pos:[7,561] width:255 height:91
-	GroupBox EventsGp "Events" pos:[271,559] width:272 height:56
+	GroupBox PhysicsGp "Physics" pos:[7,597] width:255 height:91
+	GroupBox EventsGp "Events" pos:[271,595] width:272 height:56
 	checkbox RenderExportCheckBox "Export" pos:[16,32] width:56 height:16
 	checkbox RenderVisibleCheckBox "Visible" pos:[16,64] width:56 height:16
 	checkbox LayerCheckBox "Layer" pos:[16,96] width:56 height:16
@@ -50,113 +50,126 @@ rollout UABSetProperties "UAB Set Properties" width:552 height:750
 	edittext AnimModelText "" pos:[88,128] width:168 height:16
 	label TechniqueLabel "Technique" pos:[16,160] width:64 height:16
 	edittext TechniqueText "" pos:[88,160] width:168 height:16
-	checkbox PhysicsGenerateCheckBox "Generate" pos:[15,583] width:64 height:16
-	dropdownList PhysicsGenerateList "" pos:[87,583] width:168 height:21
-	checkbox PhysicsLayerCheckBox "Layer" pos:[15,615] width:56 height:16
-	dropdownList PhysicsLayerList "" pos:[87,615] width:168 height:21
-	GroupBox LogicGp "Logic" pos:[7,655] width:256 height:88
-	checkbox LogicGenerateCheckBox "Generate" pos:[15,679] width:64 height:16
-	dropdownList LogicGenerateList "" pos:[87,679] width:168 height:21
-	checkbox showNormal "Show normal" pos:[95,711] width:88 height:16
+	checkbox PhysicsGenerateCheckBox "Generate" pos:[15,619] width:64 height:16
+	dropdownList PhysicsGenerateList "" pos:[87,619] width:168 height:21
+	checkbox PhysicsLayerCheckBox "Layer" pos:[15,651] width:56 height:16
+	dropdownList PhysicsLayerList "" pos:[87,651] width:168 height:21
+	GroupBox LogicGp "Logic" pos:[7,691] width:256 height:88
+	checkbox LogicGenerateCheckBox "Generate" pos:[15,715] width:64 height:16
+	dropdownList LogicGenerateList "" pos:[87,715] width:168 height:21
+	checkbox showNormal "Show normal" pos:[95,747] width:88 height:16
 	checkbox CameraVisibility "Don't test camera visibility" pos:[264,32] width:216 height:16
 	checkbox WorldTransform "Don't export world transform" pos:[264,64] width:216 height:16
 	edittext LinkedBoneText "" pos:[368,96] width:152 height:16
 	checkbox LinkedBoneCheck "Linked to bone" pos:[264,96] width:96 height:16
 	checkbox Cinematics "Export to cinematics" pos:[264,128] width:216 height:16
-	checkbox EventGenerateCheck "Generate" pos:[279,583] width:64 height:16
-	dropdownList EventGenerateList "" pos:[351,583] width:176 height:21
-	GroupBox TracksGp "Tracks" pos:[271,623] width:134 height:56
-	checkbox GenerateTracks "Generate" pos:[303,647] width:64 height:16
-	GroupBox CamerasGp "Cameras" pos:[271,687] width:272 height:56
-	checkbox CycleCam "Cycle" pos:[279,711] width:56 height:16
-	GroupBox LightsGp "Lights" pos:[412,623] width:131 height:56
-	checkbox GenerateLights "Generate" pos:[439,647] width:64 height:16
-	checkbox ReverseCam "Reverse" pos:[367,711] width:64 height:16
-	checkbox OnceCam "Once" pos:[455,711] width:56 height:16
+	checkbox EventGenerateCheck "Generate" pos:[279,619] width:64 height:16
+	dropdownList EventGenerateList "" pos:[351,619] width:176 height:21
+	GroupBox TracksGp "Tracks" pos:[271,659] width:134 height:56
+	checkbox GenerateTracks "Generate" pos:[303,683] width:64 height:16
+	GroupBox CamerasGp "Cameras" pos:[271,723] width:272 height:56
+	checkbox CycleCam "Cycle" pos:[279,747] width:56 height:16
+	GroupBox LightsGp "Lights" pos:[412,659] width:131 height:56
+	checkbox GenerateLights "Generate" pos:[439,683] width:64 height:16
+	checkbox ReverseCam "Reverse" pos:[367,747] width:64 height:16
+	checkbox OnceCam "Once" pos:[455,747] width:56 height:16
 	button GetButton "Get" pos:[304,160] width:104 height:32
 	button SetButton "Set" pos:[416,160] width:104 height:32
 
 	label lbl3 "Platform Type" pos:[17,190] width:72 height:14
 	dropdownList RenderPlatformList "" pos:[88,184] width:168 height:21
 	
-	GroupBox grp25 "Render" pos:[7,9] width:536 height:541
+	GroupBox grp25 "Render" pos:[7,8] width:536 height:581
 	
 	
-	GroupBox grp27 "Breakable Platform" pos:[10,221] width:266 height:56
-	label TriggerNameLabel "Trigger Name" pos:[21,247] width:65 height:17
-	edittext TriggerNameText "" pos:[96,237] width:149 height:17
-	GroupBox PolyPlatformGroup "Poly Platform" pos:[10,283] width:266 height:107
-	label ActivationDistanceLabel "Act. Distance" pos:[25,367] width:71 height:16
-	edittext ActivationDistanceText "" pos:[105,364] width:40 height:16
-	GroupBox MovingPlatformGroup "Moving Platform" pos:[288,221] width:247 height:170
-	label SpeedLabel "Speed" pos:[298,238] width:38 height:16
-	edittext SpeedText "" pos:[339,238] width:40 height:15
-	GroupBox grp32 "Way Points" pos:[295,271] width:233 height:113
-	label WP1Label "1" pos:[309,295] width:9 height:16
-	label WP1YLabel "Y" pos:[379,294] width:9 height:12
-	edittext WP1YText "" pos:[387,291] width:40 height:16
-	label WP1ZLabel "Z" pos:[437,294] width:9 height:12
-	edittext WP1ZText "" pos:[446,291] width:40 height:16
-	label WP1XLabel "X" pos:[324,295] width:9 height:12
-	edittext WP1XText "" pos:[333,292] width:40 height:15
-	label WP2Label "2" pos:[309,315] width:11 height:16
-	label WP2YLabel "Y" pos:[379,314] width:9 height:12
-	edittext WP2YText "" pos:[387,311] width:40 height:16
-	label WP2ZLabel "Z" pos:[437,314] width:9 height:12
-	edittext WP2ZText "" pos:[446,311] width:40 height:16
-	label WP2XLabel "X" pos:[324,315] width:9 height:12
-	edittext WP2XText "" pos:[333,312] width:40 height:15
-	label WP3Label "3" pos:[309,336] width:10 height:16
-	label WP3YLabel "Y" pos:[379,335] width:9 height:12
-	edittext WP3YText "" pos:[387,332] width:40 height:16
-	label lbl46 "Z" pos:[437,335] width:9 height:12
-	edittext WP3ZText "" pos:[446,332] width:40 height:16
-	label WP3XLabel "X" pos:[324,336] width:9 height:12
-	edittext WP3XText "" pos:[333,333] width:40 height:15
-	label WP4Label "4" pos:[309,356] width:10 height:16
-	label WP4YLabel "Y" pos:[379,355] width:9 height:12
-	edittext WP4YText "" pos:[387,352] width:40 height:16
-	label lbl50 "Z" pos:[437,355] width:9 height:12
-	edittext WP4ZText "" pos:[446,352] width:40 height:16
-	label WP4XLabel "X" pos:[324,356] width:9 height:12
-	edittext WP4XText "" pos:[333,353] width:40 height:15
+	GroupBox grp27 "Breakable Platform" pos:[10,244] width:266 height:49
+	label TriggerNameLabel "Trigger Name" pos:[21,265] width:65 height:17
+	edittext TriggerNameText "" pos:[96,263] width:149 height:17
+	GroupBox PolyPlatformGroup "Poly Platform" pos:[9,296] width:266 height:148
+	label ActivationDistanceLabel "Act. Distance" pos:[25,390] width:71 height:16
+	edittext ActivationDistanceText "" pos:[105,387] width:40 height:16
+	GroupBox MovingPlatformGroup "Moving Platform" pos:[288,295] width:247 height:149
+	label SpeedLabel "Speed" pos:[298,320] width:38 height:16
+	edittext SpeedText "" pos:[339,320] width:40 height:15
+	GroupBox grp32 "Way Points" pos:[295,342] width:233 height:95
+	label WP1Label "1" pos:[309,356] width:9 height:16
+	label WP1YLabel "Y" pos:[379,354] width:9 height:12
+	edittext WP1YText "" pos:[387,352] width:40 height:16
+	label WP1ZLabel "Z" pos:[437,354] width:9 height:12
+	edittext WP1ZText "" pos:[446,352] width:40 height:16
+	label WP1XLabel "X" pos:[324,355] width:9 height:12
+	edittext WP1XText "" pos:[333,353] width:40 height:15
+	label WP2Label "2" pos:[309,376] width:11 height:16
+	label WP2YLabel "Y" pos:[379,374] width:9 height:12
+	edittext WP2YText "" pos:[387,372] width:40 height:16
+	label WP2ZLabel "Z" pos:[437,374] width:9 height:12
+	edittext WP2ZText "" pos:[446,372] width:40 height:16
+	label WP2XLabel "X" pos:[324,375] width:9 height:12
+	edittext WP2XText "" pos:[333,373] width:40 height:15
+	label WP3Label "3" pos:[309,397] width:10 height:16
+	label WP3YLabel "Y" pos:[379,395] width:9 height:12
+	edittext WP3YText "" pos:[387,393] width:40 height:16
+	label lbl46 "Z" pos:[437,395] width:9 height:12
+	edittext WP3ZText "" pos:[446,393] width:40 height:16
+	label WP3XLabel "X" pos:[324,396] width:9 height:12
+	edittext WP3XText "" pos:[333,394] width:40 height:15
+	label WP4Label "4" pos:[309,417] width:10 height:16
+	label WP4YLabel "Y" pos:[379,415] width:9 height:12
+	edittext WP4YText "" pos:[387,413] width:40 height:16
+	label lbl50 "Z" pos:[437,415] width:9 height:12
+	edittext WP4ZText "" pos:[446,413] width:40 height:16
+	label WP4XLabel "X" pos:[324,416] width:9 height:12
+	edittext WP4XText "" pos:[333,414] width:40 height:15
 		
-	label FinalPositionLabel "Final Position" pos:[23,305] width:68 height:16
-	label PolyDirectionLabel "Direction" pos:[25,336] width:62 height:16
-	label PolyFinalPosLabelY "Y" pos:[152,306] width:9 height:12
-	label PolyFinalPosLabelZ "Z" pos:[210,305] width:9 height:12
-	label PolyFinalPosLabelX "X" pos:[97,307] width:9 height:12
-	label PolyDirectionLabelY "Y" pos:[152,337] width:9 height:12
-	label PolyDirectionLabelZ "Z" pos:[210,337] width:9 height:12
-	label PolyDirectionLabelX "X" pos:[97,338] width:9 height:12
-	edittext PolyFinalPosXText "" pos:[107,303] width:37 height:16
-	edittext PolyFinalPosYText "" pos:[161,303] width:37 height:16
-	edittext PolyFinalPosZText "" pos:[219,304] width:37 height:16
-	edittext PolyDirectionXText "" pos:[107,334] width:37 height:16
-	edittext PolyDirectionYText "" pos:[161,334] width:37 height:16
-	edittext PolyDirectionZText "" pos:[219,334] width:37 height:16
+	label FinalPositionLabel "Final Position" pos:[23,328] width:68 height:16
+	label PolyDirectionLabel "Direction" pos:[25,359] width:62 height:16
+	label PolyFinalPosLabelY "Y" pos:[152,329] width:9 height:12
+	label PolyFinalPosLabelZ "Z" pos:[210,328] width:9 height:12
+	label PolyFinalPosLabelX "X" pos:[97,330] width:9 height:12
+	label PolyDirectionLabelY "Y" pos:[152,360] width:9 height:12
+	label PolyDirectionLabelZ "Z" pos:[210,360] width:9 height:12
+	label PolyDirectionLabelX "X" pos:[97,361] width:9 height:12
+	edittext PolyFinalPosXText "" pos:[107,326] width:37 height:16
+	edittext PolyFinalPosYText "" pos:[161,326] width:37 height:16
+	edittext PolyFinalPosZText "" pos:[219,327] width:37 height:16
+	edittext PolyDirectionXText "" pos:[107,357] width:37 height:16
+	edittext PolyDirectionYText "" pos:[161,357] width:37 height:16
+	edittext PolyDirectionZText "" pos:[219,357] width:37 height:16
 	
-	GroupBox grp28 "Triggers" pos:[15,401] width:520 height:140
-	label lbl67 "Trigger Name" pos:[31,425] width:72 height:16
-	edittext TriggerName "" pos:[95,425] width:144 height:16
-	dropdownList ShapeDL "" pos:[95,449] width:72 height:21
-	label lbl68 "Shape" pos:[31,449] width:56 height:16
-	label lbl69 "Group" pos:[31,473] width:56 height:16
-	dropdownList GroupDL "" pos:[95,473] width:72 height:21
-	label lbl70 "Event Type" pos:[255,425] width:80 height:16
-	dropdownList eventType "" pos:[343,425] width:88 height:21
-	checkbox PaintIt "Paint It" pos:[455,425] width:72 height:16
-	label lbl71 "Parameter 1" pos:[255,449] width:80 height:16
-	label lbl72 "Script Function" pos:[255,473] width:80 height:16
-	edittext Param1 "" pos:[343,449] width:168 height:16
-	edittext ScriptFunction "" pos:[343,473] width:168 height:16
-	label lbl301 "Duration" pos:[39,513] width:51 height:14
-	edittext DurationTime "" pos:[87,513] width:50 height:16
-	edittext UpdateFunction "" pos:[343,497] width:168 height:16
-	label lbl157 "Update Function" pos:[255,497] width:80 height:16
-	edittext PlatfName "" pos:[343,521] width:168 height:16
-	label lbl198 "Platform Name" pos:[255,521] width:80 height:16
+	GroupBox grp28 "Triggers" pos:[15,444] width:520 height:140
+	label lbl67 "Trigger Name" pos:[31,468] width:72 height:16
+	edittext TriggerName "" pos:[95,468] width:144 height:16
+	dropdownList ShapeDL "" pos:[95,492] width:72 height:21
+	label lbl68 "Shape" pos:[31,492] width:56 height:16
+	label lbl69 "Group" pos:[31,516] width:56 height:16
+	dropdownList GroupDL "" pos:[95,516] width:72 height:21
+	label lbl70 "Event Type" pos:[255,468] width:80 height:16
+	dropdownList eventType "" pos:[343,468] width:88 height:21
+	checkbox PaintIt "Paint It" pos:[455,468] width:72 height:16
+	label lbl71 "Parameter 1" pos:[255,492] width:80 height:16
+	label lbl72 "Script Function" pos:[255,516] width:80 height:16
+	edittext Param1 "" pos:[343,492] width:168 height:16
+	edittext ScriptFunction "" pos:[343,516] width:168 height:16
+	label lbl301 "Duration" pos:[39,556] width:51 height:14
+	edittext DurationTime "" pos:[87,556] width:50 height:16
+	edittext UpdateFunction "" pos:[343,540] width:168 height:16
+	label lbl157 "Update Function" pos:[255,540] width:80 height:16
+	edittext PlatfName "" pos:[343,564] width:168 height:16
+	label lbl198 "Platform Name" pos:[255,564] width:80 height:16
+	label PhisicsSizeLabel "Phisics Size" pos:[17,218] width:58 height:17
+	label PhisicSizeXLabel "X:" pos:[90,218] width:13 height:13
+	edittext PhisicSizeXText "" pos:[102,216] width:36 height:16
 	
+	label PhisicSizeYLabel "Y:" pos:[144,218] width:13 height:13
+	edittext PhisicSizeYText "" pos:[156,216] width:36 height:16
+	label PhisicSizeZLabel "Z:" pos:[203,218] width:13 height:13
+	edittext PhisicSizeZText "" pos:[214,216] width:36 height:16
+	label TimeOutLabel "Time Out" pos:[166,390] width:52 height:16
+	edittext TimeOutText "" pos:[219,387] width:40 height:16
+	label SpeedPolyLabel "Speed" pos:[25,418] width:36 height:16
+	edittext SpeedPolyText "" pos:[58,415] width:40 height:16
+	label LightNamePolyLabel "Light Name" pos:[116,418] width:59 height:16
+	edittext LightNamePolyText "" pos:[173,415] width:86 height:16
 	on UABSetProperties open do
 	(	
 		RenderExportList.items = MeshType
@@ -220,17 +233,24 @@ rollout UABSetProperties "UAB Set Properties" width:552 height:750
 	
 		--- Platform Properties----
 		GetUserProperty obj RenderPlatformList "platform_type"
+		GetUserProperty obj PhisicSizeXText "phisics_size_x"
+		GetUserProperty obj PhisicSizeYText "phisics_size_y"
+		GetUserProperty obj PhisicSizeZText "phisics_size_z"
+		--break platform
 		GetUserProperty obj TriggerNameText "trigger_name"
+		-- Poly platform
 		GetUserProperty obj PolyFinalPosXText "poly_final_pos_x"
 		GetUserProperty obj PolyFinalPosYText "poly_final_pos_y"
 		GetUserProperty obj PolyFinalPosZText "poly_final_pos_z"
 		GetUserProperty obj PolyDirectionXText "poly_direction_x"
 		GetUserProperty obj PolyDirectionYText "poly_direction_y"
 		GetUserProperty obj PolyDirectionZText "poly_direction_z"
-		
-		
 		GetUserProperty obj ActivationDistanceText "activation_distance"
-	
+		GetUserProperty obj TimeOutText "time_out"
+		GetUserProperty obj SpeedPolyText "speed_poly"
+		GetUserProperty obj LightNamePolyText "light_name"
+		
+		-- Moveable platform
 		GetUserProperty obj SpeedText "speed"
 		GetUserProperty obj WP1XText "wp1_x"
 		GetUserProperty obj WP1YText "wp1_y"
@@ -300,7 +320,21 @@ rollout UABSetProperties "UAB Set Properties" width:552 height:750
 				SetUserProperty $[i] "cam_reverse" ReverseCam.checked
 				SetUserProperty $[i] "cam_once" OnceCam.checked
 				SetUserProperty $[i] "lights" GenerateLights.checked
-	
+				
+				
+				if PhisicSizeXText.text != "" or (getUserProp $[i] "phisics_size_x")!=undefined then
+				(
+					SetUserProperty $[i] "phisics_size_x" PhisicSizeXText.text
+				)
+				if PhisicSizeYText.text != "" or (getUserProp $[i] "phisics_size_y")!=undefined then
+				(
+					SetUserProperty $[i] "phisics_size_y" PhisicSizeYText.text
+				)
+				if PhisicSizeZText.text != "" or (getUserProp $[i] "phisics_size_z")!=undefined then
+				(
+					SetUserProperty $[i] "phisics_size_z" PhisicSizeZText.text
+				)
+				
 				---Platform properties
 				if RenderExportList.items[RenderExportList.selection] == "platform_mesh" then (
 					SetUserProperty $[i] "platform_type" RenderPlatformList.items[RenderPlatformList.selection]
@@ -322,6 +356,10 @@ rollout UABSetProperties "UAB Set Properties" width:552 height:750
 						SetUserProperty $[i] "poly_direction_y" PolyDirectionYText.text
 						SetUserProperty $[i] "poly_direction_z" PolyDirectionZText.text
 						SetUserProperty $[i] "activation_distance" ActivationDistanceText.text
+						SetUserProperty $[i] "time_out" TimeOutText.text
+						SetUserProperty $[i] "speed_poly" SpeedPolyText.text
+						SetUserProperty $[i] "light_name" LightNamePolyText.text
+
 					--)
 					---End Poly-----
 					--Moving Platform----
@@ -406,6 +444,20 @@ rollout UABSetProperties "UAB Set Properties" width:552 height:750
 			SetUserProperty $ "cam_reverse" ReverseCam.checked
 			SetUserProperty $ "cam_once" OnceCam.checked
 			SetUserProperty $ "lights" GenerateLights.checked
+			
+			
+			if PhisicSizeXText.text != "" or (getUserProp $ "phisics_size_x")!=undefined then
+			(
+				SetUserProperty $ "phisics_size_x" PhisicSizeXText.text
+			)
+			if PhisicSizeYText.text != "" or (getUserProp $ "phisics_size_y")!=undefined then
+			(
+				SetUserProperty $ "phisics_size_y" PhisicSizeYText.text
+			)
+			if PhisicSizeZText.text != "" or (getUserProp $ "phisics_size_z")!=undefined then
+			(
+				SetUserProperty $ "phisics_size_z" PhisicSizeZText.text
+			)
 			---Platform properties
 			if RenderExportList.items[RenderExportList.selection] == "platform_mesh" then (
 				SetUserProperty $ "platform_type" RenderPlatformList.items[RenderPlatformList.selection]
@@ -430,6 +482,10 @@ rollout UABSetProperties "UAB Set Properties" width:552 height:750
 					SetUserProperty $ "poly_direction_y" PolyDirectionYText.text
 					SetUserProperty $ "poly_direction_z" PolyDirectionZText.text
 					SetUserProperty $ "activation_distance" ActivationDistanceText.text
+					SetUserProperty $ "time_out" TimeOutText.text
+					SetUserProperty $ "speed_poly" SpeedPolyText.text
+					SetUserProperty $ "light_name" LightNamePolyText.text
+
 					
 			--	)
 					---End Poly-----

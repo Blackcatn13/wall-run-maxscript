@@ -29,6 +29,9 @@ global RelativePathToCopy
 global XMLVersion		= "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n"
 global XMLCloseTag		= "/>\n"
 global XMLEndTag		= ">\n"
+global XMLCarryRet		= "\n"
+global XMLTab			= "\t"
+global XML2Tab			= "\t\t"
 global XMLName			= " name="
 global XMLFilename		= " filename="
 global XMLCore			= " core="
@@ -66,8 +69,10 @@ global XMLForthPos		= " forth_position="
 global XMLRedAxis		= " redim_axis="
 global XMLRedScale		= " redim_scale="
 global XMLActDist		= " activation_distance="
+global XMLTimeOut		= " time_out="
 global XMLInitCol 		= " initial_collision="
 global XMLSpeed			= " speed="
+global XMLLightName	= " light="
 global XMLGroup			= " group="
 global XMLShape			= " shape="
 global XMLPlatfName		= " platform_name="
@@ -84,6 +89,7 @@ global XMLFinalPos		= " final_position="
 global XMLDirection		= " direction="
 global XMLRegister		= " register="
 global XMLEvent			= " event="
+global XMLPhisicSize	= " phisic_size="
 global XMLGameObject	= " GameObject="
 global XMLID 			= " id="
 global XML1Value      	= "\"%\""
@@ -91,8 +97,8 @@ global XML3Value		= "\"% % %\""
 
 
 -- Properties values
-global RenderLayers = #("solid", "skybox", "alpha_objects", "alpha_blend_objects", "particles")
-global MeshType = #("mesh_instance", "animated_model", "platform_mesh", "trigger")
+global RenderLayers = #("solid", "skybox", "alpha_objects", "alpha_blend_objects", "particles", "phisics", "poly", "enabled_poly", "collectible", "enemies", "puzzle")
+global MeshType = #("mesh_instance", "animated_model", "platform_mesh", "trigger", "switch_instance", "door")
 global PhysicsType = #("triangle_mesh", "convex_shape", "box_shape", "plane_shape", "capsule_shape")
 global PhysicsLayer = #("logic")
 global logicGenerate = #("box_event", "sphere_event")
