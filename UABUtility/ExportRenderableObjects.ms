@@ -1,6 +1,8 @@
 global ro_open_file_tag		= "<renderable_objects>\n"
 global ro_close_file_tag	= "</renderable_objects>\n"
 global ro_mesh 				= "\t<mesh_instance"
+global ro_switch 				= "\t<switch_instance"
+global ro_door 				= "\t<door"
 global ro_animated			= "\t<animated_model"
 global ro_platform			= "\t<platform"
 global ro_platform_close	= "\t</platform>\n"
@@ -53,6 +55,7 @@ function ExportRenderableObjects =
 			local tranY = formattedPrint Translation.y format:"f"
 			local tranZ = formattedPrint Translation.z format:"f"
 			local visible = GetUserProp objaux "visible"
+			local Core =  (GetObjectCore objaux)
 			
 			
 			if (GetUserProp objaux "export_type" == "mesh_instance") then (
@@ -122,6 +125,14 @@ function ExportRenderableObjects =
 					format (ro_platform_close) to:ro_file
 				)
 			)
+			if (GetUserProp objaux "export_type" == "switch_instance") then (
+				WriteMeshProps ro_file ro_switch Core ObjName tranX tranY tranZ objaux yawAng pitchAng rollAng ObjScale visible
+			)
+			
+			if (GetUserProp objaux "export_type" == "door") then (
+				WriteMeshProps ro_file ro_door Core ObjName tranX tranY tranZ objaux yawAng pitchAng rollAng ObjScale visible
+			)
+			
 			if (GetUserProp objaux "export_type" == "trigger") then (
 				local bb = nodeLocalBoundingBox objaux
 				local sizebb = RHTranslationToLH(bb[2] - bb[1])
@@ -147,6 +158,20 @@ function ExportRenderableObjects =
 	close ro_file
 	format (trigger_close_file_tag) to:trigg_file
 	close trigg_file
+)
+
+function WriteMeshProps _ro_file mesh_type ObjCore ObjName tranX tranY tranZ obj yawAng pitchAng rollAng ObjScale visible =
+(
+	format (mesh_type + XMLName + XML1Value + XMLCore + XML1Value) ObjName ObjCore to:_ro_file
+	format (XMLPos + XML3Value + XMLYaw + XML1Value) tranX tranY tranZ yawAng to:_ro_file
+	format (XMLPitch + XML1Value + XMLRoll + XML1Value + XMLScale + XML3Value + XMLVisible + XML1Value) pitchAng rollAng ObjScale.x ObjScale.y ObjScale.z visible to:_ro_file
+	if(CheckNotNullProperty obj "phisics_size_x" == true and CheckNotNullProperty obj "phisics_size_y" == true and CheckNotNullProperty obj "phisics_size_z" == true) then(
+		format (XMLPhisicSize + XML3Value) (GetUserProp obj "phisics_size_x")  (GetUserProp obj "phisics_size_y") (GetUserProp obj "phisics_size_z")  to:_ro_file
+	)	
+	if (GetUserProp obj "render_to_layer" == true) then (
+		format (XMLLayer + XML1Value) (GetUserProp obj "render_layer") to:_ro_file
+	)
+	format (XMLCloseTag) to:_ro_file
 )
 
 function CheckNotNullProperty Obj propName = 
