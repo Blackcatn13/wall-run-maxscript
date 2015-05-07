@@ -16,7 +16,13 @@ function exportSound =
 	format (XMLVersion) to:snd_file
 	format (ww_open_file_tag) to:snd_file
 	format (ww_bnk_tag + XMLName + XML1Value + XMLCloseTag) ww_init_bnk to:snd_file
-
+	-- 
+	-- TODO:
+	-- <Bank name/>, new rollout to add banks
+	-- <GameObject2D name register/> Property in properties rollout
+	-- <GameObject3D name register type/> Property in properties rollout
+	-- <InitEvent event GameObject/> in the same rollout as banks
+	-- 
 	format (ww_close_file_tag) to:snd_file
 	close snd_file
 
