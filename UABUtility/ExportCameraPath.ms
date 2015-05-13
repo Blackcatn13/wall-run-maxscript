@@ -20,7 +20,7 @@ function ExportCameraPath =
 		for s = 1 to (numsplines scene_shapes[spl]) do
 		(
 			spl_name = "line_" + s as string
-			format (cp_spline_open_tag + XMLName + XML1Value + XMLCloseTag) spl_name to:cp_file
+			format (cp_spline_open_tag + XMLName + XML1Value + XMLEndTag) spl_name to:cp_file
 			for k = 1 to (numknots scene_shapes[spl] s) do 
 			(
 				pos = getKnotPoint scene_shapes[spl] s k
