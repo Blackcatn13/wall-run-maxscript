@@ -170,6 +170,8 @@ rollout UABSetProperties "UAB Set Properties" width:552 height:786
 	edittext SpeedPolyText "" pos:[58,415] width:40 height:16
 	label LightNamePolyLabel "Light Name" pos:[116,418] width:59 height:16
 	edittext LightNamePolyText "" pos:[173,415] width:86 height:16
+	label RoomLabel "Room" pos:[396,320] width:38 height:16
+	edittext RoomText "" pos:[437,320] width:81 height:15
 	on UABSetProperties open do
 	(	
 		RenderExportList.items = MeshType
@@ -359,12 +361,13 @@ rollout UABSetProperties "UAB Set Properties" width:552 height:786
 						SetUserProperty $[i] "time_out" TimeOutText.text
 						SetUserProperty $[i] "speed_poly" SpeedPolyText.text
 						SetUserProperty $[i] "light_name" LightNamePolyText.text
-
+	
 					--)
 					---End Poly-----
 					--Moving Platform----
 					--if RenderPlatformList.selection == "moving"  then (
 						SetUserProperty $[i] "speed" SpeedText.text
+						SetUserProperty $[i]  "room" RoomText.text
 						SetUserProperty $[i] "wp1_x" WP1XText.text
 						SetUserProperty $[i] "wp1_y" WP1YText.text
 						SetUserProperty $[i] "wp1_z" WP1ZText.text
@@ -485,13 +488,14 @@ rollout UABSetProperties "UAB Set Properties" width:552 height:786
 					SetUserProperty $ "time_out" TimeOutText.text
 					SetUserProperty $ "speed_poly" SpeedPolyText.text
 					SetUserProperty $ "light_name" LightNamePolyText.text
-
+	
 					
 			--	)
 					---End Poly-----
 					--Moving Platform----
 			--	if RenderPlatformList.selection == "moving"  then (
 					SetUserProperty $ "speed" SpeedText.text
+					SetUserProperty $ "room" RoomText.text
 					SetUserProperty $ "wp1_x" WP1XText.text
 					SetUserProperty $ "wp1_y" WP1YText.text
 					SetUserProperty $ "wp1_z" WP1ZText.text

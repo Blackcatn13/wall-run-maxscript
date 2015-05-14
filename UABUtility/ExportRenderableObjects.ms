@@ -107,7 +107,7 @@ function ExportRenderableObjects =
 				)
 				if platfType == "moving" then (
 					format (XMLSpeed + XML1Value + XMLEndTag) (getUserProp objaux "speed") to:ro_file
-					
+					format (XMLRoom + XML1Value + XMLEndTag) (getUserProp objaux "room") to:ro_file
 					WriteWayPoints objaux ro_file wp 4
 					
 				--	if (getUserProp objaux "wp1_x" != "") and (getUserProp objaux "xp1_x" != undefined) then (
