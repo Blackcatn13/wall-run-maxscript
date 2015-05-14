@@ -106,7 +106,7 @@ global EventList = #("event1")
 global RenderPlatform=#("static","breakable","moving","pinchos","poly")
 global RedimAxis=#("x","y","z")
 global EventTypeL = #("enter", "stay", "leave")
-global GroupsList = #("1", "2", "3")
+global GroupsList = #("1", "2", "3", "18")
 global TriggerShapeL = #("box", "sphere")
 
 -- Vertex declaration
