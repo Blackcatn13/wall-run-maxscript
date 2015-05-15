@@ -254,6 +254,7 @@ rollout UABSetProperties "UAB Set Properties" width:552 height:786
 		
 		-- Moveable platform
 		GetUserProperty obj SpeedText "speed"
+		GetUserProperty obj RoomText "room"
 		GetUserProperty obj WP1XText "wp1_x"
 		GetUserProperty obj WP1YText "wp1_y"
 		GetUserProperty obj WP1ZText "wp1_z"

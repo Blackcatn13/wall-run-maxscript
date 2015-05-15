@@ -106,7 +106,7 @@ function ExportRenderableObjects =
 					format (XMLActDist + XML1Value + XMLCloseTag) (getUserProp objaux "activation_distance") to:ro_file
 				)
 				if platfType == "moving" then (
-					format (XMLSpeed + XML1Value + XMLEndTag) (getUserProp objaux "speed") to:ro_file
+					format (XMLSpeed + XML1Value ) (getUserProp objaux "speed") to:ro_file
 					format (XMLRoom + XML1Value + XMLEndTag) (getUserProp objaux "room") to:ro_file
 					WriteWayPoints objaux ro_file wp 4
 					
