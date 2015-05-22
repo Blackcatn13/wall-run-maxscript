@@ -92,13 +92,13 @@ function exportLights lightsList=
 			if (findString ((classof _lights[i]) as string) "light") != undefined or (findString ((classof _lights[i]) as string) "spot") != undefined then (
 				if (GetUserProp _lights[i] "lights") == true then (
 					if (classof _lights[i] == Omnilight) then (
-						ExportOmniLight _lights[i] light_file
+						ExportOmniLight _lights[i]
 					)
 					if (classof _lights[i] == targetspot) then (
-						ExportSpot _lights[i] light_file
+						ExportSpot _lights[i]
 					)
 					if (classof _lights[i] == TargetDirectionallight) then (
-						ExportDirectional _lights[i] light_file
+						ExportDirectional _lights[i]
 					)
 				)
 			)
