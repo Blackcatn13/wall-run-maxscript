@@ -177,7 +177,7 @@ rollout UABSetProperties "UAB Set Properties" width:951 height:786
 	GroupBox shadowProp "Shadow map properties" pos:[569,88] width:215 height:264
 	label lbl48 "ShadowMap format" pos:[584,120] width:104 height:16
 	label lbl49 "Ortho size w:" pos:[584,152] width:64 height:16
-	dropDownList ShadowDynType "" pos:[696,120] width:80 height:21
+	dropdownList ShadowDynType "" pos:[696,120] width:80 height:21
 	editText orthoWidth "" pos:[648,152] width:56 height:16
 	label lbl56 "h:" pos:[712,152] width:8 height:16
 	editText orthoHeight "" pos:[720,152] width:56 height:16
@@ -187,7 +187,7 @@ rollout UABSetProperties "UAB Set Properties" width:951 height:786
 	editText ShadowWidth "" pos:[648,176] width:56 height:16
 	checkbox staticShadow "Generate Static shadow" pos:[584,200] width:152 height:16
 	label lbl53 "Static Shadow format" pos:[584,224] width:104 height:16
-	dropDownList ShadowStatType "" pos:[696,224] width:80 height:21
+	dropdownList ShadowStatType "" pos:[696,224] width:80 height:21
 	editText LayersToRender "" pos:[584,280] width:184 height:64
 	label lbl54 "Renderable layers, separated by comas" pos:[584,248] width:176 height:24
 
@@ -204,7 +204,7 @@ rollout UABSetProperties "UAB Set Properties" width:951 height:786
 		GroupDL.items = GroupsList
 		EventType.items = EventTypeL
 		ShadowDynType.items = ImageType
-		ShadowStatType.items = ShadowStatType
+		ShadowStatType.items = ImageType
 	)
 
 	on AnimModelText entered key do
@@ -351,7 +351,7 @@ rollout UABSetProperties "UAB Set Properties" width:951 height:786
 				SetUserProperty $[i] "lights" GenerateLights.checked
 				SetUserProperty $[i] "ShadowMap" GenShadowMap.checked
 				if GenShadowMap.checked then (
-					SetUserProperty $[i] "dynImageType" shadowProp.items[shadowProp.selection]
+					SetUserProperty $[i] "dynImageType" ShadowDynType.items[ShadowDynType.selection]
 					SetUserProperty $[i] "orthoWidth" orthoWidth.text
 					SetUserProperty $[i] "orthoHeight" orthoHeight.text
 					SetUserProperty $[i] "mapWidth" ShadowWidth.text
@@ -486,7 +486,7 @@ rollout UABSetProperties "UAB Set Properties" width:951 height:786
 			SetUserProperty $ "lights" GenerateLights.checked
 			SetUserProperty $ "ShadowMap" GenShadowMap.checked
 			if GenShadowMap.checked then (
-				SetUserProperty $ "dynImageType" shadowProp.items[shadowProp.selection]
+				SetUserProperty $ "dynImageType" ShadowDynType.items[ShadowDynType.selection]
 				SetUserProperty $ "orthoWidth" orthoWidth.text
 				SetUserProperty $ "orthoHeight" orthoHeight.text
 				SetUserProperty $ "mapWidth" ShadowWidth.text

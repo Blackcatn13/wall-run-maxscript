@@ -8,6 +8,8 @@ global light_file
 
 function ExportShadowProperties _light =
 (
+	if debug then
+		format "[ExportShadowMap] starting export of ShadowMap properties\n"
 	local DynShadow = (GetUserProp _light "ShadowMap")
 	local DynType = (GetUserProp _light "dynImageType")
 	local orthoWidth = (GetUserProp _light "orthoWidth")
@@ -76,17 +78,17 @@ function ExportSpot _light =
 		format "[ExportSpot] spot light exported\n"
 )	
 
-function ExportOmniLight obj =
+function ExportOmniLight _light =
 (
 	if debug then
 		format "[ExportOmniLight] starting export of omni light\n"
-	local namel = obj.name
+	local namel = _light.name
 	local type = "omni"
-	local pos = RHTranslationToLH obj.pos
-	local colorl = obj.rgb / 255
-	local intensity = obj.multiplier
-	local startatt = obj.farAttenStart
-	local endatt = obj.farAttenEnd
+	local pos = RHTranslationToLH _light.pos
+	local colorl = _light.rgb / 255
+	local intensity = _light.multiplier
+	local startatt = _light.farAttenStart
+	local endatt = _light.farAttenEnd
 	format (light_tag + XMLName + XML1Value + XMLType + XML1Value) namel type to:light_file
 	format (XMLPos + XML3Value + XMLColor + XML3Value) pos.x pos.y pos.z colorl.r colorl.g colorl.b to:light_file 
 	format (XMLIntensity + XML1Value + XMLAttStartRange + XML1Value) intensity startatt to:light_file
