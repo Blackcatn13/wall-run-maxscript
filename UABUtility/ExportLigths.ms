@@ -1,8 +1,33 @@
 global lights_open_file_tag			= "<lights>\n"
 global lights_close_file_tag		= "</lights>\n"
 global light_tag 					= "\t<light"
+global light_close_tag 				= "\t</light>\n"
+global dynamic_tag					= "\t\t<dynamic"
 
 global light_file
+
+function ExportShadowProperties _light =
+(
+	local DynShadow = (GetUserProp _light "ShadowMap")
+	local DynType = (GetUserProp _light "dynImageType")
+	local orthoWidth = (GetUserProp _light "orthoWidth")
+	local orthoHeight = (GetUserProp _light "orthoHeight")
+	local mapWidth = (GetUserProp _light "mapWidth")
+	local mapHeight = (GetUserProp _light "mapHeight")
+	local staticShadow = (GetUserProp _light "staticShadow")
+	local StaticType = (GetUserProp _light "staImageType")
+	local renderables = (GetUserProp _light "rednerablesList")
+
+	format (XMLGenShadow + XML1Value + XMLDynShadowType + XML1Value) DynShadow DynType to:light_file
+	format (XMLOrthoWidth + XML1Value + XMLOrthoHeight + XML1Value) orthoWidth orthoHeight to:light_file
+	format (XMLShadowWidth + XML1Value + XMLShadowHeight + XML1Value) mapWidth mapHeight to:light_file
+	format (XMLStaticShadow + XML1Value + XMLStaShadowType + XML1Value + XMLEndTag) staticShadow StaticType to:light_file
+	for word in (filterString renderables ",") do
+	(
+		format (dynamic_tag + XMLRendManager + XML1Value + XMLCloseTag) word to:light_file
+	)
+	format (light_close_tag) to:light_file
+) 
 
 function ExportDirectional _light =
 (
@@ -17,7 +42,12 @@ function ExportDirectional _light =
 	format (light_tag + XMLName + XML1Value + XMLType + XML1Value) _light.name "directional" to:light_file
 	format (XMLPos + XML3Value + XMLDir + XML3Value) pos.x pos.y pos.z dir.x dir.y dir.z to:light_file
 	format (XMLColor + XML3Value + XMLIntensity + XML1Value) col.r col.g col.b inten to:light_file
-	format (XMLAttStartRange + XML1Value + XMLAttEndRange + XML1Value + XMLCloseTag) start end to:light_file
+	format (XMLAttStartRange + XML1Value + XMLAttEndRange + XML1Value) start end to:light_file
+	if (GetUserProp _light "ShadowMap") == true then (
+		ExportShadowProperties _light
+	) else (
+		format (XMLCloseTag) to:light_file
+	)
 	if debug then
 		format "[ExportDirectional] directional light exported\n"
 )	
@@ -36,7 +66,12 @@ function ExportSpot _light =
 	format (XMLPos + XML3Value + XMLDir + XML3Value) pos.x pos.y pos.z dir.x dir.y dir.z to:light_file
 	format (XMLColor + XML3Value + XMLIntensity + XML1Value) col.r col.g col.b inten to:light_file
 	format (XMLAngle + XML1Value + XMLFallOff + XML1Value) _light.hotspot _light.falloff to:light_file
-	format (XMLAttStartRange + XML1Value + XMLAttEndRange + XML1Value + XMLCloseTag) start end to:light_file
+	format (XMLAttStartRange + XML1Value + XMLAttEndRange + XML1Value) start end to:light_file
+	if (GetUserProp _light "ShadowMap") == true then (
+		ExportShadowProperties _light
+	) else (
+		format (XMLCloseTag) to:light_file
+	)
 	if debug then
 		format "[ExportSpot] spot light exported\n"
 )	
@@ -55,7 +90,12 @@ function ExportOmniLight obj =
 	format (light_tag + XMLName + XML1Value + XMLType + XML1Value) namel type to:light_file
 	format (XMLPos + XML3Value + XMLColor + XML3Value) pos.x pos.y pos.z colorl.r colorl.g colorl.b to:light_file 
 	format (XMLIntensity + XML1Value + XMLAttStartRange + XML1Value) intensity startatt to:light_file
-	format (XMLAttEndRange + XML1Value + XMLCloseTag) endatt to:light_file
+	format (XMLAttEndRange + XML1Value) endatt to:light_file
+	if (GetUserProp _light "ShadowMap") == true then (
+		ExportShadowProperties _light
+	) else (
+		format (XMLCloseTag) to:light_file
+	)
 	if debug then
 		format "[ExportOmniLight] omni light exported\n"
 )
