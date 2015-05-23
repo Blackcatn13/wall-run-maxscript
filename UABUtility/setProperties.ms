@@ -37,7 +37,7 @@ fn SetUserProperty Obj StrProperty StrValue =
 	setUserProp Obj StrProperty StrValue
 )
 
-rollout UABSetProperties "UAB Set Properties" width:552 height:786
+rollout UABSetProperties "UAB Set Properties" width:951 height:786
 (
 	GroupBox PhysicsGp "Physics" pos:[7,597] width:255 height:91
 	GroupBox EventsGp "Events" pos:[271,595] width:272 height:56
@@ -69,8 +69,8 @@ rollout UABSetProperties "UAB Set Properties" width:552 height:786
 	checkbox GenerateTracks "Generate" pos:[303,683] width:64 height:16
 	GroupBox CamerasGp "Cameras" pos:[271,723] width:272 height:56
 	checkbox CycleCam "Cycle" pos:[279,747] width:56 height:16
-	GroupBox LightsGp "Lights" pos:[412,659] width:131 height:56
-	checkbox GenerateLights "Generate" pos:[439,683] width:64 height:16
+	GroupBox LightsGp "Lights" pos:[552,14] width:248 height:354
+	checkbox GenerateLights "Generate" pos:[568,40] width:64 height:16
 	checkbox ReverseCam "Reverse" pos:[367,747] width:64 height:16
 	checkbox OnceCam "Once" pos:[455,747] width:56 height:16
 	button GetButton "Get" pos:[304,160] width:104 height:32
@@ -172,6 +172,25 @@ rollout UABSetProperties "UAB Set Properties" width:552 height:786
 	edittext LightNamePolyText "" pos:[173,415] width:86 height:16
 	label RoomLabel "Room" pos:[396,320] width:38 height:16
 	edittext RoomText "" pos:[437,320] width:81 height:15
+
+	checkbox GenShadowMap "Generate ShadowMap" pos:[568,64] width:136 height:16
+	GroupBox shadowProp "Shadow map properties" pos:[569,88] width:215 height:264
+	label lbl48 "ShadowMap format" pos:[584,120] width:104 height:16
+	label lbl49 "Ortho size w:" pos:[584,152] width:64 height:16
+	dropDownList ShadowDynType "" pos:[696,120] width:80 height:21
+	editText orthoWidth "" pos:[648,152] width:56 height:16
+	label lbl56 "h:" pos:[712,152] width:8 height:16
+	editText orthoHeight "" pos:[720,152] width:56 height:16
+	label lbl51 "Shad. size w:" pos:[584,176] width:64 height:16
+	label lbl52 "h:" pos:[712,176] width:8 height:16
+	editText ShadowHeigth "" pos:[720,176] width:56 height:16
+	editText ShadowWidth "" pos:[648,176] width:56 height:16
+	checkbox staticShadow "Generate Static shadow" pos:[584,200] width:152 height:16
+	label lbl53 "Static Shadow format" pos:[584,224] width:104 height:16
+	dropDownList ShadowStatType "" pos:[696,224] width:80 height:21
+	editText LayersToRender "" pos:[584,280] width:184 height:64
+	label lbl54 "Renderable layers, separated by comas" pos:[584,248] width:176 height:24
+
 	on UABSetProperties open do
 	(	
 		RenderExportList.items = MeshType

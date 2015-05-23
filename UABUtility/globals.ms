@@ -72,7 +72,7 @@ global XMLActDist		= " activation_distance="
 global XMLTimeOut		= " time_out="
 global XMLInitCol 		= " initial_collision="
 global XMLSpeed			= " speed="
-global XMLRoom			=" room="
+global XMLRoom			= " room="
 global XMLLightName		= " light="
 global XMLGroup			= " group="
 global XMLShape			= " shape="
@@ -109,6 +109,7 @@ global RedimAxis=#("x","y","z")
 global EventTypeL = #("enter", "stay", "leave")
 global GroupsList = #("1", "2", "3", "18")
 global TriggerShapeL = #("box", "sphere")
+global ImageType = #("R32F", "A8R8G8B8", "R8G8B8", "X8R8G8B8")
 
 -- Vertex declaration
 global VERTEX_XYZ 		= 0x1
