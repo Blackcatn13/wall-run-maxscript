@@ -183,7 +183,7 @@ rollout UABSetProperties "UAB Set Properties" width:951 height:786
 	editText orthoHeight "" pos:[720,152] width:56 height:16
 	label lbl51 "Shad. size w:" pos:[584,176] width:64 height:16
 	label lbl52 "h:" pos:[712,176] width:8 height:16
-	editText ShadowHeigth "" pos:[720,176] width:56 height:16
+	editText ShadowHeight "" pos:[720,176] width:56 height:16
 	editText ShadowWidth "" pos:[648,176] width:56 height:16
 	checkbox staticShadow "Generate Static shadow" pos:[584,200] width:152 height:16
 	label lbl53 "Static Shadow format" pos:[584,224] width:104 height:16
@@ -203,19 +203,25 @@ rollout UABSetProperties "UAB Set Properties" width:951 height:786
 		ShapeDL.items = TriggerShapeL
 		GroupDL.items = GroupsList
 		EventType.items = EventTypeL
+		ShadowDynType.items = ImageType
+		ShadowStatType.items = ShadowStatType
 	)
+
 	on AnimModelText entered key do
 	(
 			AnimModelText.bold = false
-		)
+	)
+
 	on TechniqueText entered key do
 	(
 			TechniqueText.bold = false
-		)
+	)
+
 	on LinkedBoneText entered key do
 	(
 			LinkedBoneText.bold = false
-		)
+	)
+
 	on GetButton pressed do
 	(
 		local obj
@@ -287,6 +293,7 @@ rollout UABSetProperties "UAB Set Properties" width:951 height:786
 		GetUserProperty obj WP4YText "wp4_y"
 		GetUserProperty obj WP4ZText "wp4_z"
 	)
+
 	on SetButton pressed do
 	(
 		if ((classof $) == ObjectSet) then
@@ -342,7 +349,17 @@ rollout UABSetProperties "UAB Set Properties" width:951 height:786
 				SetUserProperty $[i] "cam_reverse" ReverseCam.checked
 				SetUserProperty $[i] "cam_once" OnceCam.checked
 				SetUserProperty $[i] "lights" GenerateLights.checked
-				
+				SetUserProperty $[i] "ShadowMap" GenShadowMap.checked
+				if GenShadowMap.checked then (
+					SetUserProperty $[i] "dynImageType" shadowProp.items[shadowProp.selection]
+					SetUserProperty $[i] "orthoWidth" orthoWidth.text
+					SetUserProperty $[i] "orthoHeight" orthoHeight.text
+					SetUserProperty $[i] "mapWidth" ShadowWidth.text
+					SetUserProperty $[i] "mapHeight" ShadowHeight.text
+					SetUserProperty $[i] "staticShadow" staticShadow.checked
+					SetUserProperty $[i] "staImageType" ShadowStatType.items[ShadowStatType.selection]
+					SetUserProperty $[i] "rednerablesList" LayersToRender.text
+				)
 				
 				if PhisicSizeXText.text != "" or (getUserProp $[i] "phisics_size_x")!=undefined then
 				(
@@ -467,7 +484,17 @@ rollout UABSetProperties "UAB Set Properties" width:951 height:786
 			SetUserProperty $ "cam_reverse" ReverseCam.checked
 			SetUserProperty $ "cam_once" OnceCam.checked
 			SetUserProperty $ "lights" GenerateLights.checked
-			
+			SetUserProperty $ "ShadowMap" GenShadowMap.checked
+			if GenShadowMap.checked then (
+				SetUserProperty $ "dynImageType" shadowProp.items[shadowProp.selection]
+				SetUserProperty $ "orthoWidth" orthoWidth.text
+				SetUserProperty $ "orthoHeight" orthoHeight.text
+				SetUserProperty $ "mapWidth" ShadowWidth.text
+				SetUserProperty $ "mapHeight" ShadowHeight.text
+				SetUserProperty $ "staticShadow" staticShadow.checked
+				SetUserProperty $ "staImageType" ShadowStatType.items[ShadowStatType.selection]
+				SetUserProperty $ "rednerablesList" LayersToRender.text
+			)
 			
 			if PhisicSizeXText.text != "" or (getUserProp $ "phisics_size_x")!=undefined then
 			(
@@ -544,28 +571,59 @@ rollout UABSetProperties "UAB Set Properties" width:951 height:786
 			SetUserProperty $ "trigger_platform_name" PlatfName.text
 		)
 	)
+
 	on TriggerName entered key do
 	(
-			TriggerName.bold = false
-		)
+		TriggerName.bold = false
+	)
+
 	on Param1 entered key do
 	(
-			Param1.bold = false
-		)
+		Param1.bold = false
+	)
+
 	on ScriptFunction entered key do
 	(
-			ScriptFunction.bold = false
-		)
+		ScriptFunction.bold = false
+	)
+
 	on DurationTime entered key do
 	(
-			DurationTime.bold = false
-		)
+		DurationTime.bold = false
+	)
+
 	on UpdateFunction entered key do
 	(
-			UpdateFunction.bold = false
-		)
+		UpdateFunction.bold = false
+	)
+
 	on PlatfName entered key do
 	(
-			PlatfName.bold = false
-		)
+		PlatfName.bold = false
+	)
+
+	on orthoWidth entered key do
+	(
+		orthoWidth.bold = false
+	)
+
+	on orthoHeight entered key do
+	(
+		orthoHeight.bold = false
+	)
+
+	on ShadowHeight entered key do
+	(
+		ShadowHeight.bold = false
+	)
+
+	on ShadowWidth entered key do
+	(
+		ShadowWidth.bold = false
+	)
+
+	on LayersToRender entered key do
+	(
+		LayersToRender.bold = false
+	)
 )
