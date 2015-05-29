@@ -17,6 +17,45 @@ global wp							="wp"
 global ro_file
 global trigg_file
 
+function WriteMeshProps _ro_file mesh_type ObjCore ObjName tranX tranY tranZ obj yawAng pitchAng rollAng ObjScale visible =
+(
+	format (mesh_type + XMLName + XML1Value + XMLCore + XML1Value) ObjName ObjCore to:_ro_file
+	format (XMLPos + XML3Value + XMLYaw + XML1Value) tranX tranY tranZ yawAng to:_ro_file
+	format (XMLPitch + XML1Value + XMLRoll + XML1Value + XMLScale + XML3Value + XMLVisible + XML1Value) pitchAng rollAng ObjScale.x ObjScale.y ObjScale.z visible to:_ro_file
+	if(CheckNotNullProperty obj "phisics_size_x" == true and CheckNotNullProperty obj "phisics_size_y" == true and CheckNotNullProperty obj "phisics_size_z" == true) then(
+		format (XMLPhisicSize + XML3Value) (GetUserProp obj "phisics_size_x")  (GetUserProp obj "phisics_size_y") (GetUserProp obj "phisics_size_z")  to:_ro_file
+	)	
+	if (GetUserProp obj "render_to_layer" == true) then (
+		format (XMLLayer + XML1Value) (GetUserProp obj "render_layer") to:_ro_file
+	)
+	format (XMLCloseTag) to:_ro_file
+)
+
+function CheckNotNullProperty Obj propName = 
+(
+	if(GetUserProp Obj propName != undefined and GetUserProp Obj propName != "") then (
+		return true
+	)		
+	return false
+)
+
+function WriteWayPoints Obj File wpName NumWPs =
+(
+	for i = 1 to NumWPs do
+	(	
+		local strNum = i as string
+		local WpX = wpName+strNum+"_x"
+		local WpY = wpName+strNum+"_y"
+		local WpZ = wpName+strNum+"_z"
+	
+		if(getUserProp Obj WpX != "") and ( getUserProp Obj WpX != undefined)  then
+		(
+			format (platform_wp+ XMLPos+XML3Value+XMLCloseTag) (getUserProp Obj WpX)(getUserProp Obj WpY)(getUserProp Obj WpZ) to:File
+		)
+
+	)
+)
+
 function ExportRenderableObjects =
 (
 	getGeometryandCores()
@@ -158,43 +197,4 @@ function ExportRenderableObjects =
 	close ro_file
 	format (trigger_close_file_tag) to:trigg_file
 	close trigg_file
-)
-
-function WriteMeshProps _ro_file mesh_type ObjCore ObjName tranX tranY tranZ obj yawAng pitchAng rollAng ObjScale visible =
-(
-	format (mesh_type + XMLName + XML1Value + XMLCore + XML1Value) ObjName ObjCore to:_ro_file
-	format (XMLPos + XML3Value + XMLYaw + XML1Value) tranX tranY tranZ yawAng to:_ro_file
-	format (XMLPitch + XML1Value + XMLRoll + XML1Value + XMLScale + XML3Value + XMLVisible + XML1Value) pitchAng rollAng ObjScale.x ObjScale.y ObjScale.z visible to:_ro_file
-	if(CheckNotNullProperty obj "phisics_size_x" == true and CheckNotNullProperty obj "phisics_size_y" == true and CheckNotNullProperty obj "phisics_size_z" == true) then(
-		format (XMLPhisicSize + XML3Value) (GetUserProp obj "phisics_size_x")  (GetUserProp obj "phisics_size_y") (GetUserProp obj "phisics_size_z")  to:_ro_file
-	)	
-	if (GetUserProp obj "render_to_layer" == true) then (
-		format (XMLLayer + XML1Value) (GetUserProp obj "render_layer") to:_ro_file
-	)
-	format (XMLCloseTag) to:_ro_file
-)
-
-function CheckNotNullProperty Obj propName = 
-(
-	if(GetUserProp Obj propName != undefined and GetUserProp Obj propName != "") then (
-		return true
-	)		
-	return false
-)
-
-function WriteWayPoints Obj File wpName NumWPs =
-(
-	for i = 1 to NumWPs do
-	(	
-		local strNum = i as string
-		local WpX = wpName+strNum+"_x"
-		local WpY = wpName+strNum+"_y"
-		local WpZ = wpName+strNum+"_z"
-	
-		if(getUserProp Obj WpX != "") and ( getUserProp Obj WpX != undefined)  then
-		(
-			format (platform_wp+ XMLPos+XML3Value+XMLCloseTag) (getUserProp Obj WpX)(getUserProp Obj WpY)(getUserProp Obj WpZ) to:File
-		)
-
-	)
 )
