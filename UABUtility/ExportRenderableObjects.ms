@@ -120,10 +120,12 @@ function ExportRenderableObjects =
 				format (ro_platform + XMLName + XML1Value + XMLCore + XML1Value + XMLType + XML1Value) ObjName (GetObjectCore objaux) platfType to:ro_file
 				format (XMLPos + XML3Value + XMLYaw + XML1Value) tranX tranY tranZ yawAng to:ro_file
 				format (XMLPitch + XML1Value + XMLRoll + XML1Value + XMLScale + XML3Value + XMLVisible + XML1Value) pitchAng rollAng ObjScale.x ObjScale.y ObjScale.z visible to:ro_file
-				
-				if(CheckNotNullProperty objaux "phisics_size_x" == true and CheckNotNullProperty objaux "phisics_size_y" == true and CheckNotNullProperty objaux "phisics_size_z" == true) then(
-					format (XMLPhisicSize + XML3Value) (GetUserProp objaux "phisics_size_x")  (GetUserProp objaux "phisics_size_y") (GetUserProp objaux "phisics_size_z")  to:ro_file
-				)	
+				-- Get Physic size as the half of the size in each axis.
+				local sizeObj = (objaux.max - objaux.min) / 2
+				format (XMLPhisicSize + XML3Value) sizeObj.x sizeObj.z sizeObj.y to:ro_file
+				--if(CheckNotNullProperty objaux "phisics_size_x" == true and CheckNotNullProperty objaux "phisics_size_y" == true and CheckNotNullProperty objaux "phisics_size_z" == true) then(
+					--format (XMLPhisicSize + XML3Value) (GetUserProp objaux "phisics_size_x")  (GetUserProp objaux "phisics_size_y") (GetUserProp objaux "phisics_size_z")  to:ro_file
+				--)	
 				if (GetUserProp objaux "render_to_layer" == true) then (
 					format (XMLLayer + XML1Value) (GetUserProp objaux "render_layer") to:ro_file
 				)
