@@ -179,19 +179,43 @@ rollout UABSetProperties "UAB Set Properties" width:951 height:786
 	label lbl48 "ShadowMap format" pos:[584,120] width:104 height:16
 	label lbl49 "Ortho size w:" pos:[584,152] width:64 height:16
 	dropdownList ShadowDynType "" pos:[696,120] width:80 height:21
-	editText orthoWidth "" pos:[648,152] width:56 height:16
+	edittext orthoWidth "" pos:[648,152] width:56 height:16
 	label lbl56 "h:" pos:[712,152] width:8 height:16
-	editText orthoHeight "" pos:[720,152] width:56 height:16
+	edittext orthoHeight "" pos:[720,152] width:56 height:16
 	label lbl51 "Shad. size w:" pos:[584,176] width:64 height:16
 	label lbl52 "h:" pos:[712,176] width:8 height:16
-	editText ShadowHeight "" pos:[720,176] width:56 height:16
-	editText ShadowWidth "" pos:[648,176] width:56 height:16
+	edittext ShadowHeight "" pos:[720,176] width:56 height:16
+	edittext ShadowWidth "" pos:[648,176] width:56 height:16
 	checkbox staticShadow "Generate Static shadow" pos:[584,200] width:152 height:16
 	label lbl53 "Static Shadow format" pos:[584,224] width:104 height:16
 	dropdownList ShadowStatType "" pos:[696,224] width:80 height:21
-	editText LayersToRender "" pos:[584,280] width:184 height:64
+	edittext LayersToRender "" pos:[584,280] width:184 height:64
 	label lbl54 "Renderable layers, separated by comas" pos:[584,248] width:176 height:24
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	groupBox grp14 "Door" pos:[552,379] width:249 height:61
+	label FinalPositionDoorLabel "Final Position" pos:[557,400] width:66 height:18
+	label FinalPositionXLabel "X" pos:[627,400] width:9 height:15
+
+	label FinalPositionYLabel "Y" pos:[682,400] width:9 height:15
+	label FinalPositionZLabel "Z" pos:[740,400] width:9 height:15
+	editText FinalPositionXDoorText "" pos:[632,400] width:45 height:17
+	editText FinalPositionYDoorText "" pos:[688,400] width:45 height:17
+	editText FinalPositionZDoorText "" pos:[748,400] width:45 height:17
 	on UABSetProperties open do
 	(	
 		RenderExportList.items = MeshType
@@ -207,22 +231,18 @@ rollout UABSetProperties "UAB Set Properties" width:951 height:786
 		ShadowDynType.items = ImageType
 		ShadowStatType.items = ImageType
 	)
-
 	on AnimModelText entered key do
 	(
 			AnimModelText.bold = false
 	)
-
 	on TechniqueText entered key do
 	(
 			TechniqueText.bold = false
 	)
-
 	on LinkedBoneText entered key do
 	(
 			LinkedBoneText.bold = false
 	)
-
 	on GetButton pressed do
 	(
 		local obj
@@ -294,8 +314,12 @@ rollout UABSetProperties "UAB Set Properties" width:951 height:786
 		GetUserProperty obj WP4XText "wp4_x"
 		GetUserProperty obj WP4YText "wp4_y"
 		GetUserProperty obj WP4ZText "wp4_z"
+		
+		-- Door
+		GetUserProperty obj FinalPositionXDoorText "door_final_pos_x"
+		GetUserProperty obj FinalPositionYDoorText "door_final_pos_y"
+		GetUserProperty obj FinalPositionZDoorText "door_final_pos_z"
 	)
-
 	on SetButton pressed do
 	(
 		if ((classof $) == ObjectSet) then
@@ -376,7 +400,13 @@ rollout UABSetProperties "UAB Set Properties" width:951 height:786
 				(
 					SetUserProperty $[i] "phisics_size_z" PhisicSizeZText.text
 				)
-				
+				-- Door Properties
+				if RenderExportList.items[RenderExportList.selection] == "door" then (
+					SetUserProperty $[i] "door_final_pos_x" FinalPositionXDoorText.text
+					SetUserProperty $[i] "door_final_pos_y" FinalPositionYDoorText.text
+					SetUserProperty $[i] "door_final_pos_z" FinalPositionZDoorText.text
+					
+				)
 				---Platform properties
 				if RenderExportList.items[RenderExportList.selection] == "platform_mesh" then (
 					SetUserProperty $[i] "platform_type" RenderPlatformList.items[RenderPlatformList.selection]
@@ -512,6 +542,15 @@ rollout UABSetProperties "UAB Set Properties" width:951 height:786
 			(
 				SetUserProperty $ "phisics_size_z" PhisicSizeZText.text
 			)
+			
+				-- Door Properties
+			if RenderExportList.items[RenderExportList.selection] == "door" then (
+				SetUserProperty $ "door_final_pos_x" FinalPositionXDoorText.text
+				SetUserProperty $ "door_final_pos_y" FinalPositionYDoorText.text
+				SetUserProperty $ "door_final_pos_z" FinalPositionZDoorText.text
+					
+			)
+			
 			---Platform properties
 			if RenderExportList.items[RenderExportList.selection] == "platform_mesh" then (
 				SetUserProperty $ "platform_type" RenderPlatformList.items[RenderPlatformList.selection]
@@ -575,57 +614,46 @@ rollout UABSetProperties "UAB Set Properties" width:951 height:786
 			SetUserProperty $ "trigger_platform_name" PlatfName.text
 		)
 	)
-
 	on TriggerName entered key do
 	(
 		TriggerName.bold = false
 	)
-
 	on Param1 entered key do
 	(
 		Param1.bold = false
 	)
-
 	on ScriptFunction entered key do
 	(
 		ScriptFunction.bold = false
 	)
-
 	on DurationTime entered key do
 	(
 		DurationTime.bold = false
 	)
-
 	on UpdateFunction entered key do
 	(
 		UpdateFunction.bold = false
 	)
-
 	on PlatfName entered key do
 	(
 		PlatfName.bold = false
 	)
-
 	on orthoWidth entered key do
 	(
 		orthoWidth.bold = false
 	)
-
 	on orthoHeight entered key do
 	(
 		orthoHeight.bold = false
 	)
-
 	on ShadowHeight entered key do
 	(
 		ShadowHeight.bold = false
 	)
-
 	on ShadowWidth entered key do
 	(
 		ShadowWidth.bold = false
 	)
-
 	on LayersToRender entered key do
 	(
 		LayersToRender.bold = false
