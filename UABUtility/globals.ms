@@ -102,12 +102,14 @@ global XMLStaticShadow  = " generate_static_shadowm_map="
 global XMLStaShadowType = " static_shadowm_map_format_type="
 global XMLCanRotate		= " can_rotate="
 global XMLID 			= " id="
+global XMLEmitter		=" emitter="
+global XMLUsePhisicMesh	=" use_phisics_mesh="
 global XML1Value      	= "\"%\""
 global XML3Value		= "\"% % %\""
 
 
 -- Properties values
-global RenderLayers = #("solid", "skybox", "alpha_objects", "alpha_blend_objects", "particles", "phisics", "poly", "enabled_poly", "collectible", "enemies", "player", "puzzle", "mov_platforms", "invisible")
+global RenderLayers = #("solid", "skybox", "alpha_objects", "alpha_blend_objects", "particles", "phisics", "poly", "enabled_poly", "collectible", "enemies", "player", "puzzle", "mov_platforms", "invisible", "breakable")
 global MeshType = #("mesh_instance", "animated_model", "platform_mesh", "trigger", "switch_instance", "door")
 global PhysicsType = #("triangle_mesh", "convex_shape", "box_shape", "plane_shape", "capsule_shape")
 global PhysicsLayer = #("logic")

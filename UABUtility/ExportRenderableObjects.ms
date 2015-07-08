@@ -25,9 +25,14 @@ function WriteMeshProps _ro_file mesh_type ObjCore ObjName tranX tranY tranZ obj
 	if(CheckNotNullProperty obj "phisics_size_x" == true and CheckNotNullProperty obj "phisics_size_y" == true and CheckNotNullProperty obj "phisics_size_z" == true) then(
 		format (XMLPhisicSize + XML3Value) (GetUserProp obj "phisics_size_x")  (GetUserProp obj "phisics_size_y") (GetUserProp obj "phisics_size_z")  to:_ro_file
 	)	
+	
+	WriteCheckProp objaux "use_phisic_mesh" XMLUsePhisicMesh ro_file				
+	WriteTextProperty objaux "emitter" XMLEmitter ro_file
+	
 	if (GetUserProp obj "render_to_layer" == true) then (
 		format (XMLLayer + XML1Value) (GetUserProp obj "render_layer") to:_ro_file
 	)
+	
 	format (XMLCloseTag) to:_ro_file
 )
 
@@ -37,6 +42,20 @@ function CheckNotNullProperty Obj propName =
 		return true
 	)		
 	return false
+)
+
+function WriteCheckProp Obj propName Tag file =
+(
+	if (GetUserProp Obj propName == true) then (
+		format (Tag + XML1Value) (GetUserProp Obj propName) to:file
+	)
+)
+
+function WriteTextProperty Obj propName Tag file = 
+(
+	if ((CheckNotNullProperty Obj propName) == true) then(
+		format (Tag + XML1Value) (getUserProp Obj propName) to:file
+	)
 )
 
 function WriteWayPoints Obj File wpName NumWPs =
@@ -101,18 +120,28 @@ function ExportRenderableObjects =
 				format (ro_mesh + XMLName + XML1Value + XMLCore + XML1Value) ObjName (GetObjectCore objaux) to:ro_file
 				format (XMLPos + XML3Value + XMLYaw + XML1Value) tranX tranY tranZ yawAng to:ro_file
 				format (XMLPitch + XML1Value + XMLRoll + XML1Value + XMLScale + XML3Value + XMLVisible + XML1Value) pitchAng rollAng ObjScale.x ObjScale.y ObjScale.z visible to:ro_file
+				
+				WriteCheckProp objaux "use_phisic_mesh" XMLUsePhisicMesh ro_file				
+				WriteTextProperty objaux "emitter" XMLEmitter ro_file
+				
 				if (GetUserProp objaux "render_to_layer" == true) then (
 					format (XMLLayer + XML1Value) (GetUserProp objaux "render_layer") to:ro_file
 				)
+				
 				format (XMLCloseTag) to:ro_file
 			)
 			if (GetUserProp objaux "export_type" == "animated_model") then (
 				format (ro_animated + XMLName + XML1Value + XMLCore + XML1Value) ObjName (GetUserProp objaux "anim_model") to:ro_file
 				format (XMLPos + XML3Value + XMLYaw + XML1Value) tranX tranY tranZ yawAng to:ro_file
 				format (XMLPitch + XML1Value + XMLRoll + XML1Value + XMLScale + XML3Value + XMLVisible + XML1Value) pitchAng rollAng ObjScale.x ObjScale.y ObjScale.z visible to:ro_file
+				
+				WriteCheckProp objaux "use_phisic_mesh" XMLUsePhisicMesh ro_file				
+				WriteTextProperty objaux "emitter" XMLEmitter ro_file
+				
 				if (GetUserProp objaux "render_to_layer" == true) then (
 					format (XMLLayer + XML1Value) (GetUserProp objaux "render_layer") to:ro_file
 				)
+				
 				format (XMLCloseTag) to:ro_file
 			)
 			if (GetUserProp objaux "export_type" == "platform_mesh") then (
@@ -129,6 +158,10 @@ function ExportRenderableObjects =
 				if (GetUserProp objaux "render_to_layer" == true) then (
 					format (XMLLayer + XML1Value) (GetUserProp objaux "render_layer") to:ro_file
 				)
+				
+				WriteCheckProp objaux "use_phisic_mesh" XMLUsePhisicMesh ro_file				
+				WriteTextProperty objaux "emitter" XMLEmitter ro_file
+				
 				if platfType == "breakable" then (
 					format (XMLTriggerName + XML1Value + XMLCloseTag) (getUserProp objaux "trigger_name") to:ro_file
 				)
@@ -179,6 +212,10 @@ function ExportRenderableObjects =
 				if(CheckNotNullProperty objaux "phisics_size_x" == true and CheckNotNullProperty objaux "phisics_size_y" == true and CheckNotNullProperty objaux "phisics_size_z" == true) then(
 					format (XMLPhisicSize + XML3Value) (GetUserProp objaux "phisics_size_x")  (GetUserProp objaux "phisics_size_y") (GetUserProp objaux "phisics_size_z")  to:ro_file
 				)	
+				
+				WriteCheckProp objaux "use_phisic_mesh" XMLUsePhisicMesh ro_file				
+				WriteTextProperty objaux "emitter" XMLEmitter ro_file
+				
 				if (GetUserProp objaux "render_to_layer" == true) then (
 					format (XMLLayer + XML1Value) (GetUserProp objaux "render_layer") to:ro_file
 				)
