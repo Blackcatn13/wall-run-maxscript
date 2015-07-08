@@ -81,8 +81,6 @@ rollout UABSetProperties "UAB Set Properties" width:951 height:786
 	dropdownList RenderPlatformList "" pos:[88,184] width:168 height:21
 	
 	GroupBox grp25 "Render" pos:[7,8] width:536 height:581
-	
-	
 	GroupBox grp27 "Breakable Platform" pos:[10,244] width:266 height:49
 	label TriggerNameLabel "Trigger Name" pos:[21,265] width:65 height:17
 	edittext TriggerNameText "" pos:[96,263] width:149 height:17
@@ -192,30 +190,19 @@ rollout UABSetProperties "UAB Set Properties" width:951 height:786
 	edittext LayersToRender "" pos:[584,280] width:184 height:64
 	label lbl54 "Renderable layers, separated by comas" pos:[584,248] width:176 height:24
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	groupBox grp14 "Door" pos:[552,379] width:249 height:61
+	GroupBox grp14 "Door" pos:[552,379] width:249 height:61
 	label FinalPositionDoorLabel "Final Position" pos:[557,400] width:66 height:18
 	label FinalPositionXLabel "X" pos:[627,400] width:9 height:15
 
 	label FinalPositionYLabel "Y" pos:[682,400] width:9 height:15
 	label FinalPositionZLabel "Z" pos:[740,400] width:9 height:15
-	editText FinalPositionXDoorText "" pos:[632,400] width:45 height:17
-	editText FinalPositionYDoorText "" pos:[688,400] width:45 height:17
-	editText FinalPositionZDoorText "" pos:[748,400] width:45 height:17
+	edittext FinalPositionXDoorText "" pos:[632,400] width:45 height:17
+	edittext FinalPositionYDoorText "" pos:[688,400] width:45 height:17
+	edittext FinalPositionZDoorText "" pos:[748,400] width:45 height:17
+	checkbox ScenePhisicCheckbox "Physic Mesh" pos:[275,216] width:91 height:17
+	groupBox grp15 "Particles" pos:[291,243] width:242 height:50
+	label EmitterLabel "Emitter" pos:[301,265] width:45 height:18
+	editText EmitterText "" pos:[346,264] width:162 height:17
 	on UABSetProperties open do
 	(	
 		RenderExportList.items = MeshType
@@ -279,6 +266,7 @@ rollout UABSetProperties "UAB Set Properties" width:951 height:786
 		GetUserProperty obj ReverseCam "cam_reverse"
 		GetUserProperty obj OnceCam "cam_once"
 		GetUserProperty obj GenerateLights "lights"
+		GetUserProperty obj ScenePhisicCheckbox "use_phisic_mesh"
 	
 		--- Platform Properties----
 		GetUserProperty obj RenderPlatformList "platform_type"
@@ -319,6 +307,10 @@ rollout UABSetProperties "UAB Set Properties" width:951 height:786
 		GetUserProperty obj FinalPositionXDoorText "door_final_pos_x"
 		GetUserProperty obj FinalPositionYDoorText "door_final_pos_y"
 		GetUserProperty obj FinalPositionZDoorText "door_final_pos_z"
+		
+		--Particles
+		GetUserProperty obj EmitterText "emitter"
+		
 	)
 	on SetButton pressed do
 	(
@@ -388,6 +380,7 @@ rollout UABSetProperties "UAB Set Properties" width:951 height:786
 					SetUserProperty $[i] "rednerablesList" LayersToRender.text
 				)
 				
+				--scene_phisic
 				if PhisicSizeXText.text != "" or (getUserProp $[i] "phisics_size_x")!=undefined then
 				(
 					SetUserProperty $[i] "phisics_size_x" PhisicSizeXText.text
@@ -400,6 +393,9 @@ rollout UABSetProperties "UAB Set Properties" width:951 height:786
 				(
 					SetUserProperty $[i] "phisics_size_z" PhisicSizeZText.text
 				)
+				
+				SetUserProperty $[i]  "use_phisic_mesh" ScenePhisicCheckbox.checked
+				
 				-- Door Properties
 				if RenderExportList.items[RenderExportList.selection] == "door" then (
 					SetUserProperty $[i] "door_final_pos_x" FinalPositionXDoorText.text
@@ -453,7 +449,7 @@ rollout UABSetProperties "UAB Set Properties" width:951 height:786
 					--)
 					--End Moving Platform---
 				)
-	
+				--triggers
 				SetUserProperty $[i] "triggerName" TriggerName.text 	
 				SetUserProperty $[i] "trigger_shape" ShapeDL.items[ShapeDL.selection]
 				SetUserProperty $[i] "trigger_group" GroupDL.items[GroupDL.selection]		
@@ -464,6 +460,9 @@ rollout UABSetProperties "UAB Set Properties" width:951 height:786
 				SetUserProperty $[i] "trigger_duration" DurationTime.text
 				SetUserProperty $[i] "trigger_update" UpdateFunction.text 
 				SetUserProperty $[i] "trigger_platform_name" PlatfName.text
+				
+				--Particles
+				SetUserProperty $[i] "emitter" EmitterText.text
 			)
 		)
 		else
@@ -542,6 +541,7 @@ rollout UABSetProperties "UAB Set Properties" width:951 height:786
 			(
 				SetUserProperty $ "phisics_size_z" PhisicSizeZText.text
 			)
+			SetUserProperty $  "use_phisic_mesh" ScenePhisicCheckbox.checked
 			
 				-- Door Properties
 			if RenderExportList.items[RenderExportList.selection] == "door" then (
@@ -612,6 +612,9 @@ rollout UABSetProperties "UAB Set Properties" width:951 height:786
 			SetUserProperty $ "trigger_duration" DurationTime.text
 			SetUserProperty $ "trigger_update" UpdateFunction.text 
 			SetUserProperty $ "trigger_platform_name" PlatfName.text
+			
+			--Particles
+			SetUserProperty $ "emitter" EmitterText.text
 		)
 	)
 	on TriggerName entered key do
