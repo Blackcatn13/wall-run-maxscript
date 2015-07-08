@@ -169,8 +169,8 @@ rollout UABSetProperties "UAB Set Properties" width:951 height:786
 	edittext SpeedPolyText "" pos:[58,415] width:40 height:16
 	label LightNamePolyLabel "Light Name" pos:[116,418] width:59 height:16
 	edittext LightNamePolyText "" pos:[173,415] width:86 height:16
-	label RoomLabel "Room" pos:[396,320] width:38 height:16
-	edittext RoomText "" pos:[437,320] width:81 height:15
+	label RoomLabel "Room" pos:[366,216] width:38 height:16
+	edittext RoomText "" pos:[407,216] width:81 height:15
 
 	checkbox GenShadowMap "Generate ShadowMap" pos:[568,64] width:136 height:16
 	GroupBox shadowProp "Shadow map properties" pos:[569,88] width:215 height:264
@@ -200,9 +200,9 @@ rollout UABSetProperties "UAB Set Properties" width:951 height:786
 	edittext FinalPositionYDoorText "" pos:[688,400] width:45 height:17
 	edittext FinalPositionZDoorText "" pos:[748,400] width:45 height:17
 	checkbox ScenePhisicCheckbox "Physic Mesh" pos:[275,216] width:91 height:17
-	groupBox grp15 "Particles" pos:[291,243] width:242 height:50
+	GroupBox grp15 "Particles" pos:[291,243] width:242 height:50
 	label EmitterLabel "Emitter" pos:[301,265] width:45 height:18
-	editText EmitterText "" pos:[346,264] width:162 height:17
+	edittext EmitterText "" pos:[346,264] width:162 height:17
 	on UABSetProperties open do
 	(	
 		RenderExportList.items = MeshType
@@ -267,6 +267,7 @@ rollout UABSetProperties "UAB Set Properties" width:951 height:786
 		GetUserProperty obj OnceCam "cam_once"
 		GetUserProperty obj GenerateLights "lights"
 		GetUserProperty obj ScenePhisicCheckbox "use_phisic_mesh"
+		GetUserProperty obj RoomText "room"
 	
 		--- Platform Properties----
 		GetUserProperty obj RenderPlatformList "platform_type"
@@ -289,7 +290,6 @@ rollout UABSetProperties "UAB Set Properties" width:951 height:786
 		
 		-- Moveable platform
 		GetUserProperty obj SpeedText "speed"
-		GetUserProperty obj RoomText "room"
 		GetUserProperty obj WP1XText "wp1_x"
 		GetUserProperty obj WP1YText "wp1_y"
 		GetUserProperty obj WP1ZText "wp1_z"
@@ -395,7 +395,7 @@ rollout UABSetProperties "UAB Set Properties" width:951 height:786
 				)
 				
 				SetUserProperty $[i]  "use_phisic_mesh" ScenePhisicCheckbox.checked
-				
+				SetUserProperty $[i]  "room" RoomText.text
 				-- Door Properties
 				if RenderExportList.items[RenderExportList.selection] == "door" then (
 					SetUserProperty $[i] "door_final_pos_x" FinalPositionXDoorText.text
@@ -433,7 +433,6 @@ rollout UABSetProperties "UAB Set Properties" width:951 height:786
 					--Moving Platform----
 					--if RenderPlatformList.selection == "moving"  then (
 						SetUserProperty $[i] "speed" SpeedText.text
-						SetUserProperty $[i]  "room" RoomText.text
 						SetUserProperty $[i] "wp1_x" WP1XText.text
 						SetUserProperty $[i] "wp1_y" WP1YText.text
 						SetUserProperty $[i] "wp1_z" WP1ZText.text
@@ -542,7 +541,7 @@ rollout UABSetProperties "UAB Set Properties" width:951 height:786
 				SetUserProperty $ "phisics_size_z" PhisicSizeZText.text
 			)
 			SetUserProperty $  "use_phisic_mesh" ScenePhisicCheckbox.checked
-			
+			SetUserProperty $ "room" RoomText.text
 				-- Door Properties
 			if RenderExportList.items[RenderExportList.selection] == "door" then (
 				SetUserProperty $ "door_final_pos_x" FinalPositionXDoorText.text
@@ -585,7 +584,6 @@ rollout UABSetProperties "UAB Set Properties" width:951 height:786
 					--Moving Platform----
 			--	if RenderPlatformList.selection == "moving"  then (
 					SetUserProperty $ "speed" SpeedText.text
-					SetUserProperty $ "room" RoomText.text
 					SetUserProperty $ "wp1_x" WP1XText.text
 					SetUserProperty $ "wp1_y" WP1YText.text
 					SetUserProperty $ "wp1_z" WP1ZText.text

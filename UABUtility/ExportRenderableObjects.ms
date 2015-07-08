@@ -28,6 +28,7 @@ function WriteMeshProps _ro_file mesh_type ObjCore ObjName tranX tranY tranZ obj
 	
 	WriteCheckProp objaux "use_phisic_mesh" XMLUsePhisicMesh ro_file				
 	WriteTextProperty objaux "emitter" XMLEmitter ro_file
+	WriteTextProperty objaux "room" XMLRoom ro_file
 	
 	if (GetUserProp obj "render_to_layer" == true) then (
 		format (XMLLayer + XML1Value) (GetUserProp obj "render_layer") to:_ro_file
@@ -38,7 +39,7 @@ function WriteMeshProps _ro_file mesh_type ObjCore ObjName tranX tranY tranZ obj
 
 function CheckNotNullProperty Obj propName = 
 (
-	if(GetUserProp Obj propName != undefined and GetUserProp Obj propName != "") then (
+	if(GetUserProp Obj propName != undefined and GetUserProp Obj propName != "" and GetUserProp Obj propName != "undefined" ) then (
 		return true
 	)		
 	return false
@@ -123,6 +124,7 @@ function ExportRenderableObjects =
 				
 				WriteCheckProp objaux "use_phisic_mesh" XMLUsePhisicMesh ro_file				
 				WriteTextProperty objaux "emitter" XMLEmitter ro_file
+				WriteTextProperty objaux "room" XMLRoom ro_file
 				
 				if (GetUserProp objaux "render_to_layer" == true) then (
 					format (XMLLayer + XML1Value) (GetUserProp objaux "render_layer") to:ro_file
@@ -137,6 +139,7 @@ function ExportRenderableObjects =
 				
 				WriteCheckProp objaux "use_phisic_mesh" XMLUsePhisicMesh ro_file				
 				WriteTextProperty objaux "emitter" XMLEmitter ro_file
+				WriteTextProperty objaux "room" XMLRoom ro_file
 				
 				if (GetUserProp objaux "render_to_layer" == true) then (
 					format (XMLLayer + XML1Value) (GetUserProp objaux "render_layer") to:ro_file
@@ -161,6 +164,7 @@ function ExportRenderableObjects =
 				
 				WriteCheckProp objaux "use_phisic_mesh" XMLUsePhisicMesh ro_file				
 				WriteTextProperty objaux "emitter" XMLEmitter ro_file
+				WriteTextProperty objaux "room" XMLRoom ro_file
 				
 				if platfType == "breakable" then (
 					format (XMLTriggerName + XML1Value + XMLCloseTag) (getUserProp objaux "trigger_name") to:ro_file
@@ -180,8 +184,7 @@ function ExportRenderableObjects =
 					format (XMLActDist + XML1Value + XMLCloseTag) (getUserProp objaux "activation_distance") to:ro_file
 				)
 				if platfType == "moving" then (
-					format (XMLSpeed + XML1Value ) (getUserProp objaux "speed") to:ro_file
-					format (XMLRoom + XML1Value + XMLEndTag) (getUserProp objaux "room") to:ro_file
+					format (XMLSpeed + XML1Value + XMLEndTag) (getUserProp objaux "speed") to:ro_file
 					WriteWayPoints objaux ro_file wp 4
 					
 				--	if (getUserProp objaux "wp1_x" != "") and (getUserProp objaux "xp1_x" != undefined) then (
@@ -215,6 +218,7 @@ function ExportRenderableObjects =
 				
 				WriteCheckProp objaux "use_phisic_mesh" XMLUsePhisicMesh ro_file				
 				WriteTextProperty objaux "emitter" XMLEmitter ro_file
+				WriteTextProperty objaux "room" XMLRoom ro_file
 				
 				if (GetUserProp objaux "render_to_layer" == true) then (
 					format (XMLLayer + XML1Value) (GetUserProp objaux "render_layer") to:ro_file
