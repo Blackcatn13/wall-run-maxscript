@@ -15,6 +15,7 @@ global LightsFileName = "lights.xml"
 global CinematicFileName = "cinematic.xml"
 global TriggerFileName = "triggers.xml"
 global PhysXFileName = "LevelCooking.xml"
+global PhysXSceneElementFileName = "SceneElementCooking.xml"
 global CameraPathFileName = "camera_path.xml"
 global SoundFileName = "WWSounds.xml"
 global CopyTextures = true
