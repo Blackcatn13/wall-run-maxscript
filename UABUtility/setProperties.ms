@@ -170,7 +170,7 @@ rollout UABSetProperties "UAB Set Properties" width:951 height:786
 	label LightNamePolyLabel "Light Name" pos:[116,418] width:59 height:16
 	edittext LightNamePolyText "" pos:[173,415] width:86 height:16
 	label RoomLabel "Room" pos:[366,216] width:38 height:16
-	edittext RoomText "" pos:[407,216] width:81 height:15
+	dropdownList RoomText "" pos:[407,216] width:81 height:21
 
 	checkbox GenShadowMap "Generate ShadowMap" pos:[568,64] width:136 height:16
 	GroupBox shadowProp "Shadow map properties" pos:[569,88] width:215 height:264
@@ -217,6 +217,7 @@ rollout UABSetProperties "UAB Set Properties" width:951 height:786
 		EventType.items = EventTypeL
 		ShadowDynType.items = ImageType
 		ShadowStatType.items = ImageType
+		RoomText.items = RoomList
 	)
 	on AnimModelText entered key do
 	(
@@ -395,7 +396,7 @@ rollout UABSetProperties "UAB Set Properties" width:951 height:786
 				)
 				
 				SetUserProperty $[i]  "use_phisic_mesh" ScenePhisicCheckbox.checked
-				SetUserProperty $[i]  "room" RoomText.text
+				SetUserProperty $[i]  "room" RoomText.items[RoomText.selection]
 				-- Door Properties
 				if RenderExportList.items[RenderExportList.selection] == "door" then (
 					SetUserProperty $[i] "door_final_pos_x" FinalPositionXDoorText.text
@@ -541,7 +542,7 @@ rollout UABSetProperties "UAB Set Properties" width:951 height:786
 				SetUserProperty $ "phisics_size_z" PhisicSizeZText.text
 			)
 			SetUserProperty $  "use_phisic_mesh" ScenePhisicCheckbox.checked
-			SetUserProperty $ "room" RoomText.text
+			SetUserProperty $ "room" RoomText.items[RoomText.selection]
 				-- Door Properties
 			if RenderExportList.items[RenderExportList.selection] == "door" then (
 				SetUserProperty $ "door_final_pos_x" FinalPositionXDoorText.text

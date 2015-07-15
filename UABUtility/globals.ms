@@ -122,6 +122,7 @@ global EventTypeL = #("enter", "stay", "leave")
 global GroupsList = #("1", "2", "3", "18")
 global TriggerShapeL = #("box", "sphere")
 global ImageType = #("R32F", "A8R8G8B8", "R8G8B8", "X8R8G8B8")
+global RoomList = #("0", "1", "2", "3", "4", "5", "6", "7", "8")
 
 -- Vertex declaration
 global VERTEX_XYZ 		= 0x1
