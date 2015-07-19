@@ -67,7 +67,9 @@ rollout UABSetProperties "UAB Set Properties" width:951 height:786
 	dropdownList EventGenerateList "" pos:[351,619] width:176 height:21
 	GroupBox TracksGp "Tracks" pos:[271,659] width:272 height:56
 	checkbox GenerateTracks "Generate" pos:[279,683] width:64 height:16
-	checkbox RotateTracks "Rotate" pos:[367,683] width:64 height:16
+	checkbox RotateTracks "Rotate" pos:[350,683] width:60 height:16
+	checkbox FollowTracks "Follow" pos:[460,683] width:64 height:16
+	checkbox BackTracks "Back" pos:[410,683] width:40 height:16
 	GroupBox CamerasGp "Cameras" pos:[271,723] width:272 height:56
 	checkbox CycleCam "Cycle" pos:[279,747] width:56 height:16
 	GroupBox LightsGp "Lights" pos:[552,14] width:248 height:354
@@ -263,6 +265,8 @@ rollout UABSetProperties "UAB Set Properties" width:951 height:786
 		GetUserProperty obj EventGenerateList "event_type"
 		GetUserProperty obj GenerateTracks "track"
 		GetUserProperty obj RotateTracks "rotate_track"
+		GetUserProperty obj FollowTracks "follow_track"
+		GetUserProperty obj BackTracks "back_track"
 		GetUserProperty obj CycleCam "cam_cycle"
 		GetUserProperty obj ReverseCam "cam_reverse"
 		GetUserProperty obj OnceCam "cam_once"
@@ -365,6 +369,8 @@ rollout UABSetProperties "UAB Set Properties" width:951 height:786
 				)
 				SetUserProperty $[i] "track" GenerateTracks.checked
 				SetUserProperty $[i] "rotate_track" RotateTracks.checked
+				SetUserProperty $[i] "follow_track" FollowTracks.checked
+				SetUserProperty $[i] "back_track" BackTracks.checked
 				SetUserProperty $[i] "cam_cycle" CycleCam.checked
 				SetUserProperty $[i] "cam_reverse" ReverseCam.checked
 				SetUserProperty $[i] "cam_once" OnceCam.checked
@@ -513,6 +519,8 @@ rollout UABSetProperties "UAB Set Properties" width:951 height:786
 			)
 			SetUserProperty $ "track" GenerateTracks.checked
 			SetUserProperty $ "rotate_track" RotateTracks.checked
+			SetUserProperty $ "follow_track" FollowTracks.checked
+			SetUserProperty $ "back_track" BackTracks.checked
 			SetUserProperty $ "cam_cycle" CycleCam.checked
 			SetUserProperty $ "cam_reverse" ReverseCam.checked
 			SetUserProperty $ "cam_once" OnceCam.checked

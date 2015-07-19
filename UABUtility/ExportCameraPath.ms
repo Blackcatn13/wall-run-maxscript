@@ -22,6 +22,8 @@ function ExportCameraPath =
 			spl_name = "line_" + s as string
 			format (cp_spline_open_tag + XMLName + XML1Value + XMLEndTag) spl_name to:cp_file
 			local rotateSet = GetUserProp scene_shapes[spl] "rotate_track"
+			local followSet = GetUserProp scene_shapes[spl] "follow_track"
+			local backSet = getUserProp scene_shapes[spl] "back_track"
 			for k = 1 to (numknots scene_shapes[spl] s) do 
 			(
 				pos = getKnotPoint scene_shapes[spl] s k
@@ -29,6 +31,12 @@ function ExportCameraPath =
 				format (cp_point_tag + XMLID + XML1Value + XMLPos + XML3Value) pos_name pos.x pos.z pos.y to:cp_file
 				if rotateSet == true then
 					format (XMLCanRotate + XML1Value) "true" to:cp_file
+				end
+				if followSet == true then
+					format (XMLFollowY + XML1Value) "true" to:cp_file
+				end
+				if backSet == true then
+					format (XMLCanGoBack + XML1Value) "true" to:cp_file
 				end
 				format (XMLCloseTag) to:cp_file
 			)
