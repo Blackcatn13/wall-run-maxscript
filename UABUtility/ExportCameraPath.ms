@@ -6,9 +6,14 @@ global cp_point_tag			= "\t\t<point"
 
 global cp_file
 
+function comparenames str1 str2 = stricmp str1.name str2.name
+
 function ExportCameraPath =
 (
 	scene_shapes = shapes as Array
+	-- order array to export the lines by name
+	qSort scene_shapes comparenames
+
 	CreatePath PathToCopy
 
 	cp_file = createfile (PathToCopy + CameraPathFileName)
