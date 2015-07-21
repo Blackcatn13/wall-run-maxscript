@@ -8,7 +8,8 @@ fn GetUserProperty Obj GUIObj StrProperty =
 		--Aquí uno por cada tipo de elemento de GUI
 		if (classof GUIObj) == ComboBoxControl then (
 			local items = GUIObj.items
-			local position = findItem items (getUserProp Obj StrProperty)
+			local val = (getUserProp Obj StrProperty) as string
+			local position = findItem items val
 			GUIObj.selection = position
 		)
 		
