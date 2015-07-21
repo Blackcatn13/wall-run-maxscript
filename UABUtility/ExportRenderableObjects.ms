@@ -28,6 +28,9 @@ function WriteMeshProps _ro_file mesh_type ObjCore ObjName tranX tranY tranZ obj
 	
 	WriteCheckProp objaux "use_phisic_mesh" XMLUsePhisicMesh ro_file				
 	WriteTextProperty objaux "emitter" XMLEmitter ro_file
+	WriteTextProperty objaux "emitter2" XMLEmitter2 ro_file
+	WriteTextProperty objaux "emitter3" XMLEmitter3 ro_file
+	WriteTextProperty objaux "emitter4" XMLEmitter4 ro_file
 	WriteTextProperty objaux "room" XMLRoom ro_file
 	
 	if (GetUserProp obj "render_to_layer" == true) then (
@@ -124,6 +127,9 @@ function ExportRenderableObjects =
 				
 				WriteCheckProp objaux "use_phisic_mesh" XMLUsePhisicMesh ro_file				
 				WriteTextProperty objaux "emitter" XMLEmitter ro_file
+				WriteTextProperty objaux "emitter2" XMLEmitter2 ro_file
+				WriteTextProperty objaux "emitter3" XMLEmitter3 ro_file
+				WriteTextProperty objaux "emitter4" XMLEmitter4 ro_file
 				WriteTextProperty objaux "room" XMLRoom ro_file
 				
 				if (GetUserProp objaux "render_to_layer" == true) then (
@@ -139,6 +145,9 @@ function ExportRenderableObjects =
 				
 				WriteCheckProp objaux "use_phisic_mesh" XMLUsePhisicMesh ro_file				
 				WriteTextProperty objaux "emitter" XMLEmitter ro_file
+				WriteTextProperty objaux "emitter2" XMLEmitter2 ro_file
+				WriteTextProperty objaux "emitter3" XMLEmitter3 ro_file
+				WriteTextProperty objaux "emitter4" XMLEmitter4 ro_file
 				WriteTextProperty objaux "room" XMLRoom ro_file
 				
 				if (GetUserProp objaux "render_to_layer" == true) then (
@@ -164,6 +173,9 @@ function ExportRenderableObjects =
 				
 				WriteCheckProp objaux "use_phisic_mesh" XMLUsePhisicMesh ro_file				
 				WriteTextProperty objaux "emitter" XMLEmitter ro_file
+				WriteTextProperty objaux "emitter2" XMLEmitter2 ro_file
+				WriteTextProperty objaux "emitter3" XMLEmitter3 ro_file
+				WriteTextProperty objaux "emitter4" XMLEmitter4 ro_file
 				WriteTextProperty objaux "room" XMLRoom ro_file
 				
 				if platfType == "breakable" then (
@@ -218,11 +230,37 @@ function ExportRenderableObjects =
 				
 				WriteCheckProp objaux "use_phisic_mesh" XMLUsePhisicMesh ro_file				
 				WriteTextProperty objaux "emitter" XMLEmitter ro_file
+				WriteTextProperty objaux "emitter2" XMLEmitter2 ro_file
+				WriteTextProperty objaux "emitter3" XMLEmitter3 ro_file
+				WriteTextProperty objaux "emitter4" XMLEmitter4 ro_file
 				WriteTextProperty objaux "room" XMLRoom ro_file
 				
 				if (GetUserProp objaux "render_to_layer" == true) then (
 					format (XMLLayer + XML1Value) (GetUserProp objaux "render_layer") to:ro_file
 				)
+				format (XMLCloseTag) to:ro_file
+			)
+			if (GetUserProp objaux "export_type" == "wall_trap_mesh") then (
+				format (ro_animated + XMLName + XML1Value + XMLCore + XML1Value) ObjName (GetUserProp objaux "anim_model") to:ro_file
+				format (XMLPos + XML3Value + XMLYaw + XML1Value) tranX tranY tranZ yawAng to:ro_file
+				format (XMLPitch + XML1Value + XMLRoll + XML1Value + XMLScale + XML3Value + XMLVisible + XML1Value) pitchAng rollAng ObjScale.x ObjScale.y ObjScale.z visible to:ro_file
+				
+				WriteCheckProp objaux "use_phisic_mesh" XMLUsePhisicMesh ro_file				
+				WriteTextProperty objaux "emitter" XMLEmitter ro_file
+				WriteTextProperty objaux "emitter2" XMLEmitter2 ro_file
+				WriteTextProperty objaux "emitter3" XMLEmitter3 ro_file
+				WriteTextProperty objaux "emitter4" XMLEmitter4 ro_file
+				WriteTextProperty objaux "room" XMLRoom ro_file
+				WriteTextProperty objaux "wt_speed_opening" XMLSpeedOpening ro_file
+				WriteTextProperty objaux "wt_speed_closing" XMLSpeedClosing ro_file
+				WriteTextProperty objaux "wt_time_out" XMLTimeOut ro_file
+				WriteTextProperty objaux "wt_side" XMLSide ro_file
+				format (XMLFinalPos + XML3Value) (getUserProp objaux "wt_final_pos_x") (getUserProp objaux "wt_final_pos_y") (getUserProp objaux "wt_final_pos_z") to:ro_file
+				
+				if (GetUserProp objaux "render_to_layer" == true) then (
+					format (XMLLayer + XML1Value) (GetUserProp objaux "render_layer") to:ro_file
+				)
+				
 				format (XMLCloseTag) to:ro_file
 			)
 			

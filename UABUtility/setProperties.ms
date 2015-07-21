@@ -202,9 +202,32 @@ rollout UABSetProperties "UAB Set Properties" width:951 height:786
 	edittext FinalPositionYDoorText "" pos:[688,400] width:45 height:17
 	edittext FinalPositionZDoorText "" pos:[748,400] width:45 height:17
 	checkbox ScenePhisicCheckbox "Physic Mesh" pos:[275,216] width:91 height:17
-	GroupBox grp15 "Particles" pos:[291,243] width:242 height:50
-	label EmitterLabel "Emitter" pos:[301,265] width:45 height:18
-	edittext EmitterText "" pos:[346,264] width:162 height:17
+	GroupBox grp15 "Particles" pos:[551,549] width:249 height:102
+	label EmitterLabel "Emitter" pos:[561,566] width:45 height:18
+	edittext EmitterText "" pos:[606,565] width:162 height:17
+	
+	GroupBox grp16 "Wall Trap" pos:[552,444] width:249 height:98
+	label WalTrapFPLabel "Final Position" pos:[557,511] width:66 height:18
+	label WalTrapXLabel "X" pos:[627,512] width:9 height:15
+	label WalTrapYLabel "Y" pos:[680,513] width:9 height:15
+	label WalTrapZLabel "Z" pos:[738,512] width:9 height:15
+	edittext WalTrapXText "" pos:[633,511] width:45 height:17
+	edittext WalTrapYText "" pos:[687,511] width:45 height:17
+	edittext WalTrapZText "" pos:[745,512] width:45 height:17
+	label SpeedOpeningLabel "SpeedOpening" pos:[557,462] width:79 height:14
+	edittext SpeedOpeningText "" pos:[636,460] width:45 height:17
+	label SpeedClosingLabel "SpeedClosing" pos:[557,486] width:79 height:14
+	edittext SpeedClosingText "" pos:[636,484] width:45 height:17
+	label SideLabel "Side" pos:[700,463] width:26 height:16
+	label TimeOutLabelWallTrap "TimeOut" pos:[699,485] width:50 height:14
+	edittext WallTrapTimeOutText "" pos:[745,482] width:45 height:17
+	dropdownList SideList "" pos:[732,459] width:58 height:21
+	label Emitter2Label "Emitter 2" pos:[561,585] width:45 height:18
+	edittext Emitter2Text "" pos:[606,584] width:162 height:17
+	label Emitter3Label "Emitter 3" pos:[561,604] width:45 height:18
+	edittext Emitter3Text "" pos:[606,603] width:162 height:17
+	label Emitter4Label "Emitter 4" pos:[561,623] width:45 height:18
+	edittext Emitter4Text "" pos:[606,622] width:162 height:17
 	on UABSetProperties open do
 	(	
 		RenderExportList.items = MeshType
@@ -220,6 +243,7 @@ rollout UABSetProperties "UAB Set Properties" width:951 height:786
 		ShadowDynType.items = ImageType
 		ShadowStatType.items = ImageType
 		RoomText.items = RoomList
+		SideList.items = SideListText
 	)
 	on AnimModelText entered key do
 	(
@@ -315,6 +339,19 @@ rollout UABSetProperties "UAB Set Properties" width:951 height:786
 		
 		--Particles
 		GetUserProperty obj EmitterText "emitter"
+		GetUserProperty obj Emitter2Text "emitter2"
+		GetUserProperty obj Emitter3Text "emitter3"
+		GetUserProperty obj Emitter4Text "emitter4"
+		
+		--WallTrap
+		GetUserProperty obj SpeedOpeningText "wt_speed_opening"
+		GetUserProperty obj SpeedClosingText "wt_speed_closing"
+		GetUserProperty obj SideList "wt_side"
+		GetUserProperty obj WallTrapTimeOutText "wt_time_out"
+		
+		GetUserProperty obj WalTrapXText "wt_final_pos_x"
+		GetUserProperty obj WalTrapYText "wt_final_pos_y"
+		GetUserProperty obj WalTrapZText "wt_final_pos_z"
 		
 	)
 	on SetButton pressed do
@@ -469,6 +506,19 @@ rollout UABSetProperties "UAB Set Properties" width:951 height:786
 				
 				--Particles
 				SetUserProperty $[i] "emitter" EmitterText.text
+				SetUserProperty $[i] "emitter2" Emitter2Text.text
+				SetUserProperty $[i] "emitter3" Emitter3Text.text
+				SetUserProperty $[i] "emitter4" Emitter4Text.text
+				
+				--WallTrap
+				SetUserProperty $[i] "wt_speed_opening" SpeedOpeningText.text
+				SetUserProperty $[i] "wt_speed_closing" SpeedClosingText.text
+				SetUserProperty $[i] "wt_time_out" WallTrapTimeOutText.text
+				SetUserProperty $[i] "wt_side" SideList.items[SideList.selection]
+				SetUserProperty $[i] "wt_final_pos_x" WalTrapXText.text
+				SetUserProperty $[i] "wt_final_pos_y" WalTrapYText.text
+				SetUserProperty $[i] "wt_final_pos_z" WalTrapZText.text
+				
 			)
 		)
 		else
@@ -622,6 +672,18 @@ rollout UABSetProperties "UAB Set Properties" width:951 height:786
 			
 			--Particles
 			SetUserProperty $ "emitter" EmitterText.text
+			SetUserProperty $ "emitter2" Emitter2Text.text
+			SetUserProperty $ "emitter3" Emitter3Text.text
+			SetUserProperty $ "emitter4" Emitter4Text.text
+			
+			--WallTrap
+			SetUserProperty $ "wt_speed_opening" SpeedOpeningText.text
+			SetUserProperty $ "wt_speed_closing" SpeedClosingText.text
+			SetUserProperty $ "wt_time_out" WallTrapTimeOutText.text
+			SetUserProperty $ "wt_side" SideList.items[SideList.selection]
+			SetUserProperty $ "wt_final_pos_x" WalTrapXText.text
+			SetUserProperty $ "wt_final_pos_y" WalTrapYText.text
+			SetUserProperty $ "wt_final_pos_z" WalTrapZText.text
 		)
 	)
 	on TriggerName entered key do

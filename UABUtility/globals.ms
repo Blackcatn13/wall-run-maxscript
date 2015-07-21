@@ -106,14 +106,20 @@ global XMLCanGoBack		= " can_go_back="
 global XMLFollowY		= " follow_player_y="
 global XMLID 			= " id="
 global XMLEmitter		=" emitter="
+global XMLEmitter2		=" emitter2="
+global XMLEmitter3		=" emitter3="
+global XMLEmitter4		=" emitter4="
 global XMLUsePhisicMesh	=" use_phisics_mesh="
+global XMLSide	=" side="
+global XMLSpeedOpening =" speed_opening="
+global XMLSpeedClosing  =" speed_closing="
 global XML1Value      	= "\"%\""
 global XML3Value		= "\"% % %\""
 
 
 -- Properties values
 global RenderLayers = #("solid", "skybox", "alpha_objects", "alpha_blend_objects", "particles", "phisics", "poly", "enabled_poly", "collectible", "enemies", "player", "puzzle", "mov_platforms", "invisible", "breakable")
-global MeshType = #("mesh_instance", "animated_model", "platform_mesh", "trigger", "switch_instance", "door")
+global MeshType = #("mesh_instance", "animated_model", "platform_mesh", "trigger", "switch_instance", "door", "wall_trap_mesh")
 global PhysicsType = #("triangle_mesh", "convex_shape", "box_shape", "plane_shape", "capsule_shape")
 global PhysicsLayer = #("logic")
 global logicGenerate = #("box_event", "sphere_event")
@@ -125,6 +131,7 @@ global GroupsList = #("1", "2", "3", "18")
 global TriggerShapeL = #("box", "sphere")
 global ImageType = #("R32F", "A8R8G8B8", "R8G8B8", "X8R8G8B8")
 global RoomList = #("0", "1", "2", "3", "4", "5", "6", "7", "8")
+global SideListText=#("left", "right", "up", "down")
 
 -- Vertex declaration
 global VERTEX_XYZ 		= 0x1
