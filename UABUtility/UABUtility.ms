@@ -44,6 +44,8 @@ utility UABUtility "UAB export Utility" width:152 height:513
 
 	Include "ExportSound.ms"
 
+	Include "ExportCinematics.ms"
+
 	on UABUtility open do
 	(
 		LevelList.items = levels

@@ -12,7 +12,7 @@ function ExportAnimatedObject Obj =
 	if debug then 
 		format "[ExportAnimatedObject] starting export of animated object %\n" Obj.name
 	local object_manager = "solid"
-	format (cinematic_object_open_tag + XMLResource + XML1Value + XMLRendManager + XML1Value + XMLCloseTag) Obj.name object_manager to:cinematic_file
+	format (cinematic_object_open_tag + XMLResource + XML1Value + XMLRendManager + XML1Value + XMLEndTag) Obj.name object_manager to:cinematic_file
 
 	local animStart = animationRange.start
 	local animStop = animationRange.end
@@ -55,11 +55,11 @@ function ExportCinematics name =
 	format (XMLVersion) to:cinematic_file
 	local frames = animationRange.end.frame - animationRange.start.frame + 1
 	local duration = frames / frameRate
-	format (cinematic_open_file_tag + XMLName + XML1Value + XMLDuration + XML1Value) cinematicName duration to:cinematic_file
+	format (cinematic_open_file_tag + XMLName + XML1Value + XMLDuration + XML1Value + XMLEndTag) cinematicName duration to:cinematic_file
 	local objs = Geometry as array
 	for i = 1 to objs.count do (
 		if (GetUserProp objs[i] "cinematics") == true then (
-			ExportAnimatedObject objs[i] cinematic_file
+			ExportAnimatedObject objs[i]
 		)
 	)
 	format (cinematic_close_file_tag) to:cinematic_file
