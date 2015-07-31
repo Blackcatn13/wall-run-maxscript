@@ -28,9 +28,15 @@ function WriteMeshProps _ro_file mesh_type ObjCore ObjName tranX tranY tranZ obj
 	
 	WriteCheckProp objaux "use_phisic_mesh" XMLUsePhisicMesh ro_file				
 	WriteTextProperty objaux "emitter" XMLEmitter ro_file
+	WriteText3Property objaux "emitter_offset_x" "emitter_offset_y" "emitter_offset_z" XMLEmitterOffset ro_file
 	WriteTextProperty objaux "emitter2" XMLEmitter2 ro_file
+	WriteText3Property objaux "emitter2_offset_x" "emitter2_offset_y" "emitter2_offset_z" XMLEmitter2Offset ro_file
 	WriteTextProperty objaux "emitter3" XMLEmitter3 ro_file
+	WriteText3Property objaux "emitter3_offset_x" "emitter3_offset_y" "emitter3_offset_z" XMLEmitter3Offset ro_file
 	WriteTextProperty objaux "emitter4" XMLEmitter4 ro_file
+	WriteText3Property objaux "emitter4_offset_x" "emitter4_offset_y" "emitter4_offset_z" XMLEmitter4Offset ro_file
+	WriteTextProperty objaux "billboard" XMLBillboard ro_file
+	WriteText3Property objaux "billboard_offset_x" "billboard_offset_y" "billboard_offset_z" XMLBillboardOffset ro_file
 	WriteTextProperty objaux "room" XMLRoom ro_file
 	
 	if (GetUserProp obj "render_to_layer" == true) then (
@@ -50,7 +56,7 @@ function CheckNotNullProperty Obj propName =
 
 function WriteCheckProp Obj propName Tag file =
 (
-	if (GetUserProp Obj propName == true) then (
+	if ((CheckNotNullProperty Obj propName) == true and GetUserProp Obj propName == true) then (
 		format (Tag + XML1Value) (GetUserProp Obj propName) to:file
 	)
 )
@@ -59,6 +65,13 @@ function WriteTextProperty Obj propName Tag file =
 (
 	if ((CheckNotNullProperty Obj propName) == true) then(
 		format (Tag + XML1Value) (getUserProp Obj propName) to:file
+	)
+)
+
+function WriteText3Property Obj propName prop2Name prop3Name Tag file = 
+(
+	if ((CheckNotNullProperty Obj propName) == true and (CheckNotNullProperty Obj prop2Name) == true and (CheckNotNullProperty Obj prop3Name) == true) then(
+		format (Tag + XML3Value) (getUserProp Obj propName) (getUserProp Obj prop2Name) (getUserProp Obj prop3Name) to:file
 	)
 )
 
@@ -127,9 +140,15 @@ function ExportRenderableObjects =
 				
 				WriteCheckProp objaux "use_phisic_mesh" XMLUsePhisicMesh ro_file				
 				WriteTextProperty objaux "emitter" XMLEmitter ro_file
+				WriteText3Property objaux "emitter_offset_x" "emitter_offset_y" "emitter_offset_z" XMLEmitterOffset ro_file
 				WriteTextProperty objaux "emitter2" XMLEmitter2 ro_file
+				WriteText3Property objaux "emitter2_offset_x" "emitter2_offset_y" "emitter2_offset_z" XMLEmitter2Offset ro_file
 				WriteTextProperty objaux "emitter3" XMLEmitter3 ro_file
+				WriteText3Property objaux "emitter3_offset_x" "emitter3_offset_y" "emitter3_offset_z" XMLEmitter3Offset ro_file
 				WriteTextProperty objaux "emitter4" XMLEmitter4 ro_file
+				WriteText3Property objaux "emitter4_offset_x" "emitter4_offset_y" "emitter4_offset_z" XMLEmitter4Offset ro_file
+				WriteTextProperty objaux "billboard" XMLBillboard ro_file
+				WriteText3Property objaux "billboard_offset_x" "billboard_offset_y" "billboard_offset_z" XMLBillboardOffset ro_file
 				WriteTextProperty objaux "room" XMLRoom ro_file
 				
 				if (GetUserProp objaux "render_to_layer" == true) then (
@@ -145,9 +164,15 @@ function ExportRenderableObjects =
 				
 				WriteCheckProp objaux "use_phisic_mesh" XMLUsePhisicMesh ro_file				
 				WriteTextProperty objaux "emitter" XMLEmitter ro_file
+				WriteText3Property objaux "emitter_offset_x" "emitter_offset_y" "emitter_offset_z" XMLEmitterOffset ro_file
 				WriteTextProperty objaux "emitter2" XMLEmitter2 ro_file
+				WriteText3Property objaux "emitter2_offset_x" "emitter2_offset_y" "emitter2_offset_z" XMLEmitter2Offset ro_file
 				WriteTextProperty objaux "emitter3" XMLEmitter3 ro_file
+				WriteText3Property objaux "emitter3_offset_x" "emitter3_offset_y" "emitter3_offset_z" XMLEmitter3Offset ro_file
 				WriteTextProperty objaux "emitter4" XMLEmitter4 ro_file
+				WriteText3Property objaux "emitter4_offset_x" "emitter4_offset_y" "emitter4_offset_z" XMLEmitter4Offset ro_file
+				WriteTextProperty objaux "billboard" XMLBillboard ro_file
+				WriteText3Property objaux "billboard_offset_x" "billboard_offset_y" "billboard_offset_z" XMLBillboardOffset ro_file
 				WriteTextProperty objaux "room" XMLRoom ro_file
 				
 				if (GetUserProp objaux "render_to_layer" == true) then (
@@ -173,9 +198,15 @@ function ExportRenderableObjects =
 				
 				WriteCheckProp objaux "use_phisic_mesh" XMLUsePhisicMesh ro_file				
 				WriteTextProperty objaux "emitter" XMLEmitter ro_file
+				WriteText3Property objaux "emitter_offset_x" "emitter_offset_y" "emitter_offset_z" XMLEmitterOffset ro_file
 				WriteTextProperty objaux "emitter2" XMLEmitter2 ro_file
+				WriteText3Property objaux "emitter2_offset_x" "emitter2_offset_y" "emitter2_offset_z" XMLEmitter2Offset ro_file
 				WriteTextProperty objaux "emitter3" XMLEmitter3 ro_file
+				WriteText3Property objaux "emitter3_offset_x" "emitter3_offset_y" "emitter3_offset_z" XMLEmitter3Offset ro_file
 				WriteTextProperty objaux "emitter4" XMLEmitter4 ro_file
+				WriteText3Property objaux "emitter4_offset_x" "emitter4_offset_y" "emitter4_offset_z" XMLEmitter4Offset ro_file
+				WriteTextProperty objaux "billboard" XMLBillboard ro_file
+				WriteText3Property objaux "billboard_offset_x" "billboard_offset_y" "billboard_offset_z" XMLBillboardOffset ro_file
 				WriteTextProperty objaux "room" XMLRoom ro_file
 				
 				if platfType == "breakable" then (
@@ -230,9 +261,15 @@ function ExportRenderableObjects =
 				
 				WriteCheckProp objaux "use_phisic_mesh" XMLUsePhisicMesh ro_file				
 				WriteTextProperty objaux "emitter" XMLEmitter ro_file
+				WriteText3Property objaux "emitter_offset_x" "emitter_offset_y" "emitter_offset_z" XMLEmitterOffset ro_file
 				WriteTextProperty objaux "emitter2" XMLEmitter2 ro_file
+				WriteText3Property objaux "emitter2_offset_x" "emitter2_offset_y" "emitter2_offset_z" XMLEmitter2Offset ro_file
 				WriteTextProperty objaux "emitter3" XMLEmitter3 ro_file
+				WriteText3Property objaux "emitter3_offset_x" "emitter3_offset_y" "emitter3_offset_z" XMLEmitter3Offset ro_file
 				WriteTextProperty objaux "emitter4" XMLEmitter4 ro_file
+				WriteText3Property objaux "emitter4_offset_x" "emitter4_offset_y" "emitter4_offset_z" XMLEmitter4Offset ro_file
+				WriteTextProperty objaux "billboard" XMLBillboard ro_file
+				WriteText3Property objaux "billboard_offset_x" "billboard_offset_y" "billboard_offset_z" XMLBillboardOffset ro_file
 				WriteTextProperty objaux "room" XMLRoom ro_file
 				
 				if (GetUserProp objaux "render_to_layer" == true) then (
@@ -247,9 +284,15 @@ function ExportRenderableObjects =
 				
 				WriteCheckProp objaux "use_phisic_mesh" XMLUsePhisicMesh ro_file				
 				WriteTextProperty objaux "emitter" XMLEmitter ro_file
+				WriteText3Property objaux "emitter_offset_x" "emitter_offset_y" "emitter_offset_z" XMLEmitterOffset ro_file
 				WriteTextProperty objaux "emitter2" XMLEmitter2 ro_file
+				WriteText3Property objaux "emitter2_offset_x" "emitter2_offset_y" "emitter2_offset_z" XMLEmitter2Offset ro_file
 				WriteTextProperty objaux "emitter3" XMLEmitter3 ro_file
+				WriteText3Property objaux "emitter3_offset_x" "emitter3_offset_y" "emitter3_offset_z" XMLEmitter3Offset ro_file
 				WriteTextProperty objaux "emitter4" XMLEmitter4 ro_file
+				WriteText3Property objaux "emitter4_offset_x" "emitter4_offset_y" "emitter4_offset_z" XMLEmitter4Offset ro_file
+				WriteTextProperty objaux "billboard" XMLBillboard ro_file
+				WriteText3Property objaux "billboard_offset_x" "billboard_offset_y" "billboard_offset_z" XMLBillboardOffset ro_file
 				WriteTextProperty objaux "room" XMLRoom ro_file
 				WriteTextProperty objaux "wt_speed_opening" XMLSpeedOpening ro_file
 				WriteTextProperty objaux "wt_speed_closing" XMLSpeedClosing ro_file

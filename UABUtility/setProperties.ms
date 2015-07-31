@@ -38,7 +38,7 @@ fn SetUserProperty Obj StrProperty StrValue =
 	setUserProp Obj StrProperty StrValue
 )
 
-rollout UABSetProperties "UAB Set Properties" width:951 height:786
+rollout UABSetProperties "UAB Set Properties" width:808 height:823
 (
 	GroupBox PhysicsGp "Physics" pos:[7,597] width:255 height:91
 	GroupBox EventsGp "Events" pos:[271,595] width:272 height:56
@@ -203,9 +203,9 @@ rollout UABSetProperties "UAB Set Properties" width:951 height:786
 	edittext FinalPositionYDoorText "" pos:[688,400] width:45 height:17
 	edittext FinalPositionZDoorText "" pos:[748,400] width:45 height:17
 	checkbox ScenePhisicCheckbox "Physic Mesh" pos:[275,216] width:91 height:17
-	GroupBox grp15 "Particles" pos:[551,549] width:249 height:102
+	GroupBox grp15 "Particles" pos:[550,549] width:253 height:269
 	label EmitterLabel "Emitter" pos:[561,566] width:45 height:18
-	edittext EmitterText "" pos:[606,565] width:162 height:17
+	edittext EmitterText "" pos:[606,565] width:194 height:17
 	
 	GroupBox grp16 "Wall Trap" pos:[552,444] width:249 height:98
 	label WalTrapFPLabel "Final Position" pos:[557,511] width:66 height:18
@@ -223,12 +223,49 @@ rollout UABSetProperties "UAB Set Properties" width:951 height:786
 	label TimeOutLabelWallTrap "TimeOut" pos:[699,485] width:50 height:14
 	edittext WallTrapTimeOutText "" pos:[745,482] width:45 height:17
 	dropdownList SideList "" pos:[732,459] width:58 height:21
-	label Emitter2Label "Emitter 2" pos:[561,585] width:45 height:18
-	edittext Emitter2Text "" pos:[606,584] width:162 height:17
-	label Emitter3Label "Emitter 3" pos:[561,604] width:45 height:18
-	edittext Emitter3Text "" pos:[606,603] width:162 height:17
-	label Emitter4Label "Emitter 4" pos:[561,623] width:45 height:18
-	edittext Emitter4Text "" pos:[606,622] width:162 height:17
+	label Emitter2Label "Emitter 2" pos:[565,623] width:45 height:18
+	edittext Emitter2Text "" pos:[610,622] width:189 height:17
+	label Emitter3Label "Emitter 3" pos:[564,673] width:45 height:18
+	edittext Emitter3Text "" pos:[609,672] width:188 height:17
+	label Emitter4Label "Emitter 4" pos:[565,722] width:45 height:18
+	edittext Emitter4Text "" pos:[610,721] width:188 height:17
+	label EmitterOffsetLabel "Emitter Offset" pos:[563,597] width:70 height:16
+	editText EmitterOffsetTextX "" pos:[649,595] width:40 height:17
+	editText EmitterOffsetTextY "" pos:[705,595] width:40 height:17
+	editText EmitterOffsetTextZ "" pos:[760,595] width:40 height:17
+	label lbl72X "X" pos:[643,597] width:9 height:13
+	label lbl73Y "Y" pos:[696,597] width:9 height:13
+	label lbl74Z "Z" pos:[751,597] width:9 height:13
+	label lbl75x "Emitter2 Offset" pos:[562,648] width:79 height:16
+	editText EmitterOffset2TextX "" pos:[649,646] width:40 height:17
+	editText EmitterOffset2TextY "" pos:[706,646] width:40 height:17
+	editText EmitterOffset2TextZ "" pos:[758,646] width:40 height:17
+	label lbl76 "X" pos:[642,648] width:9 height:13
+	label lbl77 "Y" pos:[695,648] width:9 height:13
+	label lbl78 "Z" pos:[750,648] width:9 height:13
+	label lbl79 "Emitter3 Offset" pos:[563,697] width:78 height:16
+	editText EmitterOffset3TextX "" pos:[650,695] width:40 height:17
+	editText EmitterOffset3TextY "" pos:[705,695] width:40 height:17
+	editText EmitterOffset3TextZ "" pos:[758,696] width:40 height:17
+	label lbl80 "X" pos:[643,697] width:9 height:13
+	label lbl81 "Y" pos:[696,697] width:9 height:13
+	label lbl82 "Z" pos:[751,697] width:9 height:13
+	label lbl83 "Emitter4 Offset" pos:[563,748] width:81 height:16
+	editText EmitterOffset4TextX "" pos:[650,745] width:40 height:17
+	editText EmitterOffset4TextY "" pos:[705,745] width:40 height:17
+	editText EmitterOffset4TextZ "" pos:[759,745] width:40 height:17
+	label lbl84 "X" pos:[643,747] width:9 height:13
+	label lbl85 "Y" pos:[696,747] width:9 height:13
+	label lbl86 "Z" pos:[751,747] width:9 height:13
+	label lbl102 "Billboard Offset" pos:[565,795] width:75 height:16
+	editText BillboardOffsetTextX "" pos:[647,795] width:40 height:17
+	editText BillboardOffsetTextY "" pos:[702,794] width:40 height:17
+	editText BillboardOffsetTextZ "" pos:[757,794] width:40 height:17
+	label lbl103 "Y" pos:[693,796] width:9 height:13
+	label lbl104 "Z" pos:[748,796] width:9 height:13
+	label lbl105 "Emitter 4" pos:[564,770] width:45 height:18
+	edittext BillboardText "" pos:[609,769] width:189 height:17
+	label lbl106 "X" pos:[644,795] width:9 height:13
 	on UABSetProperties open do
 	(	
 		RenderExportList.items = MeshType
@@ -343,7 +380,32 @@ rollout UABSetProperties "UAB Set Properties" width:951 height:786
 		GetUserProperty obj Emitter2Text "emitter2"
 		GetUserProperty obj Emitter3Text "emitter3"
 		GetUserProperty obj Emitter4Text "emitter4"
+		GetUserProperty obj BillboardText "billboard"
 		
+		GetUserProperty obj EmitterOffsetTextX "emitter_offset_x"
+		GetUserProperty obj EmitterOffsetTextY "emitter_offset_y"
+		GetUserProperty obj EmitterOffsetTextZ "emitter_offset_z"
+		
+		GetUserProperty obj EmitterOffset2TextX "emitter2_offset_x"
+		GetUserProperty obj EmitterOffset2TextY "emitter2_offset_y"
+		GetUserProperty obj EmitterOffset2TextZ "emitter2_offset_z"
+		
+		GetUserProperty obj EmitterOffset2TextX "emitter2_offset_x"
+		GetUserProperty obj EmitterOffset2TextY "emitter2_offset_y"
+		GetUserProperty obj EmitterOffset2TextZ "emitter2_offset_z"
+		
+		GetUserProperty obj EmitterOffset3TextX "emitter3_offset_x"
+		GetUserProperty obj EmitterOffset3TextY "emitter3_offset_y"
+		GetUserProperty obj EmitterOffset3TextZ "emitter3_offset_z"
+		
+		GetUserProperty obj EmitterOffset4TextX "emitter4_offset_x"
+		GetUserProperty obj EmitterOffset4TextY "emitter4_offset_y"
+		GetUserProperty obj EmitterOffset4TextZ "emitter4_offset_z"
+		
+		GetUserProperty obj BillboardOffsetTextX "billboard_offset_x"
+		GetUserProperty obj BillboardOffsetTextY "billboard_offset_y"
+		GetUserProperty obj BillboardOffsetTextZ "billboard_offset_z"
+	
 		--WallTrap
 		GetUserProperty obj SpeedOpeningText "wt_speed_opening"
 		GetUserProperty obj SpeedClosingText "wt_speed_closing"
@@ -510,6 +572,27 @@ rollout UABSetProperties "UAB Set Properties" width:951 height:786
 				SetUserProperty $[i] "emitter2" Emitter2Text.text
 				SetUserProperty $[i] "emitter3" Emitter3Text.text
 				SetUserProperty $[i] "emitter4" Emitter4Text.text
+				SetUserProperty $[i] "billboard" BillboardText.text
+				
+				SetUserProperty $[i] "emitter_offset_x" EmitterOffsetTextX.text
+				SetUserProperty $[i] "emitter_offset_y" EmitterOffsetTextY.text
+				SetUserProperty $[i] "emitter_offset_z" EmitterOffsetTextZ.text
+				
+				SetUserProperty $[i] "emitter2_offset_x" EmitterOffset2TextX.text
+				SetUserProperty $[i] "emitter2_offset_y" EmitterOffset2TextY.text
+				SetUserProperty $[i] "emitter2_offset_z" EmitterOffset2TextZ.text
+				
+				SetUserProperty $[i] "emitter3_offset_x" EmitterOffset3TextX.text
+				SetUserProperty $[i] "emitter3_offset_y" EmitterOffset3TextY.text
+				SetUserProperty $[i] "emitter3_offset_z" EmitterOffset3TextZ.text
+				
+				SetUserProperty $[i] "emitter4_offset_x" EmitterOffset4TextX.text
+				SetUserProperty $[i] "emitter4_offset_y" EmitterOffset4TextY.text
+				SetUserProperty $[i] "emitter4_offset_z" EmitterOffset4TextZ.text
+				
+				SetUserProperty $[i] "billboard_offset_x" BillboardOffsetTextX.text
+				SetUserProperty $[i] "billboard_offset_y" BillboardOffsetTextY.text
+				SetUserProperty $[i] "billboard_offset_z" BillboardOffsetTextZ.text
 				
 				--WallTrap
 				SetUserProperty $[i] "wt_speed_opening" SpeedOpeningText.text
@@ -676,6 +759,27 @@ rollout UABSetProperties "UAB Set Properties" width:951 height:786
 			SetUserProperty $ "emitter2" Emitter2Text.text
 			SetUserProperty $ "emitter3" Emitter3Text.text
 			SetUserProperty $ "emitter4" Emitter4Text.text
+			SetUserProperty $ "billboard" BillboardText.text
+				
+			SetUserProperty $ "emitter_offset_x" EmitterOffsetTextX.text
+			SetUserProperty $ "emitter_offset_y" EmitterOffsetTextY.text
+			SetUserProperty $ "emitter_offset_z" EmitterOffsetTextZ.text
+			
+			SetUserProperty $ "emitter2_offset_x" EmitterOffset2TextX.text
+			SetUserProperty $ "emitter2_offset_y" EmitterOffset2TextY.text
+			SetUserProperty $ "emitter2_offset_z" EmitterOffset2TextZ.text
+			
+			SetUserProperty $ "emitter3_offset_x" EmitterOffset3TextX.text
+			SetUserProperty $ "emitter3_offset_y" EmitterOffset3TextY.text
+			SetUserProperty $ "emitter3_offset_z" EmitterOffset3TextZ.text
+			
+			SetUserProperty $ "emitter4_offset_x" EmitterOffset4TextX.text
+			SetUserProperty $ "emitter4_offset_y" EmitterOffset4TextY.text
+			SetUserProperty $ "emitter4_offset_z" EmitterOffset4TextZ.text
+				
+			SetUserProperty $ "billboard_offset_x" BillboardOffsetTextX.text
+			SetUserProperty $ "billboard_offset_y" BillboardOffsetTextY.text
+			SetUserProperty $ "billboard_offset_z" BillboardOffsetTextZ.text
 			
 			--WallTrap
 			SetUserProperty $ "wt_speed_opening" SpeedOpeningText.text
