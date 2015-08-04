@@ -29,25 +29,6 @@ function exportStaticCamera cam =
 		format "[exportStaticCamera] camera exported\n"
 )
 
-function exportAnimatedCamera cam= 
-(
-	if debug then
-		format "[exportAnimatedCamera] starting export of animated camera\n"
-
-	CreatePath (PathToCopy + AnimatedCamerasPath)
-	
-	local pathaux = GetMeshesPathExport (RelativePathToCopy + AnimatedCamerasPath) PathToCopy
-	local camXML = pathaux + cam.name + ".xml"
-	local camAbsXML = PathToCopy + AnimatedCamerasPath + cam.name + ".xml"
-
-	format (camera_key_controller + XMLName + XML1Value + XMLFile + XML1Value + XMLCloseTag) cam.name camXML to:cam_file
-	if debug then
-		format "[exportAnimatedCamera] starting export of keys\n"
-	exportCameraKeyFrames cam camAbsXML
-	if debug then
-		format "[exportAnimatedCamera] camera exported\n"
-)
-
 function exportCameraKeyFrames cam fileNameWithPath =
 (
 	select cam
@@ -104,6 +85,25 @@ function exportCameraKeyFrames cam fileNameWithPath =
 	close file
 	if debug then
 		format "[exportCameraKeyFrames] export keys ended\n"
+)
+
+function exportAnimatedCamera cam= 
+(
+	if debug then
+		format "[exportAnimatedCamera] starting export of animated camera\n"
+
+	CreatePath (PathToCopy + AnimatedCamerasPath)
+	
+	local pathaux = GetMeshesPathExport (RelativePathToCopy + AnimatedCamerasPath) PathToCopy
+	local camXML = pathaux + cam.name + ".xml"
+	local camAbsXML = PathToCopy + AnimatedCamerasPath + cam.name + ".xml"
+
+	format (camera_key_controller + XMLName + XML1Value + XMLFile + XML1Value + XMLCloseTag) cam.name camXML to:cam_file
+	if debug then
+		format "[exportAnimatedCamera] starting export of keys\n"
+	exportCameraKeyFrames cam camAbsXML
+	if debug then
+		format "[exportAnimatedCamera] camera exported\n"
 )
 
 function exportCameras cameraList=
