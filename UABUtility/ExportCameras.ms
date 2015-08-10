@@ -49,7 +49,7 @@ function exportCameraKeyFrames cam fileNameWithPath =
 		local _reverse = true
 	else 
 		local _reverse = false
-	format (XMLOnce + XML1Value + XMLCycle + XML1Value + XMLReverse + XML1Value + XMLCloseTag) once cycle _reverse to:file
+	format (XMLOnce + XML1Value + XMLCycle + XML1Value + XMLReverse + XML1Value + XMLEndTag) once cycle _reverse to:file
 	local animStart = animationRange.start
 	local animStop = animationRange.end
 	local fr = frameRate
