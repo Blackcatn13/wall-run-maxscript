@@ -41,9 +41,11 @@ function ExportDirectional _light =
 	local inten = _light.multiplier
 	local start = _light.farAttenStart
 	local end = _light.farAttenEnd
+	local dynIntensity = (GetUserProp _light "dynamic_intensity")
+	
 	format (light_tag + XMLName + XML1Value + XMLType + XML1Value) _light.name "directional" to:light_file
 	format (XMLPos + XML3Value + XMLDir + XML3Value) pos.x pos.y pos.z dir.x dir.y dir.z to:light_file
-	format (XMLColor + XML3Value + XMLIntensity + XML1Value) col.r col.g col.b inten to:light_file
+	format (XMLColor + XML3Value + XMLIntensity + XML1Value + XMLDynamicIntensity + XML1Value) col.r col.g col.b inten dynIntensity to:light_file
 	format (XMLAttStartRange + XML1Value + XMLAttEndRange + XML1Value) start end to:light_file
 	if (GetUserProp _light "ShadowMap") == true then (
 		ExportShadowProperties _light
@@ -64,9 +66,11 @@ function ExportSpot _light =
 	local inten = _light.multiplier
 	local start = _light.farAttenStart
 	local end = _light.farAttenEnd
+	local dynIntensity = (GetUserProp _light "dynamic_intensity")
+	
 	format (light_tag + XMLName + XML1Value + XMLType + XML1Value) _light.name "spot" to:light_file
 	format (XMLPos + XML3Value + XMLDir + XML3Value) pos.x pos.y pos.z dir.x dir.y dir.z to:light_file
-	format (XMLColor + XML3Value + XMLIntensity + XML1Value) col.r col.g col.b inten to:light_file
+	format (XMLColor + XML3Value + XMLIntensity + XML1Value + XMLDynamicIntensity + XML1Value) col.r col.g col.b inten dynIntensity to:light_file
 	format (XMLAngle + XML1Value + XMLFallOff + XML1Value) _light.hotspot _light.falloff to:light_file
 	format (XMLAttStartRange + XML1Value + XMLAttEndRange + XML1Value) start end to:light_file
 	if (GetUserProp _light "ShadowMap") == true then (
@@ -89,9 +93,11 @@ function ExportOmniLight _light =
 	local intensity = _light.multiplier
 	local startatt = _light.farAttenStart
 	local endatt = _light.farAttenEnd
+	local dynIntensity = (GetUserProp _light "dynamic_intensity")
+	
 	format (light_tag + XMLName + XML1Value + XMLType + XML1Value) namel type to:light_file
 	format (XMLPos + XML3Value + XMLColor + XML3Value) pos.x pos.y pos.z colorl.r colorl.g colorl.b to:light_file 
-	format (XMLIntensity + XML1Value + XMLAttStartRange + XML1Value) intensity startatt to:light_file
+	format (XMLIntensity + XML1Value + XMLDynamicIntensity + XML1Value + XMLAttStartRange + XML1Value) intensity dynIntensity startatt to:light_file
 	format (XMLAttEndRange + XML1Value) endatt to:light_file
 	if (GetUserProp _light "ShadowMap") == true then (
 		ExportShadowProperties _light

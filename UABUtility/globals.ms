@@ -101,6 +101,7 @@ global XMLShadowWidth	= " shadow_map_width="
 global XMLShadowHeight  = " shadow_map_height="
 global XMLStaticShadow  = " generate_static_shadowm_map="
 global XMLStaShadowType = " static_shadowm_map_format_type="
+global XMLDynamicIntensity = " dynamic_intensity="
 global XMLCanRotate		= " can_rotate="
 global XMLCanGoBack		= " can_go_back="
 global XMLFollowY		= " follow_player_y="
@@ -124,7 +125,7 @@ global XML3Value		= "\"% % %\""
 
 
 -- Properties values
-global RenderLayers = #("solid", "skybox", "alpha_objects", "alpha_blend_objects", "particles", "phisics", "poly", "enabled_poly", "collectible", "enemies", "player", "puzzle", "mov_platforms", "invisible", "breakable")
+global RenderLayers = #("solid", "skybox", "alpha_objects", "alpha_blend_objects", "particles", "phisics", "poly", "enabled_poly", "collectible", "enemies", "player", "puzzle", "mov_platforms", "invisible", "breakable", "glow")
 global MeshType = #("mesh_instance", "animated_model", "platform_mesh", "trigger", "switch_instance", "door", "wall_trap_mesh")
 global PhysicsType = #("triangle_mesh", "convex_shape", "box_shape", "plane_shape", "capsule_shape")
 global PhysicsLayer = #("logic")
@@ -136,7 +137,7 @@ global EventTypeL = #("enter", "stay", "leave")
 global GroupsList = #("1", "2", "3", "18")
 global TriggerShapeL = #("box", "sphere")
 global ImageType = #("R32F", "A8R8G8B8", "R8G8B8", "X8R8G8B8")
-global RoomList = #("0", "1", "2", "3", "4", "5", "6", "7", "8")
+global RoomList = #("0", "1", "2", "3", "4", "5", "6", "7", "8","9","10","11")
 global SideListText=#("left", "right", "up", "down")
 
 -- Vertex declaration

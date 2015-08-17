@@ -230,42 +230,44 @@ rollout UABSetProperties "UAB Set Properties" width:808 height:823
 	label Emitter4Label "Emitter 4" pos:[565,722] width:45 height:18
 	edittext Emitter4Text "" pos:[610,721] width:188 height:17
 	label EmitterOffsetLabel "Emitter Offset" pos:[563,597] width:70 height:16
-	editText EmitterOffsetTextX "" pos:[649,595] width:40 height:17
-	editText EmitterOffsetTextY "" pos:[705,595] width:40 height:17
-	editText EmitterOffsetTextZ "" pos:[760,595] width:40 height:17
+	edittext EmitterOffsetTextX "" pos:[649,595] width:40 height:17
+	edittext EmitterOffsetTextY "" pos:[705,595] width:40 height:17
+	edittext EmitterOffsetTextZ "" pos:[760,595] width:40 height:17
 	label lbl72X "X" pos:[643,597] width:9 height:13
 	label lbl73Y "Y" pos:[696,597] width:9 height:13
 	label lbl74Z "Z" pos:[751,597] width:9 height:13
 	label lbl75x "Emitter2 Offset" pos:[562,648] width:79 height:16
-	editText EmitterOffset2TextX "" pos:[649,646] width:40 height:17
-	editText EmitterOffset2TextY "" pos:[706,646] width:40 height:17
-	editText EmitterOffset2TextZ "" pos:[758,646] width:40 height:17
+	edittext EmitterOffset2TextX "" pos:[649,646] width:40 height:17
+	edittext EmitterOffset2TextY "" pos:[706,646] width:40 height:17
+	edittext EmitterOffset2TextZ "" pos:[758,646] width:40 height:17
 	label lbl76 "X" pos:[642,648] width:9 height:13
 	label lbl77 "Y" pos:[695,648] width:9 height:13
 	label lbl78 "Z" pos:[750,648] width:9 height:13
 	label lbl79 "Emitter3 Offset" pos:[563,697] width:78 height:16
-	editText EmitterOffset3TextX "" pos:[650,695] width:40 height:17
-	editText EmitterOffset3TextY "" pos:[705,695] width:40 height:17
-	editText EmitterOffset3TextZ "" pos:[758,696] width:40 height:17
+	edittext EmitterOffset3TextX "" pos:[650,695] width:40 height:17
+	edittext EmitterOffset3TextY "" pos:[705,695] width:40 height:17
+	edittext EmitterOffset3TextZ "" pos:[758,696] width:40 height:17
 	label lbl80 "X" pos:[643,697] width:9 height:13
 	label lbl81 "Y" pos:[696,697] width:9 height:13
 	label lbl82 "Z" pos:[751,697] width:9 height:13
 	label lbl83 "Emitter4 Offset" pos:[563,748] width:81 height:16
-	editText EmitterOffset4TextX "" pos:[650,745] width:40 height:17
-	editText EmitterOffset4TextY "" pos:[705,745] width:40 height:17
-	editText EmitterOffset4TextZ "" pos:[759,745] width:40 height:17
+	edittext EmitterOffset4TextX "" pos:[650,745] width:40 height:17
+	edittext EmitterOffset4TextY "" pos:[705,745] width:40 height:17
+	edittext EmitterOffset4TextZ "" pos:[759,745] width:40 height:17
 	label lbl84 "X" pos:[643,747] width:9 height:13
 	label lbl85 "Y" pos:[696,747] width:9 height:13
 	label lbl86 "Z" pos:[751,747] width:9 height:13
 	label lbl102 "Billboard Offset" pos:[565,795] width:75 height:16
-	editText BillboardOffsetTextX "" pos:[647,795] width:40 height:17
-	editText BillboardOffsetTextY "" pos:[702,794] width:40 height:17
-	editText BillboardOffsetTextZ "" pos:[757,794] width:40 height:17
+	edittext BillboardOffsetTextX "" pos:[647,795] width:40 height:17
+	edittext BillboardOffsetTextY "" pos:[702,794] width:40 height:17
+	edittext BillboardOffsetTextZ "" pos:[757,794] width:40 height:17
 	label lbl103 "Y" pos:[693,796] width:9 height:13
 	label lbl104 "Z" pos:[748,796] width:9 height:13
 	label lbl105 "Emitter 4" pos:[564,770] width:45 height:18
 	edittext BillboardText "" pos:[609,769] width:189 height:17
 	label lbl106 "X" pos:[644,795] width:9 height:13
+	checkbox dynamicIntensityCheckBox "Dynamic Intensity" pos:[686,40] width:107 height:15
+	
 	on UABSetProperties open do
 	(	
 		RenderExportList.items = MeshType
@@ -335,6 +337,7 @@ rollout UABSetProperties "UAB Set Properties" width:808 height:823
 		GetUserProperty obj GenerateLights "lights"
 		GetUserProperty obj ScenePhisicCheckbox "use_phisic_mesh"
 		GetUserProperty obj RoomText "room"
+		GetUserProperty obj dynamicIntensityCheckBox "dynamic_intensity"
 	
 		--- Platform Properties----
 		GetUserProperty obj RenderPlatformList "platform_type"
@@ -476,6 +479,8 @@ rollout UABSetProperties "UAB Set Properties" width:808 height:823
 				SetUserProperty $[i] "cam_once" OnceCam.checked
 				SetUserProperty $[i] "lights" GenerateLights.checked
 				SetUserProperty $[i] "ShadowMap" GenShadowMap.checked
+				SetUserProperty $[i] "dynamic_intensity" dynamicIntensityCheckBox.checked
+				
 				if GenShadowMap.checked then (
 					SetUserProperty $[i] "dynImageType" ShadowDynType.items[ShadowDynType.selection]
 					SetUserProperty $[i] "orthoWidth" orthoWidth.text
@@ -660,6 +665,7 @@ rollout UABSetProperties "UAB Set Properties" width:808 height:823
 			SetUserProperty $ "cam_once" OnceCam.checked
 			SetUserProperty $ "lights" GenerateLights.checked
 			SetUserProperty $ "ShadowMap" GenShadowMap.checked
+			SetUserProperty $ "dynamic_intensity" dynamicIntensityCheckBox.checked
 			if GenShadowMap.checked then (
 				SetUserProperty $ "dynImageType" ShadowDynType.items[ShadowDynType.selection]
 				SetUserProperty $ "orthoWidth" orthoWidth.text
