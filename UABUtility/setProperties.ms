@@ -38,10 +38,10 @@ fn SetUserProperty Obj StrProperty StrValue =
 	setUserProp Obj StrProperty StrValue
 )
 
-rollout UABSetProperties "UAB Set Properties" width:808 height:823
+rollout UABSetProperties "UAB Set Properties" width:808 height:923
 (
-	GroupBox PhysicsGp "Physics" pos:[7,597] width:255 height:91
-	GroupBox EventsGp "Events" pos:[271,595] width:272 height:56
+	GroupBox PhysicsGp "Physics" pos:[6,735] width:255 height:91
+	GroupBox EventsGp "Events" pos:[270,733] width:272 height:56
 	checkbox RenderExportCheckBox "Export" pos:[16,32] width:56 height:16
 	checkbox RenderVisibleCheckBox "Visible" pos:[16,64] width:56 height:16
 	checkbox LayerCheckBox "Layer" pos:[16,96] width:56 height:16
@@ -51,39 +51,39 @@ rollout UABSetProperties "UAB Set Properties" width:808 height:823
 	edittext AnimModelText "" pos:[88,128] width:168 height:16
 	label TechniqueLabel "Technique" pos:[16,160] width:64 height:16
 	edittext TechniqueText "" pos:[88,160] width:168 height:16
-	checkbox PhysicsGenerateCheckBox "Generate" pos:[15,619] width:64 height:16
-	dropdownList PhysicsGenerateList "" pos:[87,619] width:168 height:21
-	checkbox PhysicsLayerCheckBox "Layer" pos:[15,651] width:56 height:16
-	dropdownList PhysicsLayerList "" pos:[87,651] width:168 height:21
-	GroupBox LogicGp "Logic" pos:[7,691] width:256 height:88
-	checkbox LogicGenerateCheckBox "Generate" pos:[15,715] width:64 height:16
-	dropdownList LogicGenerateList "" pos:[87,715] width:168 height:21
-	checkbox showNormal "Show normal" pos:[95,747] width:88 height:16
+	checkbox PhysicsGenerateCheckBox "Generate" pos:[14,757] width:64 height:16
+	dropdownList PhysicsGenerateList "" pos:[86,757] width:168 height:21
+	checkbox PhysicsLayerCheckBox "Layer" pos:[14,789] width:56 height:16
+	dropdownList PhysicsLayerList "" pos:[86,789] width:168 height:21
+	GroupBox LogicGp "Logic" pos:[6,829] width:256 height:88
+	checkbox LogicGenerateCheckBox "Generate" pos:[14,853] width:64 height:16
+	dropdownList LogicGenerateList "" pos:[86,853] width:168 height:21
+	checkbox showNormal "Show normal" pos:[94,885] width:88 height:16
 	checkbox CameraVisibility "Don't test camera visibility" pos:[264,32] width:216 height:16
 	checkbox WorldTransform "Don't export world transform" pos:[264,64] width:216 height:16
 	edittext LinkedBoneText "" pos:[368,96] width:152 height:16
 	checkbox LinkedBoneCheck "Linked to bone" pos:[264,96] width:96 height:16
 	checkbox Cinematics "Export to cinematics" pos:[264,128] width:216 height:16
-	checkbox EventGenerateCheck "Generate" pos:[279,619] width:64 height:16
-	dropdownList EventGenerateList "" pos:[351,619] width:176 height:21
-	GroupBox TracksGp "Tracks" pos:[271,659] width:272 height:56
-	checkbox GenerateTracks "Generate" pos:[279,683] width:64 height:16
-	checkbox RotateTracks "Rotate" pos:[350,683] width:60 height:16
-	checkbox FollowTracks "Follow" pos:[460,683] width:64 height:16
-	checkbox BackTracks "Back" pos:[410,683] width:40 height:16
-	GroupBox CamerasGp "Cameras" pos:[271,723] width:272 height:56
-	checkbox CycleCam "Cycle" pos:[279,747] width:56 height:16
+	checkbox EventGenerateCheck "Generate" pos:[278,757] width:64 height:16
+	dropdownList EventGenerateList "" pos:[350,757] width:176 height:21
+	GroupBox TracksGp "Tracks" pos:[270,797] width:272 height:56
+	checkbox GenerateTracks "Generate" pos:[278,821] width:64 height:16
+	checkbox RotateTracks "Rotate" pos:[349,821] width:60 height:16
+	checkbox FollowTracks "Follow" pos:[459,821] width:64 height:16
+	checkbox BackTracks "Back" pos:[409,821] width:40 height:16
+	GroupBox CamerasGp "Cameras" pos:[270,861] width:272 height:56
+	checkbox CycleCam "Cycle" pos:[278,885] width:56 height:16
 	GroupBox LightsGp "Lights" pos:[552,14] width:248 height:354
 	checkbox GenerateLights "Generate" pos:[568,40] width:64 height:16
-	checkbox ReverseCam "Reverse" pos:[367,747] width:64 height:16
-	checkbox OnceCam "Once" pos:[455,747] width:56 height:16
+	checkbox ReverseCam "Reverse" pos:[366,885] width:64 height:16
+	checkbox OnceCam "Once" pos:[454,885] width:56 height:16
 	button GetButton "Get" pos:[304,160] width:104 height:32
 	button SetButton "Set" pos:[416,160] width:104 height:32
 
 	label lbl3 "Platform Type" pos:[17,190] width:72 height:14
 	dropdownList RenderPlatformList "" pos:[88,184] width:168 height:21
 	
-	GroupBox grp25 "Render" pos:[7,8] width:536 height:581
+	GroupBox grp25 "Render" pos:[7,8] width:536 height:725
 	GroupBox grp27 "Breakable Platform" pos:[10,244] width:266 height:49
 	label TriggerNameLabel "Trigger Name" pos:[21,265] width:65 height:17
 	edittext TriggerNameText "" pos:[96,263] width:149 height:17
@@ -138,7 +138,7 @@ rollout UABSetProperties "UAB Set Properties" width:808 height:823
 	edittext PolyDirectionYText "" pos:[161,357] width:37 height:16
 	edittext PolyDirectionZText "" pos:[219,357] width:37 height:16
 	
-	GroupBox grp28 "Triggers" pos:[15,444] width:520 height:140
+	GroupBox grp28 "Triggers" pos:[15,444] width:520 height:280
 	label lbl67 "Trigger Name" pos:[31,468] width:72 height:16
 	edittext TriggerName "" pos:[95,468] width:144 height:16
 	dropdownList ShapeDL "" pos:[95,492] width:72 height:21
@@ -149,13 +149,13 @@ rollout UABSetProperties "UAB Set Properties" width:808 height:823
 	dropdownList eventType "" pos:[343,468] width:88 height:21
 	checkbox PaintIt "Paint It" pos:[455,468] width:72 height:16
 	label lbl71 "Parameter 1" pos:[255,492] width:80 height:16
-	label lbl72 "Script Function" pos:[255,516] width:80 height:16
+	label lbl72 "Script Function" pos:[255,540] width:80 height:16
 	edittext Param1 "" pos:[343,492] width:168 height:16
-	edittext ScriptFunction "" pos:[343,516] width:168 height:16
-	label lbl301 "Duration" pos:[39,556] width:51 height:14
-	edittext DurationTime "" pos:[87,556] width:50 height:16
-	edittext UpdateFunction "" pos:[343,540] width:168 height:16
-	label lbl157 "Update Function" pos:[255,540] width:80 height:16
+	edittext ScriptFunction "" pos:[343,540] width:168 height:16
+	label lbl301 "Duration" pos:[39,564] width:51 height:14
+	edittext DurationTime "" pos:[87,564] width:50 height:16
+	edittext UpdateFunction "" pos:[119,541] width:122 height:16
+	label lbl157 "Update Function" pos:[31,541] width:80 height:16
 	edittext PlatfName "" pos:[343,564] width:168 height:16
 	label lbl198 "Platform Name" pos:[255,564] width:80 height:16
 	label PhisicsSizeLabel "Phisics Size" pos:[17,218] width:58 height:17
@@ -268,6 +268,26 @@ rollout UABSetProperties "UAB Set Properties" width:808 height:823
 	label lbl106 "X" pos:[644,795] width:9 height:13
 	checkbox dynamicIntensityCheckBox "Dynamic Intensity" pos:[686,40] width:107 height:15
 	
+	edittext Param2 "" pos:[343,517] width:167 height:16
+	label TriggerEvenParam2 "Parameter 2" pos:[255,517] width:80 height:16
+	label eventType2Label "Event Type" pos:[27,616] width:80 height:16
+	dropdownList eventType2 "" pos:[115,613] width:88 height:21
+	label lbl918 "Parameter 1" pos:[27,637] width:80 height:16
+	label lbl919 "Script Function" pos:[27,685] width:80 height:16
+	edittext Param1Event2 "" pos:[104,637] width:140 height:16
+	edittext ScriptFunction2 "" pos:[104,685] width:139 height:16
+	edittext Param2Event2 "" pos:[105,661] width:139 height:16
+	label lbl921 "Parameter 2" pos:[27,662] width:80 height:16
+	label lbl922 "Event Type" pos:[254,617] width:80 height:16
+	dropdownList eventType3 "" pos:[342,617] width:88 height:21
+	label lbl923 "Parameter 1" pos:[254,641] width:80 height:16
+	label lbl924 "Script Function" pos:[254,689] width:80 height:16
+	edittext Param1Event3 "" pos:[342,641] width:168 height:16
+	edittext ScriptFunction3 "" pos:[342,689] width:168 height:16
+	edittext Param2Event3 "" pos:[342,666] width:167 height:16
+	label lbl926 "Parameter 2" pos:[254,666] width:80 height:16
+	GroupBox grp162 "Event2" pos:[23,601] width:226 height:112
+	GroupBox grp163 "Event3" pos:[250,601] width:267 height:113
 	on UABSetProperties open do
 	(	
 		RenderExportList.items = MeshType
@@ -280,6 +300,8 @@ rollout UABSetProperties "UAB Set Properties" width:808 height:823
 		ShapeDL.items = TriggerShapeL
 		GroupDL.items = GroupsList
 		EventType.items = EventTypeL
+		EventType2.items = EventTypeL2
+		EventType3.items = EventTypeL2
 		ShadowDynType.items = ImageType
 		ShadowStatType.items = ImageType
 		RoomText.items = RoomList
@@ -567,7 +589,19 @@ rollout UABSetProperties "UAB Set Properties" width:808 height:823
 				SetUserProperty $[i] "trigger_type_event" EventType.items[EventType.selection] 		
 				SetUserProperty $[i] "trigger_paint" PaintIt.checked		
 				SetUserProperty $[i] "trigger_param1" Param1.text		
+				SetUserProperty $[i] "trigger_param2" Param2.text	
 				SetUserProperty $[i] "trigger_script" ScriptFunction.text 
+				
+				SetUserProperty $[i] "trigger_type_event2" EventType2.items[EventType2.selection] 			
+				SetUserProperty $[i] "trigger_param1_event2" Param1Event2.text		
+				SetUserProperty $[i] "trigger_param2_event2" Param2Event2.text	
+				SetUserProperty $[i] "trigger_script_event2"  ScriptFunction3.text 
+				                                              
+				SetUserProperty $[i] "trigger_type_event3" EventType3.items[EventType3.selection] 			
+				SetUserProperty $[i] "trigger_param1_event3" Param1Event3.text		
+				SetUserProperty $[i] "trigger_param2_event3" Param2Event3.text	
+				SetUserProperty $[i] "trigger_script_event3" ScriptFunction3.text 
+				
 				SetUserProperty $[i] "trigger_duration" DurationTime.text
 				SetUserProperty $[i] "trigger_update" UpdateFunction.text 
 				SetUserProperty $[i] "trigger_platform_name" PlatfName.text
@@ -754,8 +788,20 @@ rollout UABSetProperties "UAB Set Properties" width:808 height:823
 			SetUserProperty $ "trigger_group" GroupDL.items[GroupDL.selection]		
 			SetUserProperty $ "trigger_type_event" EventType.items[EventType.selection] 		
 			SetUserProperty $ "trigger_paint" PaintIt.checked		
-			SetUserProperty $ "trigger_param1" Param1.text		
+			SetUserProperty $ "trigger_param1" Param1.text
+			SetUserProperty $ "trigger_param2" Param2.text			
 			SetUserProperty $ "trigger_script" ScriptFunction.text 
+			
+			SetUserProperty $ "trigger_type_event2" EventType2.items[EventType2.selection] 			
+			SetUserProperty $ "trigger_param1_event2" Param1Event2.text		
+			SetUserProperty $ "trigger_param2_event2" Param2Event2.text	
+			SetUserProperty $ "trigger_script_event2"  ScriptFunction2.text 
+				                                              
+			SetUserProperty $ "trigger_type_event3" EventType3.items[EventType3.selection] 			
+			SetUserProperty $ "trigger_param1_event3" Param1Event3.text		
+			SetUserProperty $ "trigger_param2_event3" Param2Event3.text	
+			SetUserProperty $ "trigger_script_event3" ScriptFunction3.text 
+				
 			SetUserProperty $ "trigger_duration" DurationTime.text
 			SetUserProperty $ "trigger_update" UpdateFunction.text 
 			SetUserProperty $ "trigger_platform_name" PlatfName.text
@@ -840,5 +886,33 @@ rollout UABSetProperties "UAB Set Properties" width:808 height:823
 	on LayersToRender entered key do
 	(
 		LayersToRender.bold = false
+	)
+	on Param2 entered key do
+	(
+		UpdateFunction.bold = false
+	)
+	on Param1Event2 entered key do
+	(
+		Param1.bold = false
+	)
+	on ScriptFunction2 entered key do
+	(
+		ScriptFunction.bold = false
+	)
+	on Param2Event2 entered key do
+	(
+		UpdateFunction.bold = false
+	)
+	on Param1Event3 entered key do
+	(
+		Param1.bold = false
+	)
+	on ScriptFunction3 entered key do
+	(
+		ScriptFunction.bold = false
+	)
+	on Param2Event3 entered key do
+	(
+		UpdateFunction.bold = false
 	)
 )

@@ -314,7 +314,24 @@ function ExportRenderableObjects =
 				format (XMLPos + XML3Value + XMLShape + XML1Value) tranX tranY tranZ (getUserProp objaux "trigger_shape") to:trigg_file
 				format (XMLSize + XML3Value + XMLTypeEvent + XML1Value) sizebb.x sizebb.y sizebb.z (getUserProp objaux "trigger_type_event") to:trigg_file
 				format (XMLScriptFunc + XML1Value + XMLParam1 + XML1Value) (getUserProp objaux "trigger_script") (getUserProp objaux "trigger_param1") to:trigg_file
+				
+				WriteTextProperty objaux "trigger_param2" XMLParam2 trigg_file
+				
+				if (getUserProp objaux "trigger_type_event2" != "") then (
+					WriteTextProperty objaux "trigger_type_event2" XMLTypeEvent2 trigg_file
+					WriteTextProperty objaux "trigger_param1_event2" XMLParam1Event2 trigg_file
+					WriteTextProperty objaux "trigger_param2_event2" XMLParam2Event2 trigg_file
+					WriteTextProperty objaux "trigger_script_event2" XMLScriptFunc2 trigg_file
+				)
+				
+				if (getUserProp objaux "trigger_type_event3" != "") then (
+					WriteTextProperty objaux "trigger_type_event3" XMLTypeEvent3 trigg_file
+					WriteTextProperty objaux "trigger_param1_event3" XMLParam1Event3 trigg_file
+					WriteTextProperty objaux "trigger_param2_event3" XMLParam2Event3 trigg_file
+					WriteTextProperty objaux "trigger_script_event3" XMLScriptFunc3 trigg_file
+				)
 				format (XMLGroup + XML1Value + XMLPaint + XML1Value + XMLColor + XML3Value) (getUserProp objaux "trigger_group") (getUserProp objaux "trigger_paint") (objaux.wirecolor.r / 255) (objaux.wirecolor.g / 255) (objaux.wirecolor.b / 255) to:trigg_file
+				
 				if ((getUserProp objaux "trigger_duration") != "") and ((getUserProp objaux "trigger_duration") != undefined) then (
 					format (XMLMaxTime + XML1Value) (getUserProp objaux "trigger_duration") to:trigg_file
 				)

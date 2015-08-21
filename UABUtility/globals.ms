@@ -83,6 +83,18 @@ global XMLMaxTime 		= " max_time="
 global XMLTypeEvent 	= " type_event="
 global XMLScriptFunc	= " script_function="
 global XMLParam1		= " param1="
+global XMLParam2		= " param2="
+
+global XMLTypeEvent2 	= " type_event2="
+global XMLScriptFunc2	 	= " script_function2="
+global XMLParam1Event2	= " param1_event2="
+global XMLParam2Event2	= " param2_event2="
+
+global XMLTypeEvent3 	= " type_event3="
+global XMLScriptFunc3		= " script_function3="
+global XMLParam1Event3	= " param1_event3="
+global XMLParam2Event3	= " param2_event3="
+
 global XMLSize			= " size="
 global XMLUpdateFun     = " update_function="
 global XMLLayer			= " layer="
@@ -134,6 +146,7 @@ global EventList = #("event1")
 global RenderPlatform=#("static","breakable","moving","pinchos","poly")
 global RedimAxis=#("x","y","z")
 global EventTypeL = #("enter", "stay", "leave")
+global EventTypeL2 = #("","enter", "stay", "leave")
 global GroupsList = #("1", "2", "3", "18")
 global TriggerShapeL = #("box", "sphere")
 global ImageType = #("R32F", "A8R8G8B8", "R8G8B8", "X8R8G8B8")
