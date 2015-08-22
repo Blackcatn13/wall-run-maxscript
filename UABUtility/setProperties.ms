@@ -2,7 +2,7 @@ fn GetUserProperty Obj GUIObj StrProperty =
 (
 	--local message = (classof GUIObj)
 	--messagebox message
-	if (getUserProp $ StrProperty)!=undefined then
+	if (getUserProp Obj StrProperty)!=undefined then
 	(
 		--format "gui element type % and gui name %\n" (classof GUIObj) GUIObj.name
 		--Aquí uno por cada tipo de elemento de GUI
@@ -394,6 +394,29 @@ rollout UABSetProperties "UAB Set Properties" width:808 height:923
 		GetUserProperty obj WP4XText "wp4_x"
 		GetUserProperty obj WP4YText "wp4_y"
 		GetUserProperty obj WP4ZText "wp4_z"
+
+		GetUserProperty obj TriggerName "triggerName"
+		GetUserProperty obj ShapeDL "trigger_shape"
+		GetUserProperty obj GroupDL "trigger_group"
+		GetUserProperty obj EventType "trigger_type_event"
+		GetUserProperty obj PaintIt "trigger_paint"
+		GetUserProperty obj Param1 "trigger_param1"
+		GetUserProperty obj Param2 "trigger_param2"
+		GetUserProperty obj ScriptFunction "trigger_script"
+		
+		GetUserProperty obj EventType2 "trigger_type_event2"
+		GetUserProperty obj Param1Event2 "trigger_param1_event2"
+		GetUserProperty obj Param2Event2 "trigger_param2_event2"
+		GetUserProperty obj ScriptFunction2 "trigger_script_event2"
+			                                              
+		GetUserProperty obj EventType3 "trigger_type_event3"
+		GetUserProperty obj Param1Event3 "trigger_param1_event3"
+		GetUserProperty obj Param2Event3 "trigger_param2_event3"
+		GetUserProperty obj ScriptFunction3 "trigger_script_event3"
+			
+		GetUserProperty obj DurationTime "trigger_duration"
+		GetUserProperty obj UpdateFunction "trigger_update"
+		GetUserProperty obj PlatfName "trigger_platform_name"
 		
 		-- Door
 		GetUserProperty obj FinalPositionXDoorText "door_final_pos_x"
