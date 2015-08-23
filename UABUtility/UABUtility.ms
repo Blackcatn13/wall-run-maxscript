@@ -57,12 +57,6 @@ utility UABUtility "UAB export Utility" width:152 height:513
 	on btnSetPath pressed do
 	(
 		Include "PathReductor.ms"
-		PathToCopy = realPath + DataDirectory + LevelList.items[LevelList.selection] + "\\"
-		RelativePathToCopy = DataDirectory + LevelList.items[LevelList.selection] + "\\"
-		MeshPath = PathToCopy + MeshDirectory
-		TexturePath = PathToCopy + TextureDirectory
-		RelativeMeshPath = RelativePathToCopy + MeshDirectory
-		RelativeTexturePath = RelativePathToCopy + TextureDirectory
 	)
 	on ExportMeshCheck changed newValue do
 	(

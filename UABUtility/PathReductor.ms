@@ -27,4 +27,10 @@ if data_path != undefined then (
 	format "==============================\n"
 	format "Path set correctly\n"
 	format "==============================\n"
+	PathToCopy = realPath + DataDirectory + LevelList.items[LevelList.selection] + "\\"
+	RelativePathToCopy = DataDirectory + LevelList.items[LevelList.selection] + "\\"
+	MeshPath = PathToCopy + MeshDirectory
+	TexturePath = PathToCopy + TextureDirectory
+	RelativeMeshPath = RelativePathToCopy + MeshDirectory
+	RelativeTexturePath = RelativePathToCopy + TextureDirectory
 )	
