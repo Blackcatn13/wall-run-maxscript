@@ -253,6 +253,7 @@ function ExportRenderableObjects =
 				--WriteMeshProps ro_file ro_door Core ObjName tranX tranY tranZ objaux yawAng pitchAng rollAng ObjScale visible
 				format (ro_door + XMLName + XML1Value + XMLCore + XML1Value) ObjName Core to:ro_file
 				format (XMLFinalPos + XML3Value)  (GetUserProp objaux "door_final_pos_x")  (GetUserProp objaux "door_final_pos_y") (GetUserProp objaux "door_final_pos_z") to:ro_file
+				WriteTextProperty objaux "speed_door" XMLSpeed ro_file
 				format (XMLPos + XML3Value + XMLYaw + XML1Value) tranX tranY tranZ yawAng to:ro_file
 				format (XMLPitch + XML1Value + XMLRoll + XML1Value + XMLScale + XML3Value + XMLVisible + XML1Value) pitchAng rollAng ObjScale.x ObjScale.y ObjScale.z visible to:ro_file
 				if(CheckNotNullProperty objaux "phisics_size_x" == true and CheckNotNullProperty objaux "phisics_size_y" == true and CheckNotNullProperty objaux "phisics_size_z" == true) then(

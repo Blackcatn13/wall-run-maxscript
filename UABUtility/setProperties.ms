@@ -288,6 +288,8 @@ rollout UABSetProperties "UAB Set Properties" width:808 height:923
 	label lbl926 "Parameter 2" pos:[254,666] width:80 height:16
 	GroupBox grp162 "Event2" pos:[23,601] width:226 height:112
 	GroupBox grp163 "Event3" pos:[250,601] width:267 height:113
+	label SpeedDoor "Speed" pos:[558,421] width:38 height:15
+	edittext SpeedDoorText "" pos:[590,420] width:46 height:16
 	on UABSetProperties open do
 	(	
 		RenderExportList.items = MeshType
@@ -394,7 +396,7 @@ rollout UABSetProperties "UAB Set Properties" width:808 height:923
 		GetUserProperty obj WP4XText "wp4_x"
 		GetUserProperty obj WP4YText "wp4_y"
 		GetUserProperty obj WP4ZText "wp4_z"
-
+	
 		GetUserProperty obj TriggerName "triggerName"
 		GetUserProperty obj ShapeDL "trigger_shape"
 		GetUserProperty obj GroupDL "trigger_group"
@@ -422,6 +424,7 @@ rollout UABSetProperties "UAB Set Properties" width:808 height:923
 		GetUserProperty obj FinalPositionXDoorText "door_final_pos_x"
 		GetUserProperty obj FinalPositionYDoorText "door_final_pos_y"
 		GetUserProperty obj FinalPositionZDoorText "door_final_pos_z"
+		GetUserProperty obj SpeedDoorText "speed_door"
 		
 		--Particles
 		GetUserProperty obj EmitterText "emitter"
@@ -558,6 +561,7 @@ rollout UABSetProperties "UAB Set Properties" width:808 height:923
 					SetUserProperty $[i] "door_final_pos_x" FinalPositionXDoorText.text
 					SetUserProperty $[i] "door_final_pos_y" FinalPositionYDoorText.text
 					SetUserProperty $[i] "door_final_pos_z" FinalPositionZDoorText.text
+					SetUserProperty $[i] "speed_door" SpeedDoorText.text
 					
 				)
 				---Platform properties
@@ -753,7 +757,7 @@ rollout UABSetProperties "UAB Set Properties" width:808 height:923
 				SetUserProperty $ "door_final_pos_x" FinalPositionXDoorText.text
 				SetUserProperty $ "door_final_pos_y" FinalPositionYDoorText.text
 				SetUserProperty $ "door_final_pos_z" FinalPositionZDoorText.text
-					
+				SetUserProperty $ "speed_door" SpeedDoorText.text
 			)
 			
 			---Platform properties
