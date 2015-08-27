@@ -311,6 +311,9 @@ function ExportRenderableObjects =
 			if (GetUserProp objaux "export_type" == "trigger") then (
 				local bb = nodeLocalBoundingBox objaux
 				local sizebb = RHTranslationToLH(bb[2] - bb[1])
+				sizebb.x = abs sizebb.x
+				sizebb.y = abs sizebb.y
+				sizebb.z = abs sizebb.z
 				format (trigger_tag + XMLName + XML1Value + XMLPlatfName + XML1Value) (getUserProp objaux "triggerName") "" to:trigg_file
 				format (XMLPos + XML3Value + XMLShape + XML1Value) tranX tranY tranZ (getUserProp objaux "trigger_shape") to:trigg_file
 				format (XMLSize + XML3Value + XMLTypeEvent + XML1Value) sizebb.x sizebb.y sizebb.z (getUserProp objaux "trigger_type_event") to:trigg_file
