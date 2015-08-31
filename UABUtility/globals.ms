@@ -132,6 +132,7 @@ global XMLUsePhisicMesh	= " use_phisics_mesh="
 global XMLSide			= " side="
 global XMLSpeedOpening 	= " speed_opening="
 global XMLSpeedClosing  = " speed_closing="
+global XMLController 	= " controller="
 global XML1Value      	= "\"%\""
 global XML3Value		= "\"% % %\""
 
@@ -152,6 +153,7 @@ global TriggerShapeL = #("box", "sphere")
 global ImageType = #("R32F", "A8R8G8B8", "R8G8B8", "X8R8G8B8")
 global RoomList = #("0", "1", "2", "3", "4", "5", "6", "7", "8","9","10","11")
 global SideListText=#("left", "right", "up", "down")
+global ControllerList = #("keyboard", "gamepad")
 
 -- Vertex declaration
 global VERTEX_XYZ 		= 0x1

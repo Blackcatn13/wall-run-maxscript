@@ -290,6 +290,9 @@ rollout UABSetProperties "UAB Set Properties" width:808 height:923
 	GroupBox grp163 "Event3" pos:[250,601] width:267 height:113
 	label SpeedDoor "Speed" pos:[558,421] width:38 height:15
 	edittext SpeedDoorText "" pos:[590,420] width:46 height:16
+	groupBox grp164 "Controller" pos:[555,831] width:246 height:51
+	checkbox CheckController "Use It" pos:[575,855] width:58 height:20
+	dropDownList ControllerItemList "" pos:[633,854] width:157 height:21
 	on UABSetProperties open do
 	(	
 		RenderExportList.items = MeshType
@@ -308,6 +311,7 @@ rollout UABSetProperties "UAB Set Properties" width:808 height:923
 		ShadowStatType.items = ImageType
 		RoomText.items = RoomList
 		SideList.items = SideListText
+		ControllerItemList.items = ControllerList
 	)
 	on AnimModelText entered key do
 	(
@@ -466,6 +470,8 @@ rollout UABSetProperties "UAB Set Properties" width:808 height:923
 		GetUserProperty obj WalTrapXText "wt_final_pos_x"
 		GetUserProperty obj WalTrapYText "wt_final_pos_y"
 		GetUserProperty obj WalTrapZText "wt_final_pos_z"
+		GetUserProperty obj CheckController "use_controller"
+		GetUserProperty obj ControllerItemList "controller"
 		
 	)
 	on SetButton pressed do
@@ -669,6 +675,11 @@ rollout UABSetProperties "UAB Set Properties" width:808 height:923
 				SetUserProperty $[i] "wt_final_pos_y" WalTrapYText.text
 				SetUserProperty $[i] "wt_final_pos_z" WalTrapZText.text
 				
+				SetUserProperty $[i] "use_controller" CheckController.checked
+				if CheckController.checked then
+				(
+					SetUserProperty $[i] "controller" ControllerItemList.items[ControllerItemList.selection]
+				)
 			)
 		)
 		else
@@ -868,6 +879,12 @@ rollout UABSetProperties "UAB Set Properties" width:808 height:923
 			SetUserProperty $ "wt_final_pos_x" WalTrapXText.text
 			SetUserProperty $ "wt_final_pos_y" WalTrapYText.text
 			SetUserProperty $ "wt_final_pos_z" WalTrapZText.text
+
+			SetUserProperty $ "use_controller" CheckController.checked
+			if CheckController.checked then
+			(
+				SetUserProperty $ "controller" ControllerItemList.items[ControllerItemList.selection]
+			)
 		)
 	)
 	on TriggerName entered key do

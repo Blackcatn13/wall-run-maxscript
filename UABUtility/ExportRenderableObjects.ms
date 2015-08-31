@@ -154,6 +154,10 @@ function ExportRenderableObjects =
 				if (GetUserProp objaux "render_to_layer" == true) then (
 					format (XMLLayer + XML1Value) (GetUserProp objaux "render_layer") to:ro_file
 				)
+
+				if (GetUserProp objaux "use_controller" == true) then (
+					format (XMLController + XML1Value) (GetUserProp objaux "controller") to:ro_file
+				)
 				
 				format (XMLCloseTag) to:ro_file
 			)
