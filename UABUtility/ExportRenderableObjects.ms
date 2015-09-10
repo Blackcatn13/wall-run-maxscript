@@ -26,18 +26,18 @@ function WriteMeshProps _ro_file mesh_type ObjCore ObjName tranX tranY tranZ obj
 		format (XMLPhisicSize + XML3Value) (GetUserProp obj "phisics_size_x")  (GetUserProp obj "phisics_size_y") (GetUserProp obj "phisics_size_z")  to:_ro_file
 	)	
 	
-	WriteCheckProp objaux "use_phisic_mesh" XMLUsePhisicMesh ro_file				
-	WriteTextProperty objaux "emitter" XMLEmitter ro_file
-	WriteText3Property objaux "emitter_offset_x" "emitter_offset_y" "emitter_offset_z" XMLEmitterOffset ro_file
-	WriteTextProperty objaux "emitter2" XMLEmitter2 ro_file
-	WriteText3Property objaux "emitter2_offset_x" "emitter2_offset_y" "emitter2_offset_z" XMLEmitter2Offset ro_file
-	WriteTextProperty objaux "emitter3" XMLEmitter3 ro_file
-	WriteText3Property objaux "emitter3_offset_x" "emitter3_offset_y" "emitter3_offset_z" XMLEmitter3Offset ro_file
-	WriteTextProperty objaux "emitter4" XMLEmitter4 ro_file
-	WriteText3Property objaux "emitter4_offset_x" "emitter4_offset_y" "emitter4_offset_z" XMLEmitter4Offset ro_file
-	WriteTextProperty objaux "billboard" XMLBillboard ro_file
-	WriteText3Property objaux "billboard_offset_x" "billboard_offset_y" "billboard_offset_z" XMLBillboardOffset ro_file
-	WriteTextProperty objaux "room" XMLRoom ro_file
+	WriteCheckProp obj "use_phisic_mesh" XMLUsePhisicMesh _ro_file				
+	WriteTextProperty obj "emitter" XMLEmitter _ro_file
+	WriteText3Property obj "emitter_offset_x" "emitter_offset_y" "emitter_offset_z" XMLEmitterOffset ro_file
+	WriteTextProperty obj "emitter2" XMLEmitter2 _ro_file
+	WriteText3Property obj "emitter2_offset_x" "emitter2_offset_y" "emitter2_offset_z" XMLEmitter2Offset _ro_file
+	WriteTextProperty obj "emitter3" XMLEmitter3 _ro_file
+	WriteText3Property obj "emitter3_offset_x" "emitter3_offset_y" "emitter3_offset_z" XMLEmitter3Offset _ro_file
+	WriteTextProperty obj "emitter4" XMLEmitter4 _ro_file
+	WriteText3Property obj "emitter4_offset_x" "emitter4_offset_y" "emitter4_offset_z" XMLEmitter4Offset _ro_file
+	WriteTextProperty obj "billboard" XMLBillboard _ro_file
+	WriteText3Property obj "billboard_offset_x" "billboard_offset_y" "billboard_offset_z" XMLBillboardOffset _ro_file
+	WriteTextProperty obj "room" XMLRoom _ro_file
 	
 	if (GetUserProp obj "render_to_layer" == true) then (
 		format (XMLLayer + XML1Value) (GetUserProp obj "render_layer") to:_ro_file
