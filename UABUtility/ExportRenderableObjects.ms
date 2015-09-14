@@ -28,7 +28,7 @@ function WriteMeshProps _ro_file mesh_type ObjCore ObjName tranX tranY tranZ obj
 	
 	WriteCheckProp obj "use_phisic_mesh" XMLUsePhisicMesh _ro_file				
 	WriteTextProperty obj "emitter" XMLEmitter _ro_file
-	WriteText3Property obj "emitter_offset_x" "emitter_offset_y" "emitter_offset_z" XMLEmitterOffset ro_file
+	WriteText3Property obj "emitter_offset_x" "emitter_offset_y" "emitter_offset_z" XMLEmitterOffset _ro_file
 	WriteTextProperty obj "emitter2" XMLEmitter2 _ro_file
 	WriteText3Property obj "emitter2_offset_x" "emitter2_offset_y" "emitter2_offset_z" XMLEmitter2Offset _ro_file
 	WriteTextProperty obj "emitter3" XMLEmitter3 _ro_file
