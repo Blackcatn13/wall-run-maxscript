@@ -17,33 +17,42 @@ function ExportAnimatedObject Obj =
 	local animStart = animationRange.start
 	local animStop = animationRange.end
 	local fr = frameRate
-	local key = (at time animStop trackbar.getNextKeyTime()).frame
-	if debug then (
-		format "[ExportAnimatedObject] range of animation % - %\n" animStart animStop
-		format "[ExportAnimatedObject] frameRate of animation = %\n" fr
-		format "[ExportAnimatedObject] first key to export %\n" key
-	)
-	do (
-		if debug then 
-			--format "[ExportAnimatedObject] exporting key %\n" key
-		_time = key / fr
-		local pos = at time key RHTranslationToLH(Obj.pos)
-		local yaw = DegToRad (GetYaw (at time key Obj.transform))
-		local pitch = DegToRad (GetPitch (at time key Obj.transform))
-		local roll = DegToRad (GetRoll (at time key Obj.transform))
-		local _scale = at time key RHTranslationToLH(Obj.scale)
-		format (co_key_frame_open_tag + XMLTime + XML1Value) _time to:cinematic_file
-		format (XMLPos + XML3Value + XMLYaw + XML1Value) pos.x pos.y pos.z yaw to:cinematic_file
-		format (XMLPitch + XML1Value + XMLRoll + XML1Value + XMLScale + XML3Value + XMLCloseTag) pitch roll _scale.x _scale.y _scale.z to:cinematic_file
+	local auxTime = at time animStop trackbar.getNextKeyTime()
+	if auxTime != undefined then (
+		local key = auxTime.frame
+		animStart = key
+		if debug then (	
+			format "[ExportAnimatedObject] range of animation % - %\n" animStart animStop
+			format "[ExportAnimatedObject] frameRate of animation = %\n" fr
+			format "[ExportAnimatedObject] first key to export %\n" key
+		)
+		do (
+			if debug then 
+				--format "[ExportAnimatedObject] exporting key %\n" key
+			_time = key / fr
+			local pos = at time key RHTranslationToLH(Obj.pos)
+			local yaw = DegToRad (GetYaw (at time key Obj.transform))
+			local pitch = DegToRad (GetPitch (at time key Obj.transform))
+			local roll = DegToRad (GetRoll (at time key Obj.transform))
+			local _scale = at time key RHTranslationToLH(Obj.scale)
+			format (co_key_frame_open_tag + XMLTime + XML1Value) _time to:cinematic_file
+			format (XMLPos + XML3Value + XMLYaw + XML1Value) pos.x pos.y pos.z yaw to:cinematic_file
+			format (XMLPitch + XML1Value + XMLRoll + XML1Value + XMLScale + XML3Value + XMLCloseTag) pitch roll _scale.x _scale.y _scale.z to:cinematic_file
 
-		key = (at time key trackbar.getNextKeyTime()).frame
-	) while key > animStart
+			auxTime = at time key trackbar.getNextKeyTime()
+			if auxTime != undefined then (
+				key = auxTime.frame
+			) else (
+				key = animStart - 1
+			)
+		) while key > animStart
+	)
 	format (cinematic_object_close_tag) to:cinematic_file
 	if debug then
 		format "[ExportAnimatedObject] exported % correctly\n" Obj.name
 )
 
-function ExportCinematics name =
+function ExportCinematics cinematicName =
 (
 	if debug then
 		format "[ExportCinematics] starting export of cinematic with name %\n" cinematicName
