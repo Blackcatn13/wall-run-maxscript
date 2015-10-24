@@ -2,7 +2,7 @@ sysinfo.currentdir = getFilenamePath (getSourceFileName())
 
 Include "globals.ms"
 
-utility UABUtility "UAB export Utility" width:152 height:513
+utility UABUtility "UAB export Utility" width:152 height:536
 (
 	button btnSetPath "Set Path" pos:[8,8] width:136 height:28 toolTip:"Set path to export objects"
 	label PathLabel "" pos:[8,40] width:136 height:76 readOnly:true
@@ -18,11 +18,12 @@ utility UABUtility "UAB export Utility" width:152 height:513
 	button ExportCinematicButton "Cinematic" pos:[16,410] width:120 height:16 toolTip:"Export cinematics"
 	checkbox DebugValue "Debug Messages" pos:[24,272] width:104 height:16 toolTip:"Debug value"
 	checkbox OverrideValue "Always Override" pos:[24,296] width:104 height:16 toolTip:"Override Always"
-	GroupBox grp2 "Tools" pos:[5,445] width:139 height:56
+	GroupBox grp2 "Tools" pos:[5,445] width:139 height:80
 	button btnSetProperties "Set Properties" pos:[14,468] width:120 height:16 toolTip:"Open Property menu"
 	dropdownList LevelList "" pos:[8,172] width:136 height:21 toolTip:"Level on save the files"
 	button PhysxMeshCheck "ExportPhysXMesh" pos:[16,320] width:120 height:16 toolTip:"Export Only PhysX"
 	button ExportSceneElementPhysxMeshButton "ElementPhysXMeshes" pos:[16,341] width:120 height:16 toolTip:"Export Only PhysX"
+	button centerAndResetButton "Center/ResetXForm" pos:[16,496] width:112 height:16 tooltip:"Sets the pivot to the center and makes a ResetXFrom"
 	
 	Include "setProperties.ms"
 
@@ -201,5 +202,31 @@ utility UABUtility "UAB export Utility" width:152 height:513
 		format "==============================\n"
 		format "Scene Element PhysX exported correctly\n"
 		format "==============================\n"
+	)
+
+	on centerAndResetButton pressed do
+	(
+		if $ != undefined then
+		(
+			local _meshes
+			if classof $ == ObjectSet then (
+				_meshes = $ as array
+			) else (
+				_meshes = #($)
+			)
+			for i = 1 to _meshes.count do
+			(
+				CenterPivot _meshes[i]
+				ResetXForm _meshes[i]	
+				maxops.CollapseNodeTo _meshes[i] 1 true
+			)
+			format "==============================\n"
+			format "Pivot centered and ResetXForm applyed\n"
+			format "==============================\n"
+		) 
+		else
+		(
+			messageBox "No hi ha res seleccionat, no es pot exportar." title:"NO SELECTION"
+		)
 	)
 )
