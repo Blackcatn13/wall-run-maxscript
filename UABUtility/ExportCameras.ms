@@ -63,7 +63,7 @@ function exportCameraKeyFrames cam fileNameWithPath =
 		if debug then
 			format "[exportCameraKeyFrames] exporting key %\n" key
 		_time = key / fr
-		pos = at time key RHTranslationToLH(cam.pos)
+		pos = at time key cam.pos
 		dir = at time key cam.dir
 		if cam.type == #free then (
 			targetDist = at time key cam.baseObject.TargetDistance
@@ -73,6 +73,7 @@ function exportCameraKeyFrames cam fileNameWithPath =
 			_lookat = at time key RHTranslationToLH(cam.Target.pos)
 		)
 		--_lookat = RHTranslationToLH (pos - dir * targetDist)
+		pos = RHTranslationToLH(pos)
 		fov = DegToRad (at time key cam.fov)
 		near = at time key cam.nearClip
 		far = at time key cam.farclip

@@ -136,7 +136,7 @@ utility UABUtility "UAB export Utility" width:152 height:536
 		exportLights undefined
 		if debug then 
 			format "Exporting camera path(s)\n"
-		ExportCameraPath()
+		--ExportCameraPath()
 		format "==============================\n"
 		format "Full scene exported correctly\n"
 		format "==============================\n"
