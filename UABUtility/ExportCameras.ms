@@ -21,7 +21,7 @@ function exportStaticCamera cam =
 		targetDist = cam.TargetDistance
 	)
 	local _lookat = RHTranslationToLH (pos - cam.dir * targetDist)
-	local fov = DegToRad cam.fov
+	local fov = DegToRad cam.curfov
 	format (camera_fixed + XMLName + XML1Value) cam.name to:cam_file
 	format (XMLPos + XML3Value + XMLLookAt + XML3Value) pos.x pos.y pos.z _lookat.x _lookat.y _lookat.z to:cam_file
 	format (XMLFov + XML1Value + XMLNear_plane + XML1Value + XMLFar_plane + XML1Value + XMLCloseTag) fov cam.nearClip cam.farClip to:cam_file
@@ -74,7 +74,7 @@ function exportCameraKeyFrames cam fileNameWithPath =
 		)
 		--_lookat = RHTranslationToLH (pos - dir * targetDist)
 		pos = RHTranslationToLH(pos)
-		fov = DegToRad (at time key cam.fov)
+		fov = DegToRad (at time key cam.curfov)
 		near = at time key cam.nearClip
 		far = at time key cam.farclip
 		format (camera_key + XMLTime + XML1Value) _time to:file
