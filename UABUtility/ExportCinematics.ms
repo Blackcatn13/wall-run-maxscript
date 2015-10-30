@@ -27,9 +27,9 @@ function ExportAnimatedObject Obj =
 			format "[ExportAnimatedObject] first key to export %\n" key
 		)
 		do (
+			local _time = key / fr
 			if debug then 
-				--format "[ExportAnimatedObject] exporting key %\n" key
-			_time = key / fr
+				format "[ExportAnimatedObject] exporting key % with time %\n" key _time
 			local pos = at time key RHTranslationToLH(Obj.pos)
 			local yaw = DegToRad (GetYaw (at time key Obj.transform))
 			local pitch = DegToRad (GetPitch (at time key Obj.transform))
